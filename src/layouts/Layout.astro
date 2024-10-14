@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "@src/components/BaseHead.astro";
+import Header from "@src/components/Header.astro";
+import Footer from "@src/components/Footer.astro";
+import { useTranslations, type UiType } from "@src/i18n/utils";
+import { ViewTransitions } from "astro:transitions";
+import Lang from "@src/components/Lang.astro";
+import { IsDark } from "@src/consts";
+
+type Props = Omit<CollectionEntry<"blog">["data"], "pubDate"> & {
+  pubDate?: Date;
+  translated?: number;
+};
+
+const { title, description, lang, translated } = Astro.props;
+
+const t = useTranslations(lang as UiType);
+---
+
+<!doctype html>
+<html lang={lang} data-theme={IsDark ? "dark" : "light"}>
+  <head>
+    <script is:inline>
+      if (localStorage.getItem("theme") === "light") {
+        document.querySelector("html")?.setAttribute("data-theme", "light");
+      } else {
+        document.querySelector("html")?.setAttribute("data-theme", "dark");
+      }
+    </script>
+    <ViewTransitions />
+    <BaseHead lang={lang as string} title={title} description={description} />
+  </head>
+  <body>
+    {translated ? translated > 1 && <Lang /> : <Lang />}
+    <Header title={t("site.title")} lang={lang} />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
