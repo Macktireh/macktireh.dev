@@ -1,32 +1,39 @@
 ---
-import { getBlogPosts } from "@src/content/config";
+import { getBlogPosts, type BlogType } from "@src/content/config";
 import FormattedDate from "@src/components/FormattedDate.astro";
+import { type PageType } from "@src/helpers/types";
 import Layout from "@src/layouts/Layout.astro";
 
-const { lang } = Astro.params;
+// const posts = (await getBlogPosts())
+//   ?.filter((blog) => {
+//     return blog?.data?.lang === lang;
+//   })
+//   .sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
 
-const posts = (await getBlogPosts())
-  ?.filter((blog) => {
-    return blog?.data?.lang === lang;
-  })
-  .sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
+// const pageSize = 8;
 
-const pageSize = 8;
 export async function getStaticPaths({ paginate }) {
-  return ["en", "fr"].map((lang) => {
-    return { params: { lang } };
+  let posts = await getBlogPosts();
+  return ["en", "fr"].flatMap((lang) => {
+    const posts_filtered = posts
+      ?.filter((blog) => {
+        return blog?.data?.lang === lang;
+      })
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+    return paginate(posts_filtered, { params: { lang }, pageSize: 2 });
   });
 }
 
-const pages = Array.from(
-  { length: Math.ceil(posts.length / pageSize) },
-  (_, i) => {
-    const startIndex = i * pageSize;
-    return posts.slice(startIndex, startIndex + pageSize);
-  }
-);
+// const pages = Array.from(
+//   { length: Math.ceil(posts.length / pageSize) },
+//   (_, i) => {
+//     const startIndex = i * pageSize;
+//     return posts.slice(startIndex, startIndex + pageSize);
+//   }
+// );
 
-const page = Astro.props;
+const { lang } = Astro.params;
+const { page } = Astro.props as { page: PageType<BlogType> };
 ---
 
 <Layout title="Blog" description="Blog" lang={lang}>
@@ -125,35 +132,40 @@ const page = Astro.props;
   </style>
   <section id="posts-list">
     <ul>
+      {page.data.map((post) => (
+        <li>
+          <a href={`/${lang}/blog/${post.blog_slug}`}>
+            <img
+              width={720}
+              height={360}
+              src={post.data.heroImage}
+              alt=""
+            />
+            <h4 class="title">{post.data.title}</h4>
+            <p class="date">
+              <FormattedDate date={post.data.pubDate} />
+            </p>
+          </a>
+        </li>
+      ))}
+      {page.url.first ? <a href={page.url.first}>First</a> : null}
+      {page.url.prev ? <a href={page.url.prev}>Previous</a> : null}
+      {page.url.next ? <a href={page.url.next}>Next</a> : null}
+      {page.url.last ? <a href={page.url.last}>Last</a> : null}
       {
-        pages.map((page, index) => {
-          return (
-            <div
-              id={`page-${index}`}
-              class={`pagination-page ${index === 0 ? "display-pagination" : "hidden-pagination"}`}
-            >
-              {page.map((post) => (
-                <li>
-                  <a href={`/${lang}/blog/${post.blog_slug}`}>
-                    <img
-                      width={720}
-                      height={360}
-                      src={post.data.heroImage}
-                      alt=""
-                    />
-                    <h4 class="title">{post.data.title}</h4>
-                    <p class="date">
-                      <FormattedDate date={post.data.pubDate} />
-                    </p>
-                  </a>
-                </li>
-              ))}
-            </div>
-          );
-        })
+        // page.data.map((page, index) => {
+        //   return (
+        //     <div
+        //       id={`page-${index}`}
+        //       class={`pagination-page ${index === 0 ? "display-pagination" : "hidden-pagination"}`}
+        //     >
+              
+        //     </div>
+        //   );
+        // })
       }
     </ul>
-    <div id="pagination" class="pagination-justify-center">
+    <!-- <div id="pagination" class="pagination-justify-center">
       {
         pages.map((page, index) => {
           const pageId = `page-${index}`;
@@ -168,10 +180,10 @@ const page = Astro.props;
           );
         })
       }
-    </div>
+    </div> -->
   </section>
 
-  <script is:inline>
+  <!-- <script is:inline>
     function paginate(pageId) {
       document.querySelectorAll(".pagination-page").forEach((element) => {
         if (element.id !== pageId) {
@@ -183,5 +195,5 @@ const page = Astro.props;
         }
       });
     }
-  </script>
+  </script> -->
 </Layout>
