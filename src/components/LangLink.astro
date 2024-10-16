@@ -1,8 +1,8 @@
 ---
 import type { HTMLAttributes } from "astro/types";
-import { getLocalizedPathname, type UiType } from "@src/i18n/utils";
+import { getLocalizedPathname, type LangType } from "@src/i18n/utils";
 
-type Props = HTMLAttributes<"a"> & { language: UiType; isActive?: boolean };
+type Props = HTMLAttributes<"a"> & { language: LangType; isActive?: boolean };
 
 const { language, class: className, ...props } = Astro.props;
 const { pathname } = Astro.url;

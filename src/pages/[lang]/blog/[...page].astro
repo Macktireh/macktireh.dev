@@ -1,42 +1,40 @@
 ---
-import { getBlogPosts, type BlogType } from "@src/content/config";
+import { getPostsWithLang, getBlogPosts, type BlogType } from "@src/content/config";
 import FormattedDate from "@src/components/FormattedDate.astro";
 import { type PageType } from "@src/helpers/types";
 import Layout from "@src/layouts/Layout.astro";
-
-// const posts = (await getBlogPosts())
-//   ?.filter((blog) => {
-//     return blog?.data?.lang === lang;
-//   })
-//   .sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
-
-// const pageSize = 8;
+import { DEFAULT_LANG, LOCALES } from "@src/i18n/utils";
+import { PAGE_SIZE } from "@src/consts";
+import { getTotalPages as getLastPages } from "@src/helpers/utils";
 
 export async function getStaticPaths({ paginate }) {
   let posts = await getBlogPosts();
-  return ["en", "fr"].flatMap((lang) => {
+  return LOCALES.flatMap((lang) => {
     const posts_filtered = posts
       ?.filter((blog) => {
         return blog?.data?.lang === lang;
       })
       .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-    return paginate(posts_filtered, { params: { lang }, pageSize: 2 });
+    return paginate(posts_filtered, { params: { lang }, pageSize: PAGE_SIZE });
   });
 }
 
-// const pages = Array.from(
-//   { length: Math.ceil(posts.length / pageSize) },
-//   (_, i) => {
-//     const startIndex = i * pageSize;
-//     return posts.slice(startIndex, startIndex + pageSize);
-//   }
-// );
-
 const { lang } = Astro.params;
 const { page } = Astro.props as { page: PageType<BlogType> };
+
+const isTranslated = async () => {
+  const _posts = await getPostsWithLang(lang === DEFAULT_LANG ? "fr" : "en");
+  const lastPage = getLastPages(_posts.length, PAGE_SIZE);
+  return lastPage >= page.currentPage;
+};
 ---
 
-<Layout title="Blog" description="Blog" lang={lang}>
+<Layout
+  title="Blog"
+  description="Blog"
+  lang={lang}
+  translated={await isTranslated()}
+>
   <style>
     main {
       width: 960px;
@@ -132,68 +130,23 @@ const { page } = Astro.props as { page: PageType<BlogType> };
   </style>
   <section id="posts-list">
     <ul>
-      {page.data.map((post) => (
-        <li>
-          <a href={`/${lang}/blog/${post.blog_slug}`}>
-            <img
-              width={720}
-              height={360}
-              src={post.data.heroImage}
-              alt=""
-            />
-            <h4 class="title">{post.data.title}</h4>
-            <p class="date">
-              <FormattedDate date={post.data.pubDate} />
-            </p>
-          </a>
-        </li>
-      ))}
+      {
+        page.data.map((post) => (
+          <li>
+            <a href={`/${lang}/blog/${post.blog_slug}`}>
+              <img width={720} height={360} src={post.data.heroImage} alt="" />
+              <h4 class="title">{post.data.title}</h4>
+              <p class="date">
+                <FormattedDate date={post.data.pubDate} />
+              </p>
+            </a>
+          </li>
+        ))
+      }
       {page.url.first ? <a href={page.url.first}>First</a> : null}
       {page.url.prev ? <a href={page.url.prev}>Previous</a> : null}
       {page.url.next ? <a href={page.url.next}>Next</a> : null}
       {page.url.last ? <a href={page.url.last}>Last</a> : null}
-      {
-        // page.data.map((page, index) => {
-        //   return (
-        //     <div
-        //       id={`page-${index}`}
-        //       class={`pagination-page ${index === 0 ? "display-pagination" : "hidden-pagination"}`}
-        //     >
-              
-        //     </div>
-        //   );
-        // })
-      }
     </ul>
-    <!-- <div id="pagination" class="pagination-justify-center">
-      {
-        pages.map((page, index) => {
-          const pageId = `page-${index}`;
-          return (
-            <button
-              class="btn-pagination"
-              id={`btn-${index}`}
-              onclick={`paginate('${pageId}')`}
-            >
-              {index + 1}
-            </button>
-          );
-        })
-      }
-    </div> -->
   </section>
-
-  <!-- <script is:inline>
-    function paginate(pageId) {
-      document.querySelectorAll(".pagination-page").forEach((element) => {
-        if (element.id !== pageId) {
-          element.classList.remove("display-pagination");
-          element.classList.add("hidden-pagination");
-        } else {
-          element.classList.remove("hidden-pagination");
-          element.classList.add("display-pagination");
-        }
-      });
-    }
-  </script> -->
 </Layout>

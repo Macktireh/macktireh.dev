@@ -1,3 +1,4 @@
+import type { LangType } from "@src/i18n/utils";
 import { defineCollection, z, type CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
 
@@ -29,4 +30,11 @@ export async function getBlogPosts() {
       blog_slug,
     };
   });
+}
+
+export async function getPostsWithLang(lang: LangType) {
+  return (await getCollection("blog")).filter((blog) => {
+      return blog?.data?.lang === lang;
+    })
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }

@@ -1,12 +1,12 @@
 ---
-import { getLangFromUrl, useTranslations } from "@src/i18n/utils";
+import { getLangFromUrl, LOCALES, useTranslations } from "@src/i18n/utils";
 import BlogPost from "@src/layouts/BlogPost.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 export async function getStaticPaths() {
-  return ["en", "fr"].map((lang) => {
+  return LOCALES.map((lang) => {
     return { params: { lang } };
   });
 }
@@ -16,7 +16,7 @@ export async function getStaticPaths() {
   title={t("about.title")}
   description={t("about.description")}
   pubDate={new Date("August 08 2021")}
-  heroImage="/blog-placeholder-about.jpg"
+  heroImage="/images/hero/blog-placeholder-about.jpg"
   lang={lang}
 >
   <p>

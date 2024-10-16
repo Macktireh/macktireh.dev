@@ -17,9 +17,8 @@ export async function getStaticPaths() {
 
 const { lang, slug } = Astro.params;
 const page = Astro.props;
-const formattedDate = page.data?.pubDate?.toLocaleString(lang);
 
-const translated = (await getBlogPosts()).filter((post) => post.blog_slug === slug).length;
+const translated = (await getBlogPosts()).filter((post) => post.blog_slug === slug).length > 1;
 
 
 const { Content } = await page.render();
