@@ -32,6 +32,11 @@ export const ui = {
       "Check out the included blog posts in languages ES, EN and FR in",
     "home.p3.6": "Customize the general site layout in",
     "home.p3.7": "Customize the blog post page layout in",
+    page: "Page",
+    "pagination.firts": "First",
+    "pagination.prev": "Previous",
+    "pagination.next": "Next",
+    "pagination.last": "Last",
   },
   fr: {
     "site.title": "Astro Blog",
@@ -58,7 +63,11 @@ export const ui = {
     "home.p3.4": "Ajouter votre nom au pied de page dans",
     "home.p3.5": "Découvrez les articles de blog inclus en ES, EN et FR dans",
     "home.p3.6": "Personnalisez la mise en page générale du site dans",
-    "home.p3.7":
-      "Personnalisez la mise en page de la page des articles de blog dans",
+    "home.p3.7": "Personnalisez la mise en page de la page des articles de blog dans",
+    page: "Page",
+    "pagination.firts": "Premier",
+    "pagination.prev": "Précédent",
+    "pagination.next": "Suivant",
+    "pagination.last": "Dernier",
   },
 } as const;
