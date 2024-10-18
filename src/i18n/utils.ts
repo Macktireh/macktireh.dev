@@ -5,19 +5,19 @@ export const LANGUAGES = {
   fr: "Français",
 };
 
-export const LANGUAGES_KEYS = Object.keys(LANGUAGES) as UiType[];
+export const LOCALES = Object.keys(LANGUAGES) as LangType[];
 
 export const DEFAULT_LANG = "en";
 
-export type UiType = keyof typeof ui;
+export type LangType = keyof typeof LANGUAGES;
 
 export function getLangFromUrl(url: URL) {
   const [, lang] = url.pathname.split("/");
-  if (lang in ui) return lang as UiType;
+  if (lang in LOCALES) return lang as LangType;
   return DEFAULT_LANG;
 }
 
-export function useTranslations(lang?: UiType) {
+export function useTranslations(lang?: LangType) {
   return function t(
     key: keyof (typeof ui)[typeof DEFAULT_LANG],
     ...args: any[]
@@ -32,7 +32,7 @@ export function useTranslations(lang?: UiType) {
   };
 }
 
-export function pathNameIsInLanguage(pathname: string, lang: UiType) {
+export function pathNameIsInLanguage(pathname: string, lang: LangType) {
   return (
     pathname.startsWith(`/${lang}`) ||
     (lang === DEFAULT_LANG && !pathNameStartsWithLanguage(pathname))
@@ -54,7 +54,7 @@ function pathNameStartsWithLanguage(pathname: string) {
   return startsWithLanguage;
 }
 
-export function getLocalizedPathname(pathname: string, lang: UiType) {
+export function getLocalizedPathname(pathname: string, lang: LangType) {
   if (pathNameStartsWithLanguage(pathname)) {
     const availableLanguages = Object.keys(LANGUAGES).join("|");
     const regex = new RegExp(`^\/(${availableLanguages})`);

@@ -1,0 +1,211 @@
+---
+import { getPostsWithLang, getBlogPosts, type BlogType } from "@src/content/config";
+import FormattedDate from "@src/components/FormattedDate.astro";
+import { type PageType } from "@src/helpers/types";
+import Layout from "@src/layouts/Layout.astro";
+import { DEFAULT_LANG, LOCALES, useTranslations } from "@src/i18n/utils";
+import { PAGE_SIZE } from "@src/consts";
+import { getTotalPages as getLastPages } from "@src/helpers/utils";
+
+export async function getStaticPaths({ paginate }) {
+  let posts = await getBlogPosts();
+  return LOCALES.flatMap((lang) => {
+    const posts_filtered = posts
+      ?.filter((blog) => {
+        return blog?.data?.lang === lang;
+      })
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+    return paginate(posts_filtered, { params: { lang }, pageSize: PAGE_SIZE });
+  });
+}
+
+const { lang } = Astro.params;
+const { page } = Astro.props as { page: PageType<BlogType> };
+  const t = useTranslations(lang);
+
+const isTranslated = async () => {
+  const _posts = await getPostsWithLang(lang === DEFAULT_LANG ? "fr" : "en");
+  const lastPage = getLastPages(_posts.length, PAGE_SIZE);
+  return lastPage >= page.currentPage;
+};
+---
+
+<Layout
+  title="Blog"
+  description="Blog"
+  lang={lang}
+  translated={await isTranslated()}
+>
+  <style>
+    main {
+      width: 960px;
+    }
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    ul li {
+      width: calc(50% - 1rem);
+    }
+    ul li * {
+      text-decoration: none;
+      transition: 0.2s ease;
+    }
+    /* ul li:first-child {
+      width: 100%;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    ul li:first-child img {
+      width: 100%;
+    }
+    ul li:first-child .title {
+      font-size: calc(1.4em + 0.390625vw);
+    } */
+    ul li img {
+      margin-bottom: 0.5rem;
+      border-radius: 12px;
+    }
+    ul li a {
+      display: block;
+    }
+    .title {
+      margin: 0;
+      color: rgba(var(--text-950), 1);
+      line-height: 1;
+      font-size: calc(1em + 0.390625vw);
+    }
+    .date {
+      margin: 0;
+      color: rgba(var(--gray-600), 1);
+    }
+    ul li a:hover h4,
+    ul li a:hover .date {
+      color: rgba(var(--primary-500), 0.8);
+    }
+    ul a:hover img {
+      box-shadow:
+        0 2px 6px rgba(var(--gray-100), 25%),
+        0 8px 24px rgba(var(--gray-100), 33%),
+        0 16px 32px rgba(var(--gray-100), 33%);
+    }
+    @media (max-width: 720px) {
+      ul {
+        gap: 0.5em;
+      }
+      ul li {
+        width: 100%;
+        text-align: center;
+      }
+      ul li:first-child {
+        margin-bottom: 0;
+      }
+      ul li:first-child .title {
+        font-size: calc(1em + 0.390625vw);
+      }
+    }
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      font-size: 13px;
+    }
+
+    .page-link {
+      padding: 5px 10px;
+      margin: 0 5px;
+      background-color: rgba(var(--accent-600), 0.5);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .page-link:hover {
+      opacity: 0.8;
+    }
+
+    .current-page {
+      margin: 0 10px;
+      font-weight: bold;
+      color: rgba(var(--text), 0.6);
+    }
+
+    .disabled {
+      padding: 5px 10px;
+      margin: 0 5px;
+      color: rgba(var(--black), 0.8);
+      background-color: rgba(var(--gray-300), 0.6);
+      border-radius: 5px;
+      cursor: not-allowed;
+    }
+
+    .first-page,
+    .last-page {
+      font-weight: bold;
+    }
+  </style>
+  <section id="posts-list">
+    <ul>
+      {
+        page.data.map((post) => (
+          <li>
+            <a href={`/${lang}/blog/${post.blog_slug}`}>
+              <img width={720} height={360} src={post.data.heroImage} alt="" />
+              <h4 class="title">{post.data.title}</h4>
+              <p class="date">
+                <FormattedDate date={post.data.pubDate} />
+              </p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <div class="pagination">
+      {
+        page.url.first ? (
+          <a href={page.url.first} class="page-link first-page">
+            {t("pagination.firts")}
+          </a>
+        ) : (
+          <span class="disabled">{t("pagination.firts")}</span>
+        )
+      }
+      {
+        page.url.prev ? (
+          <a href={page.url.prev} class="page-link prev-page">
+            {t("pagination.prev")}
+          </a>
+        ) : (
+          <span class="disabled">{t("pagination.prev")}</span>
+        )
+      }
+      <span class="current-page"
+        >{t("page")} {page.currentPage}/{page.lastPage}</span
+      >
+      {
+        page.url.next ? (
+          <a href={page.url.next} class="page-link next-page">
+            {t("pagination.next")}
+          </a>
+        ) : (
+          <span class="disabled">{t("pagination.next")}</span>
+        )
+      }
+      {
+        page.url.last ? (
+          <a href={page.url.last} class="page-link last-page">
+            {t("pagination.last")}
+          </a>
+        ) : (
+          <span class="disabled">{t("pagination.last")}</span>
+        )
+      }
+    </div>
+  </section>
+</Layout>

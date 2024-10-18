@@ -1,13 +1,9 @@
 ---
 import HeaderLink from "@src/components/HeaderLink.astro";
-import { SITE_TITLE } from "@src/consts";
 import Theme from "@src/components/Theme.astro";
+import { SITE_TITLE } from "@src/consts";
 
 const { lang } = Astro.props;
-
-const homeSlug = `/${lang || ""}`;
-const blogSlug = `/${lang || ""}/blog`;
-const aboutSlug = `/${lang || ""}/about`;
 ---
 
 <header>
@@ -19,8 +15,7 @@ const aboutSlug = `/${lang || ""}/about`;
         ></a>
     </h2>
     <div class="internal-links">
-      <!-- <HeaderLink href={homeSlug}>About</HeaderLink> -->
-      <HeaderLink href={blogSlug}>Blog</HeaderLink>
+      <HeaderLink href={`/${lang || ""}/blog`}>Blog</HeaderLink>
       <Theme />
     </div>
     <!-- <div class="social-links">
@@ -79,14 +74,14 @@ const aboutSlug = `/${lang || ""}/about`;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1em;
+    padding: 0px 1.2em;
     background: rgba(var(--background-300), 0.6);
-    border-radius: 100px;
+    border-radius: 150px;
     box-shadow: 0 2px 8px rgba(var(--gray-300), 0.2);
   }
   nav a {
     /* width: 100%; */
-    padding: 0.5em 1rem;
+    padding: 0.5em 0;
     color: rgba(var(--text-950), 1);
     border-bottom: 4px solid transparent;
     text-decoration: none;
@@ -99,6 +94,7 @@ const aboutSlug = `/${lang || ""}/about`;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
   }
   .social-links,
   .social-links a {
