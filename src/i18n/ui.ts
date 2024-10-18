@@ -37,6 +37,7 @@ export const ui = {
     "pagination.prev": "Previous",
     "pagination.next": "Next",
     "pagination.last": "Last",
+    "time-read": "min read",
   },
   fr: {
     "site.title": "Astro Blog",
@@ -69,5 +70,6 @@ export const ui = {
     "pagination.prev": "Précédent",
     "pagination.next": "Suivant",
     "pagination.last": "Dernier",
+    "time-read": "min de lecture",
   },
 } as const;

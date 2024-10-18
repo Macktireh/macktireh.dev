@@ -2,11 +2,32 @@
 import type { CollectionEntry } from "astro:content";
 import FormattedDate from "@src/components/FormattedDate.astro";
 import Layout from "@src/layouts/Layout.astro";
+import { useTranslations, type LangType } from "@src/i18n/utils";
 
-type Props = CollectionEntry<"blog">["data"] & { translated?: boolean };
+type Props = CollectionEntry<"blog">["data"] & {
+  translated?: boolean;
+  content: string;
+};
 
-const { title, description, pubDate, updatedDate, heroImage, lang, translated } =
-  Astro.props;
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  lang,
+  translated,
+  content,
+} = Astro.props;
+
+const t = useTranslations(lang as LangType);
+
+function getTimeRead(content: string) {
+  const wpm = 225;
+  const words = content.trim().split(/\s+/).length;
+  const time = Math.ceil(words / wpm);
+  return time;
+}
 ---
 
 <Layout
@@ -18,26 +39,55 @@ const { title, description, pubDate, updatedDate, heroImage, lang, translated } 
   lang={lang}
   translated={translated}
 >
-  <article>
-    <div class="hero-image">
-      {heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
-    </div>
-    <div class="prose">
-      <div class="title">
-        <div class="date">
-          <FormattedDate date={pubDate} />
-          {
-            updatedDate && (
-              <div class="last-updated-on">
-                Last updated on <FormattedDate date={updatedDate} />
-              </div>
-            )
-          }
-        </div>
-        <h2>{title}</h2>
-        <hr />
+  <main>
+    <article>
+      <div class="hero-image">
+        {heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
       </div>
-      <slot />
-    </div>
-  </article>
+      <div class="prose">
+        <div class="title">
+          <div class="meta">
+            <div class="date">
+              <FormattedDate date={pubDate} />
+              {
+                updatedDate && (
+                  <div class="last-updated-on">
+                    Last updated on <FormattedDate date={updatedDate} />
+                  </div>
+                )
+              }
+
+              <div class="time-read">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  ><path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.5"
+                    d="M2.756 16.358a1.09 1.09 0 0 0 1.154 1.198a16.576 16.576 0 0 1 3.54.338c1.635.2 3.197.794 4.552 1.731V6.448A10.16 10.16 0 0 0 7.45 4.694a16.597 16.597 0 0 0-3.605-.316a1.09 1.09 0 0 0-1.09 1.09zm18.492 0a1.089 1.089 0 0 1-1.154 1.154a16.576 16.576 0 0 0-3.54.338a10.16 10.16 0 0 0-4.552 1.775V6.448a10.16 10.16 0 0 1 4.552-1.754a16.597 16.597 0 0 1 3.605-.316a1.089 1.089 0 0 1 1.089 1.155zM5.621 8.234h1.252m-1.252 6.011h1.834M5.78 11.24h3.35"
+                  ></path></svg
+                >
+                <span class="time-read-text"
+                  >{getTimeRead(content)} {t("time-read")}</span
+                >
+              </div>
+            </div>
+            <div class="author">
+              <img src="/images/mack.jpg" alt="mack" />
+              <span>by</span>
+              <strong>Macktireh</strong>
+            </div>
+          </div>
+          <h2>{title}</h2>
+          <hr />
+        </div>
+        <slot />
+      </div>
+    </article>
+  </main>
 </Layout>
