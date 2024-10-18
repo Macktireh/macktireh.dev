@@ -18,14 +18,17 @@ export async function getStaticPaths() {
 const { lang, slug } = Astro.params;
 const page = Astro.props;
 
-console.log(page)
-
 const translated =
   (await getBlogPosts()).filter((post) => post.blog_slug === slug).length > 1;
 
 const { Content } = await page.render();
 ---
 
-<BlogPost {...page.data} content={page.body} lang={lang} translated={translated}>
+<BlogPost
+  {...page.data}
+  content={page.body}
+  lang={lang}
+  translated={translated}
+>
   <Content />
 </BlogPost>
