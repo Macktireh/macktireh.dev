@@ -32,8 +32,9 @@ export async function getBlogPosts() {
   });
 }
 
-export async function getPostsWithLang(lang: LangType) {
-  return (await getCollection("blog")).filter((blog) => {
+export async function getBlogPostsByLang(lang: LangType) {
+  return (await getCollection("blog"))
+    .filter((blog) => {
       return blog?.data?.lang === lang;
     })
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());

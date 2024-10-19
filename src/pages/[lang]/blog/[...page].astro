@@ -1,7 +1,7 @@
 ---
 import {
-  getPostsWithLang,
   getBlogPosts,
+  getBlogPostsByLang,
   type BlogType,
 } from "@src/content/config";
 import FormattedDate from "@src/components/FormattedDate.astro";
@@ -27,7 +27,7 @@ const { page } = Astro.props as { page: PageType<BlogType> };
 const t = useTranslations(lang);
 
 const isTranslated = async () => {
-  const _posts = await getPostsWithLang(lang === DEFAULT_LANG ? "fr" : "en");
+  const _posts = await getBlogPostsByLang(lang === DEFAULT_LANG ? "fr" : "en");
   const lastPage = Math.ceil(_posts.length / PAGE_SIZE);
   return lastPage >= page.currentPage;
 };
