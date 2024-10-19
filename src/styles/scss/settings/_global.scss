@@ -1,0 +1,161 @@
+// * {
+//   transition: all 0.1s ease-out;
+// }
+
+html,
+body {
+  background: color($background);
+  height: 100%;
+}
+
+body {
+  font-family: $Atkinson;
+  font-size: 1.2em;
+  // font-size: calc(1em + 0.390625vw);
+  color: color($text);
+  text-align: left;
+  background-size: 100% 600px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 720px) {
+    font-size: 1em;
+  }
+}
+
+main {
+  flex-grow: 1;
+  width: 720px;
+  max-width: calc(100% - 2em);
+  margin: auto;
+  padding: 3em 1em;
+  @media (max-width: 720px) {
+    padding: 1em;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 0.5rem 0;
+  color: color($text);
+  line-height: 1.2;
+}
+h1 {
+  font-size: 3.052em;
+}
+h2 {
+  font-size: 2.441em;
+}
+h3 {
+  font-size: 1.953em;
+}
+h4 {
+  font-size: 1.563em;
+}
+h5 {
+  font-size: 1.25em;
+}
+ul,
+ol {
+  margin-left: 0;
+  li {
+    margin-left: 2em;
+  }
+}
+strong,
+b {
+  font-weight: 700;
+}
+a {
+  color: color($primary);
+}
+a:hover {
+  color: color($primary, $alpha: 0.7);
+}
+p {
+  margin-bottom: 1em;
+}
+.prose p {
+  margin-bottom: 2em;
+}
+textarea {
+  width: 100%;
+  font-size: 16px;
+}
+input {
+  font-size: 16px;
+}
+table {
+  width: 100%;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+code {
+  padding: 2px 5px;
+  background-color: color($gray, $shade: 300, $alpha: 0.6);
+  border-radius: 3px;
+}
+pre {
+  padding: 1.5em;
+  border-radius: 8px;
+}
+pre > code {
+  all: unset;
+}
+blockquote {
+  background-color: color($background, $shade: 400, $alpha: 0.2);
+  border-radius: 8px;
+  padding: 0 0 0 20px;
+  margin: 0px;
+  font-size: 1.333em;
+  position: relative;
+}
+blockquote::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  transform: translateY(-50%);
+  background-color: color($primary, $alpha: 0.7);
+  border-radius: 8px;
+}
+hr {
+  border: none;
+  border-top: 1px solid color($gray, $shade: 400);
+  margin-bottom: 1em;
+}
+svg,
+path {
+  width: 20px;
+  height: 20px;
+  // fill: color($text, $alpha: 0.7);
+  stroke: color($text, $alpha: 0.7);
+  transition: color 0.1s ease-out;
+  // &:hover {
+  //   path {
+  //     fill: color($primary, $alpha: 0.7);
+  //     stroke: color($primary, $alpha: 0.7);
+  //   }
+  // }
+}
+
+button {
+  cursor: pointer;
+  background-color: inherit;
+}
+
+time {
+  font-size: calc(12px + 0.390625vw);
+  color: color($text, $alpha: 0.7);
+}
+

@@ -19,16 +19,5 @@ const href = getLocalizedPathname(pathname, language);
   {...props}
   style="padding: 0.5em 0.5em;"
 >
-  <!-- {language} -->
   <slot />
 </a>
-<style>
-  a {
-    display: inline-block;
-    text-decoration: none;
-  }
-  a.active {
-    font-weight: bolder;
-    /* border: none !important; */
-  }
-</style>

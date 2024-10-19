@@ -13,35 +13,42 @@ export async function getStaticPaths() {
 }
 ---
 
-<Layout title={t("site.title")} description={t("site.description")} lang={lang} translated={true}>
-  <h1>{t("home.welcome")}</h1>
-  <p>
-    {t("home.p1")}
-  </p>
-  <p>
-    {t("home.p2")}
-  </p>
-  <p>{t("home.p3")}</p>
-  <ul>
-    <li>{t("home.p3.0")} <code>src/i18n/ui.ts</code></li>
-    <li>{t("home.p3.1")} <code>src/pages/index.astro</code></li>
-    <li>{t("home.p3.2")} <code>src/pages/[lang]/...</code></li>
-    <li>
-      {t("home.p3.3")}
-      <code>src/components/Header.astro</code>
-    </li>
-    <li>
-      {t("home.p3.4")}
-      <code>src/components/Footer.astro</code>
-    </li>
-    <li>{t("home.p3.5")} <code>src/pages/blog/</code></li>
-    <li>
-      {t("home.p3.6")}
-      <code>src/layouts/Layout.astro</code>
-    </li>
-    <li>
-      {t("home.p3.7")}
-      <code>src/layouts/BlogPost.astro</code>
-    </li>
-  </ul>
+<Layout
+  title={t("site.title")}
+  description={t("site.description")}
+  lang={lang}
+  translated={true}
+>
+  <main>
+    <h1>{t("home.welcome")}</h1>
+    <p>
+      {t("home.p1")}
+    </p>
+    <p>
+      {t("home.p2")}
+    </p>
+    <p>{t("home.p3")}</p>
+    <ul>
+      <li>{t("home.p3.0")} <code>src/i18n/ui.ts</code></li>
+      <li>{t("home.p3.1")} <code>src/pages/index.astro</code></li>
+      <li>{t("home.p3.2")} <code>src/pages/[lang]/...</code></li>
+      <li>
+        {t("home.p3.3")}
+        <code>src/components/Header.astro</code>
+      </li>
+      <li>
+        {t("home.p3.4")}
+        <code>src/components/Footer.astro</code>
+      </li>
+      <li>{t("home.p3.5")} <code>src/pages/blog/</code></li>
+      <li>
+        {t("home.p3.6")}
+        <code>src/layouts/Layout.astro</code>
+      </li>
+      <li>
+        {t("home.p3.7")}
+        <code>src/layouts/BlogPost.astro</code>
+      </li>
+    </ul>
+  </main>
 </Layout>

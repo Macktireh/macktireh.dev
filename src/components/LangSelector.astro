@@ -1,0 +1,15 @@
+---
+import LangLink from "@src/components/LangLink.astro";
+
+const { lang } = Astro.props;
+---
+
+<div class="lang-links">
+  <LangLink language="fr" isActive={lang == "fr"}
+    ><img src="/images/fr.png" width="18" height="18" /></LangLink
+  >
+  <span>/</span>
+  <LangLink language="en" isActive={lang == "en"}
+    ><img src="/images/en.png" width="18" height="18" /></LangLink
+  >
+</div>

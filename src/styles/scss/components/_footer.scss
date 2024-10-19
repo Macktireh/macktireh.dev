@@ -1,0 +1,15 @@
+footer {
+  background: color($background, $shade: 300, $alpha: 0.2);
+  text-align: center;
+  padding: 2em;
+}
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  margin-top: 1em;
+}
+.social-links a {
+  text-decoration: none;
+  color: color($text);
+}

@@ -1,0 +1,193 @@
+$text: "text";
+$background: "background";
+$primary: "primary";
+$secondary: "secondary";
+$accent: "accent";
+$white: "white";
+$black: "black";
+$gray: "gray";
+
+$themes: (
+  light: (
+    #{$text}: rgb(4, 3, 22),
+    #{$text}-50: rgb(234, 233, 252),
+    #{$text}-100: rgb(212, 210, 249),
+    #{$text}-200: rgb(169, 165, 243),
+    #{$text}-300: rgb(126, 120, 237),
+    #{$text}-400: rgb(83, 75, 231),
+    #{$text}-500: rgb(40, 31, 224),
+    #{$text}-600: rgb(32, 24, 180),
+    #{$text}-700: rgb(24, 18, 135),
+    #{$text}-800: rgb(16, 12, 90),
+    #{$text}-900: rgb(8, 6, 45),
+    #{$text}-950: rgb(4, 3, 22),
+
+    #{$background}: rgb(198, 198, 215),
+    #{$background}-50: rgb(240, 240, 245),
+    #{$background}-100: rgb(225, 225, 234),
+    #{$background}-200: rgb(195, 195, 213),
+    #{$background}-300: rgb(165, 165, 192),
+    #{$background}-400: rgb(135, 135, 171),
+    #{$background}-500: rgb(105, 105, 150),
+    #{$background}-600: rgb(84, 84, 120),
+    #{$background}-700: rgb(63, 63, 90),
+    #{$background}-800: rgb(42, 42, 60),
+    #{$background}-900: rgb(21, 21, 30),
+    #{$background}-950: rgb(10, 10, 15),
+
+    #{$primary}: rgb(47, 39, 206),
+    #{$primary}-50: rgb(234, 234, 251),
+    #{$primary}-100: rgb(214, 212, 247),
+    #{$primary}-200: rgb(173, 169, 239),
+    #{$primary}-300: rgb(132, 126, 231),
+    #{$primary}-400: rgb(91, 84, 222),
+    #{$primary}-500: rgb(49, 41, 214),
+    #{$primary}-600: rgb(40, 33, 171),
+    #{$primary}-700: rgb(30, 24, 129),
+    #{$primary}-800: rgb(20, 16, 86),
+    #{$primary}-900: rgb(10, 8, 43),
+    #{$primary}-950: rgb(5, 4, 21),
+
+    #{$secondary}: rgb(221, 219, 255),
+    #{$secondary}-50: rgb(231, 229, 255),
+    #{$secondary}-100: rgb(207, 204, 255),
+    #{$secondary}-200: rgb(158, 153, 255),
+    #{$secondary}-300: rgb(110, 102, 255),
+    #{$secondary}-400: rgb(61, 51, 255),
+    #{$secondary}-500: rgb(13, 0, 255),
+    #{$secondary}-600: rgb(10, 0, 204),
+    #{$secondary}-700: rgb(8, 0, 153),
+    #{$secondary}-800: rgb(5, 0, 102),
+    #{$secondary}-900: rgb(3, 0, 51),
+    #{$secondary}-950: rgb(1, 0, 26),
+
+    #{$accent}: rgb(68, 61, 255),
+    #{$accent}-50: rgb(230, 229, 255),
+    #{$accent}-100: rgb(206, 204, 255),
+    #{$accent}-200: rgb(156, 153, 255),
+    #{$accent}-300: rgb(107, 102, 255),
+    #{$accent}-400: rgb(58, 51, 255),
+    #{$accent}-500: rgb(8, 0, 255),
+    #{$accent}-600: rgb(7, 0, 204),
+    #{$accent}-700: rgb(5, 0, 153),
+    #{$accent}-800: rgb(3, 0, 102),
+    #{$accent}-900: rgb(2, 0, 51),
+    #{$accent}-950: rgb(1, 0, 26),
+
+    #{$gray}-50: rgb(242, 242, 242),
+    #{$gray}-100: rgb(230, 230, 230),
+    #{$gray}-200: rgb(204, 204, 204),
+    #{$gray}-300: rgb(179, 179, 179),
+    #{$gray}-400: rgb(153, 153, 153),
+    #{$gray}-500: rgb(128, 128, 128),
+    #{$gray}-600: rgb(102, 102, 102),
+    #{$gray}-700: rgb(77, 77, 77),
+    #{$gray}-800: rgb(51, 51, 51),
+    #{$gray}-900: rgb(26, 26, 26),
+    #{$gray}-950: rgb(13, 13, 13),
+
+    #{$black}: rgb(0, 0, 0),
+    #{$white}: rgb(255, 255, 255),
+  ),
+  dark: (
+    #{$text}: rgb(234, 233, 252),
+    #{$text}-50: rgb(4, 3, 22),
+    #{$text}-100: rgb(8, 6, 45),
+    #{$text}-200: rgb(16, 12, 90),
+    #{$text}-300: rgb(24, 18, 135),
+    #{$text}-400: rgb(32, 24, 180),
+    #{$text}-500: rgb(40, 31, 224),
+    #{$text}-600: rgb(83, 75, 231),
+    #{$text}-700: rgb(126, 120, 237),
+    #{$text}-800: rgb(169, 165, 243),
+    #{$text}-900: rgb(212, 210, 249),
+    #{$text}-950: rgb(234, 233, 252),
+
+    #{$background}: rgb(21, 21, 35),
+    #{$background}-50: rgb(10, 10, 15),
+    #{$background}-100: rgb(21, 21, 30),
+    #{$background}-200: rgb(42, 42, 60),
+    #{$background}-300: rgb(63, 63, 90),
+    #{$background}-400: rgb(84, 84, 120),
+    #{$background}-500: rgb(105, 105, 150),
+    #{$background}-600: rgb(135, 135, 171),
+    #{$background}-700: rgb(165, 165, 192),
+    #{$background}-800: rgb(195, 195, 213),
+    #{$background}-900: rgb(225, 225, 234),
+    #{$background}-950: rgb(240, 240, 245),
+
+    #{$primary}: rgb(58, 49, 216),
+    #{$primary}-50: rgb(5, 4, 21),
+    #{$primary}-100: rgb(10, 8, 43),
+    #{$primary}-200: rgb(20, 16, 86),
+    #{$primary}-300: rgb(30, 24, 129),
+    #{$primary}-400: rgb(40, 33, 171),
+    #{$primary}-500: rgb(49, 41, 214),
+    #{$primary}-600: rgb(91, 84, 222),
+    #{$primary}-700: rgb(132, 126, 231),
+    #{$primary}-800: rgb(173, 169, 239),
+    #{$primary}-900: rgb(214, 212, 247),
+    #{$primary}-950: rgb(234, 234, 251),
+
+    #{$secondary}: rgb(2, 0, 36),
+    #{$secondary}-50: rgb(1, 0, 26),
+    #{$secondary}-100: rgb(3, 0, 51),
+    #{$secondary}-200: rgb(5, 0, 102),
+    #{$secondary}-300: rgb(8, 0, 153),
+    #{$secondary}-400: rgb(10, 0, 204),
+    #{$secondary}-500: rgb(13, 0, 255),
+    #{$secondary}-600: rgb(61, 51, 255),
+    #{$secondary}-700: rgb(110, 102, 255),
+    #{$secondary}-800: rgb(158, 153, 255),
+    #{$secondary}-900: rgb(207, 204, 255),
+    #{$secondary}-950: rgb(231, 229, 255),
+
+    #{$accent}: rgb(6, 0, 194),
+    #{$accent}-50: rgb(1, 0, 26),
+    #{$accent}-100: rgb(2, 0, 51),
+    #{$accent}-200: rgb(3, 0, 102),
+    #{$accent}-300: rgb(5, 0, 153),
+    #{$accent}-400: rgb(7, 0, 204),
+    #{$accent}-500: rgb(8, 0, 255),
+    #{$accent}-600: rgb(58, 51, 255),
+    #{$accent}-700: rgb(107, 102, 255),
+    #{$accent}-800: rgb(156, 153, 255),
+    #{$accent}-900: rgb(206, 204, 255),
+    #{$accent}-950: rgb(230, 229, 255),
+
+    #{$gray}-50: rgb(13, 13, 13),
+    #{$gray}-100: rgb(26, 26, 26),
+    #{$gray}-200: rgb(51, 51, 51),
+    #{$gray}-300: rgb(77, 77, 77),
+    #{$gray}-400: rgb(102, 102, 102),
+    #{$gray}-500: rgb(128, 128, 128),
+    #{$gray}-600: rgb(153, 153, 153),
+    #{$gray}-700: rgb(179, 179, 179),
+    #{$gray}-800: rgb(204, 204, 204),
+    #{$gray}-900: rgb(230, 230, 230),
+    #{$gray}-950: rgb(242, 242, 242),
+
+    #{$black}: rgb(0, 0, 0),
+    #{$white}: rgb(255, 255, 255),
+  ),
+);
+
+
+$light: "light";
+$dark: "dark";
+$theme: $light;
+
+// Set custom CSS variables for each theme
+:root[data-theme="#{$theme}"] {
+  @each $name, $color in map-get($map: $themes, $key: $theme) {
+    --color-#{$name}: #{extract-rgb($color)};
+  }
+}
+
+[data-theme="#{get-opposite-theme($theme)}"] {
+  @each $name,
+    $color in map-get($map: $themes, $key: #{get-opposite-theme($theme)})
+  {
+    --color-#{$name}: #{extract-rgb($color)};
+  }
+}
