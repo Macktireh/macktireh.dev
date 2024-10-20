@@ -103,9 +103,15 @@ code {
   background-color: color($gray, $shade: 300, $alpha: 0.6);
   border-radius: 3px;
 }
+
+figure > figcaption {
+  background: color($dracula) !important;
+}
 pre {
   padding: 1.5em;
   border-radius: 8px;
+  background-color: color($dracula) !important;
+  border: 1px solid color($gray, $shade: 400, $alpha: 0.3) !important;
 }
 pre > code {
   all: unset;

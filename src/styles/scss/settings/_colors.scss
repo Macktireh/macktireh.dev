@@ -6,6 +6,7 @@ $accent: "accent";
 $white: "white";
 $black: "black";
 $gray: "gray";
+$dracula: "dracula";
 
 $themes: (
   light: (
@@ -88,6 +89,7 @@ $themes: (
 
     #{$black}: rgb(0, 0, 0),
     #{$white}: rgb(255, 255, 255),
+    #{$dracula}: #0c0a20,
   ),
   dark: (
     #{$text}: rgb(234, 233, 252),
@@ -169,6 +171,7 @@ $themes: (
 
     #{$black}: rgb(0, 0, 0),
     #{$white}: rgb(255, 255, 255),
+    #{$dracula}: #0c0a20,
   ),
 );
 

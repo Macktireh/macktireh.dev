@@ -1,0 +1,75 @@
+.file-tree-container {
+  width: 100%;
+  background-color: color($dracula);
+  padding: 1em 0;
+  padding-right: 3em;
+  font-size: 14px;
+  color: color($white);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 6px;
+  margin: 1em 0;
+  box-shadow: 0.1rem 0.1rem 0.2rem color($black, $alpha: 0.5);
+  border: 1px solid color($gray, $shade: 400, $alpha: 0.3) !important;
+  overflow-x: auto;
+
+  li {
+    margin-left: 20px;
+    list-style: none;
+  }
+
+  .file-tree-list {
+    margin-left: 0;
+  }
+
+  // Shared styles for file and folder items
+  .tree-item-file,
+  .tree-item-folder > .folder {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2px;
+    gap: 2px; // Standardize gap
+    // cursor: pointer;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+
+    span {
+      margin-left: 4px;
+    }
+  }
+
+  // Folder-specific styles
+  .tree-item-folder {
+    .folder {
+      cursor: pointer;
+    }
+  }
+
+  // Children list styles
+  .tree-item-children {
+    margin-left: 9px;
+    padding-left: 6px;
+    border-left: 1px dotted color($gray, $shade: 400, $alpha: 0.6);
+
+    &.tree-item-children-hidden {
+      display: none;
+    }
+  }
+
+  // Arrow rotation for closed folders
+  .tree-item-folder-closed {
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
