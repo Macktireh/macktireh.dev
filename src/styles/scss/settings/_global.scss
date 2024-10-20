@@ -106,10 +106,6 @@ code {
 
 figure > figcaption {
   background: color($dracula) !important;
-  span.title {
-    background: color($dracula) !important;
-    border: 1px solid color($gray, $shade: 400, $alpha: 0.3) !important;
-  }
 }
 pre {
   padding: 1.5em;
