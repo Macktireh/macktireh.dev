@@ -17,7 +17,6 @@ export default defineConfig({
   },
   integrations: [
     expressiveCode({
-      // Example: Change the theme to "dracula"
       theme: "dracula",
     }),
     mdx(),

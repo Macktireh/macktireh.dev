@@ -1,0 +1,17 @@
+---
+import { getFileIconUri } from "@src/helpers/materialIcons";
+
+type Props = {
+  name: string;
+  ext: string;
+};
+
+const { name, ext } = Astro.props;
+
+const fileIconUri = getFileIconUri(ext);
+---
+
+<li class="tree-item-file">
+  <img src={fileIconUri} alt={name} />
+  <span>{name}{ext}</span>
+</li>

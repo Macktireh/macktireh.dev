@@ -1,0 +1,88 @@
+---
+import { getFolderIconUrl } from "@src/helpers/materialIcons";
+import Icon from "@src/components/Icon.astro";
+
+type Props = {
+  name: string;
+  icon?: string;
+  isOpen?: boolean;
+  prefix?: string;
+};
+
+const { name, icon = "default", isOpen = false, prefix } = Astro.props;
+
+const folderIconOpenUri = getFolderIconUrl(icon, true);
+const folderIconClosedUri = getFolderIconUrl(icon, false);
+const currentIconUri = getFolderIconUrl(icon, isOpen);
+---
+
+<li
+  class={`tree-item-folder ${!isOpen ? "tree-item-folder-closed" : ""}`}
+  folder-name={name.replace(".", "")}
+>
+  <div
+    class={`folder folder-${name.replace(".", "")}`}
+    folder-icon-open={folderIconOpenUri}
+    folder-icon-closed={folderIconClosedUri}
+  >
+    <Icon name="arrow" />
+    <img src={currentIconUri} />
+    <span>{prefix && prefix}{name}</span>
+  </div>
+  {
+    Astro.slots.has("default") && (
+      <ul
+        class={`tree-item-children tree-item-children-${name.replace(".", "")} ${!isOpen ? "tree-item-children-hidden" : ""}`}
+      >
+        <slot />
+      </ul>
+    )
+  }
+</li>
+
+<script>
+  const toggleFolderVisibility = (
+    itemFolder,
+    children,
+    img,
+    openIcon,
+    closedIcon
+  ) => {
+    if (children) {
+      children.classList.toggle("tree-item-children-hidden");
+    }
+
+    const isClosed = itemFolder.classList.contains("tree-item-folder-closed");
+
+    itemFolder.classList.toggle("tree-item-folder-closed", !isClosed);
+    img.setAttribute("src", isClosed ? openIcon : closedIcon);
+  };
+
+  function initFolderTreeItem() {
+    const itemFolders = document.querySelectorAll(".tree-item-folder");
+    itemFolders.forEach((itemFolder) => {
+      const name = itemFolder.getAttribute("folder-name");
+      const folder = itemFolder.querySelector(`.folder-${name}`);
+      const children = itemFolder.querySelector(`.tree-item-children-${name}`);
+      const img = folder?.querySelector("img");
+
+      if (folder && img) {
+        const openIcon = folder.getAttribute("folder-icon-open");
+        const closedIcon = folder.getAttribute("folder-icon-closed");
+
+        folder.addEventListener("click", () =>
+          toggleFolderVisibility(
+            itemFolder,
+            children,
+            img,
+            openIcon,
+            closedIcon
+          )
+        );
+      }
+    });
+  }
+  
+  initFolderTreeItem();
+  document.addEventListener("astro:after-swap", initFolderTreeItem);
+</script>

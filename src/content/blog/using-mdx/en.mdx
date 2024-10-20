@@ -7,13 +7,50 @@ author: "Me"
 lang: "en"
 ---
 
-```js
+import FileTree from "@src/components/FileTree.astro";
+import FileItem from "@src/components/FileItem.astro";
+import FolderItem from "@src/components/FolderItem.astro";
+
+```js title="my-test-file.js"
 console.log("Hello, World!");
 ```
 
 This theme comes with the [@astrojs/mdx](https://docs.astro.build/en/guides/integrations-guide/mdx/) integration installed and configured in your `astro.config.mjs` config file. If you prefer not to use MDX, you can disable support by removing the integration from your config file.
 
 ## Why MDX?
+
+```js
+console.log("Hello, World!");
+```
+
+<FileTree>
+  <FolderItem name="layouts" icon="layouts" />
+  <FolderItem name=".vscode" icon="vscode">
+    <FileItem name="settings" ext=".json" />
+  </FolderItem>
+  <FolderItem name="src" icon="src" isOpen={true}>
+    <FolderItem name="app" icon="app" isOpen={true}>
+      <FolderItem name="components" icon="components" isOpen={true}>
+        <FileItem name="Header" ext=".tsx" />
+        <FileItem name="Footer" ext=".astro" />
+      </FolderItem>
+      <FolderItem name="views" icon="views" isOpen={true}>
+        <FileItem name="Header" ext=".tsx" />
+        <FolderItem name="components" icon="components" isOpen={true}>
+          <FileItem name="Header" ext=".tsx" />
+          <FileItem name="Footer" ext=".astro" />
+        </FolderItem>
+        <FileItem name="Footer" ext=".astro" />
+      </FolderItem>
+      <FolderItem name="api" icon="api" isOpen={true}>
+        <FileItem name="users" ext=".py" />
+        <FileItem name="tasks" ext=".py" />
+      </FolderItem>
+      <FolderItem name="services" icon="services" />
+      <FileItem name="index" ext=".html" />
+    </FolderItem>
+  </FolderItem>
+</FileTree>
 
 MDX is a special flavor of Markdown that supports embedded JavaScript & JSX syntax. This unlocks the ability to [mix JavaScript and UI Components into your Markdown content](https://docs.astro.build/en/guides/markdown-content/#mdx-features) for things like interactive charts or alerts.
 
