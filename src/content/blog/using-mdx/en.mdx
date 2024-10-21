@@ -43,10 +43,50 @@ console.log("Hello, World!");
         <FileItem name="Footer" ext=".astro" />
       </FolderItem>
       <FolderItem name="api" icon="api" isOpen={true}>
+      <FolderItem name="functions" icon="functions" isOpen={true}>
+        <FolderItem name="components" icon="components" isOpen={true}>
+          <FileItem name="Header" ext=".tsx" />
+          <FileItem name="Footer" ext=".astro" />
+        </FolderItem>
+        <FolderItem name="views" icon="views" isOpen={true}>
+          <FileItem name="Header" ext=".tsx" />
+          <FolderItem name="components" icon="components" isOpen={true}>
+            <FileItem name="Header" ext=".tsx" />
+            <FileItem name="Footer" ext=".astro" />
+          </FolderItem>
+          <FileItem name="Footer" ext=".astro" />
+        </FolderItem>
+        <FolderItem name="api" icon="api" isOpen={true}>
+          <FileItem name="users" ext=".py" />
+          <FileItem name="tasks" ext=".py" />
+        </FolderItem>
+        <FolderItem name="services" icon="services" />
+        <FileItem name="index" ext=".html" />
+      </FolderItem>
         <FileItem name="users" ext=".py" />
         <FileItem name="tasks" ext=".py" />
       </FolderItem>
       <FolderItem name="services" icon="services" />
+      <FolderItem name="libs" icon="lib" isOpen={true}>
+        <FolderItem name="components" icon="components" isOpen={true}>
+          <FileItem name="Header" ext=".tsx" />
+          <FileItem name="Footer" ext=".astro" />
+        </FolderItem>
+        <FolderItem name="views" icon="views" isOpen={true}>
+          <FileItem name="Header" ext=".tsx" />
+          <FolderItem name="components" icon="components" isOpen={true}>
+            <FileItem name="Header" ext=".tsx" />
+            <FileItem name="Footer" ext=".astro" />
+          </FolderItem>
+          <FileItem name="Footer" ext=".astro" />
+        </FolderItem>
+        <FolderItem name="api" icon="api" isOpen={true}>
+          <FileItem name="users" ext=".py" />
+          <FileItem name="tasks" ext=".py" />
+        </FolderItem>
+        <FolderItem name="services" icon="services" />
+        <FileItem name="index" ext=".html" />
+      </FolderItem>
       <FileItem name="index" ext=".html" />
     </FolderItem>
   </FolderItem>
