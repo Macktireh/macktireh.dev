@@ -1,9 +1,8 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
-
 import sitemap from "@astrojs/sitemap";
-
 import expressiveCode from "astro-expressive-code";
+import { pluginLanguageBadge } from "./plugins/expressiveCode";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,6 +17,7 @@ export default defineConfig({
   integrations: [
     expressiveCode({
       theme: "dracula",
+      plugins: [pluginLanguageBadge()],
     }),
     mdx(),
     sitemap(),
