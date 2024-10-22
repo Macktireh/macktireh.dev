@@ -11,8 +11,18 @@ import FileTree from "@src/components/FileTree.astro";
 import FileItem from "@src/components/FileItem.astro";
 import FolderItem from "@src/components/FolderItem.astro";
 
-```js title="my-test-file.js"
-console.log("Hello, World!");
+```shell frame="terminal" title="Terminal"
+pip install -r requirements.txt
+```
+<br />
+```astro title="index.astro" icon="/icons/js.svg"
+---
+import SomeAstroComponent from '../components/SomeAstroComponent.astro';
+
+const { title } = Astro.props;
+const data = await fetch('SOME_SECRET_API_URL/users').then(r => r.json());
+---
+<!-- Your template here! -->
 ```
 
 This theme comes with the [@astrojs/mdx](https://docs.astro.build/en/guides/integrations-guide/mdx/) integration installed and configured in your `astro.config.mjs` config file. If you prefer not to use MDX, you can disable support by removing the integration from your config file.
