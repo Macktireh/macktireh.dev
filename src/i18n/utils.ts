@@ -13,7 +13,7 @@ export type LangType = keyof typeof LANGUAGES;
 
 export function getLangFromUrl(url: URL) {
   const [, lang] = url.pathname.split("/");
-  if (lang in LOCALES) return lang as LangType;
+  if (LOCALES.includes(lang as LangType)) return lang as LangType;
   return DEFAULT_LANG;
 }
 
