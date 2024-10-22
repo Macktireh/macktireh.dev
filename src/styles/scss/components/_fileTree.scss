@@ -55,15 +55,20 @@
     margin-left: 9px;
     padding-left: 6px;
     border-left: 1px dotted color($gray, $shade: 400, $alpha: 0.6);
+    transition: max-height 0.5s ease-in-out;
+    max-height: 2000px;
+    overflow: hidden;
 
     &.tree-item-children-hidden {
-      display: none;
+      max-height: 0;
+      transition: max-height 0.1s ease-in-out;
     }
   }
 
   // Arrow rotation for closed folders
   .tree-item-folder-closed {
     svg {
+      transition: all 0.1s ease-in-out;
       transform: rotate(-90deg);
     }
   }
