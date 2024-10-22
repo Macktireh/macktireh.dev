@@ -1,6 +1,6 @@
 ---
 type Props = {
-  name: "arrow" | "dark" | "github" | "light" | "linkedin" | "read" | "twitter";
+  name: "arrow" | "collapse" | "dark" | "github" | "light" | "linkedin" | "read" | "twitter";
   size?: number;
   className?: string;
 };
@@ -19,6 +19,12 @@ const icon = {
       <g id="feArrowDown1" fill="currentColor">
         <path id="feArrowDown2" d="m6 7l6 6l6-6l2 2l-8 8l-8-8z"></path>
       </g>
+    </g>
+  `,
+  collapse: `
+    <g fill="currentColor">
+      <path d="M9 9H4v1h5V9z"/>
+      <path fill-rule="evenodd" d="m5 3l1-1h7l1 1v7l-1 1h-2v2l-1 1H3l-1-1V6l1-1h2V3zm1 2h4l1 1v4h2V3H6v2zm4 1H3v7h7V6z" clip-rule="evenodd"/>
     </g>
   `,
   dark: `

@@ -1,8 +1,74 @@
 ---
+import Icon from "@src/components/Icon.astro";
+
+// Utiliser un identifiant unique pour chaque instance de l'arbre de fichiers
+const id = Math.random().toString(36).substring(2, 12);
 ---
 
-<div class="file-tree-container">
+<div class="file-tree-container" id={`file-tree-container-${id}`}>
+  <button
+    class="collapse-all"
+    title="Collapse all"
+    aria-label="Collapse all"
+    data-id={id}
+  >
+    <Icon name="collapse" />
+  </button>
   <ul class="file-tree-list">
     <slot />
   </ul>
 </div>
+
+<script>
+  // Initialisation de l'événement de collapse pour chaque bouton
+  function initEventCollapseAll() {
+    document.querySelectorAll(".collapse-all").forEach((collapseAllButton) => {
+      collapseAllButton?.addEventListener("click", handleCollapse);
+    });
+  }
+
+  // Gestionnaire pour le collapse de tous les dossiers dans un arbre de fichiers
+  function handleCollapse(e) {
+    const id = e.currentTarget.getAttribute("data-id");
+    const container = document.getElementById(`file-tree-container-${id}`);
+    
+    if (!container) return;
+
+    collapseAllFolders(container);
+  }
+
+  // Fonction pour tout fermer (folders et children)
+  function collapseAllFolders(container) {
+    container.querySelectorAll(".tree-item-folder").forEach((itemFolder) => {
+      closeFolder(itemFolder);
+    });
+
+    container.querySelectorAll(".tree-item-children").forEach((children) => {
+      children.classList.add("tree-item-children-hidden");
+    });
+  }
+
+  // Fermer un dossier spécifique et changer l'icône
+  function closeFolder(itemFolder) {
+    const folders = itemFolder.querySelectorAll(".folder");
+    folders.forEach((folder) => {
+      updateFolderIcon(folder, "closed");
+    });
+    itemFolder.classList.add("tree-item-folder-closed");
+  }
+
+  // Mettre à jour l'icône d'un dossier en fonction de son état
+  function updateFolderIcon(folder, state) {
+    const img = folder.querySelector("img");
+    const icon = folder.getAttribute(state === "closed" ? "folder-icon-closed" : "folder-icon-open");
+    if (img && icon) {
+      img.setAttribute("src", icon);
+    }
+  }
+
+  // Initialisation des événements
+  initEventCollapseAll();
+
+  // Réinitialiser l'événement après chaque échange d'Astro (par exemple, navigation de page)
+  document.addEventListener("astro:after-swap", initEventCollapseAll);
+</script>

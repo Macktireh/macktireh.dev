@@ -13,6 +13,30 @@
   box-shadow: 0.1rem 0.1rem 0.2rem color($black, $alpha: 0.5);
   border: 1px solid color($gray, $shade: 400, $alpha: 0.3) !important;
   overflow-x: auto;
+  position: relative;
+
+  button {
+    position: absolute;
+    top: 12px;
+    right: 6px;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    opacity: 0;
+    transition: opacity 0.1s ease-in;
+    svg {
+      width: 24px;
+      height: 24px;
+      path {
+        // fill: color($white);
+        stroke: color($white, $alpha: 0.4);
+      }
+    }
+  }
+  &:hover button {
+    opacity: 1;
+  }
 
   li {
     margin-left: 20px;
@@ -54,7 +78,7 @@
   .tree-item-children {
     margin-left: 9px;
     padding-left: 6px;
-    border-left: 1px dotted color($gray, $shade: 400, $alpha: 0.6);
+    border-left: 1px dotted color($gray, $shade: 400, $alpha: 0.4);
     transition: max-height 0.5s ease-in-out;
     max-height: 2000px;
     overflow: hidden;
