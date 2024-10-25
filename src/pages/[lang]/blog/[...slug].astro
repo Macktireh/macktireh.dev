@@ -32,3 +32,38 @@ const { Content } = await page.render();
 >
   <Content />
 </BlogPost>
+<script>
+  initializeCopyButtonVisibility();
+  document.addEventListener("astro:after-swap", initializeCopyButtonVisibility);
+
+  function initializeCopyButtonVisibility() {
+    const mediaQuery = window.matchMedia("(max-width: 720px)");
+    if (!hideCopyButtonOnMobile()) {
+      updateCopyButtonVisibility(mediaQuery);
+      mediaQuery.addEventListener("change", () =>
+        updateCopyButtonVisibility(mediaQuery)
+      );
+    }
+  }
+
+  function updateCopyButtonVisibility(mediaQuery) {
+    toggleCopyButtonDisplay(mediaQuery.matches ? "none" : "flex");
+  }
+
+  function hideCopyButtonOnMobile() {
+    const isMobileDevice =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+    if (isMobileDevice) {
+      toggleCopyButtonDisplay("none");
+    }
+    return isMobileDevice;
+  }
+
+  function toggleCopyButtonDisplay(displayStyle) {
+    document.querySelectorAll(".copy").forEach((button: HTMLElement) => {
+      button.style.display = displayStyle;
+    });
+  }
+</script>
