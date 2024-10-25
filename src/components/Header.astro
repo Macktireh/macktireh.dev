@@ -1,7 +1,7 @@
 ---
-import HeaderLink from "@src/components/HeaderLink.astro";
-import Theme from "@src/components/Theme.astro";
 import { SITE_TITLE } from "@src/consts";
+import Link from "@src/components/Link.astro";
+import Theme from "@src/components/Theme.astro";
 
 const { lang } = Astro.props;
 ---
@@ -16,7 +16,7 @@ const { lang } = Astro.props;
       >
     </h2>
     <div class="internal-links">
-      <HeaderLink href={`/${lang || ""}/blog`}>Blog</HeaderLink>
+      <Link href="/blog" lang={lang}>Blog</Link>
       <Theme />
     </div>
   </nav>

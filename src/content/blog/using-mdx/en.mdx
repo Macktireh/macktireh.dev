@@ -10,14 +10,23 @@ lang: "en"
 import FileTree from "@src/components/FileTree.astro";
 import FileItem from "@src/components/FileItem.astro";
 import FolderItem from "@src/components/FolderItem.astro";
+import Link from "@src/components/Link.astro";
 
 ```shell frame="terminal" title="Terminal"
 pip install -r requirements.txt
 ```
 <br />
+```powerquery testa="testAA"
+let  
+    AddOne = (x as number) as number => x + 1,  
+    //additional expression steps  
+    CalcAddOne = AddOne(5)  
+in  
+    CalcAddOne
+```
+<br />
 ```astro title="index.astro" icon="/icons/js.svg"
 ---
-import SomeAstroComponent from '../components/SomeAstroComponent.astro';
 
 const { title } = Astro.props;
 const data = await fetch('SOME_SECRET_API_URL/users').then(r => r.json());
@@ -34,39 +43,38 @@ console.log("Hello, World!");
 ```
 
 <FileTree>
-  <FolderItem name="layouts" icon="layouts" />
-  <FolderItem name=".vscode" icon="vscode">
+  <FolderItem name=".vscode" icon="vscode" isOpen={true}>
     <FileItem name="settings" ext=".json" />
   </FolderItem>
   <FolderItem name="src" icon="src" isOpen={true}>
     <FolderItem name="app" icon="app" isOpen={true}>
-      <FolderItem name="components" icon="components" isOpen={true}>
+      <FolderItem name="components" icon="components">
         <FileItem name="Header" ext=".tsx" />
         <FileItem name="Footer" ext=".astro" />
       </FolderItem>
-      <FolderItem name="views" icon="views" isOpen={true}>
+      <FolderItem name="views" icon="views">
         <FileItem name="Header" ext=".tsx" />
-        <FolderItem name="components" icon="components" isOpen={true}>
+        <FolderItem name="components" icon="components">
           <FileItem name="Header" ext=".tsx" />
           <FileItem name="Footer" ext=".astro" />
         </FolderItem>
         <FileItem name="Footer" ext=".astro" />
       </FolderItem>
-      <FolderItem name="api" icon="api" isOpen={true}>
-      <FolderItem name="functions" icon="functions" isOpen={true}>
-        <FolderItem name="components" icon="components" isOpen={true}>
+      <FolderItem name="api" icon="api">
+      <FolderItem name="functions" icon="functions">
+        <FolderItem name="components" icon="components">
           <FileItem name="Header" ext=".tsx" />
           <FileItem name="Footer" ext=".astro" />
         </FolderItem>
-        <FolderItem name="views" icon="views" isOpen={true}>
+        <FolderItem name="views" icon="views">
           <FileItem name="Header" ext=".tsx" />
-          <FolderItem name="components" icon="components" isOpen={true}>
+          <FolderItem name="components" icon="components">
             <FileItem name="Header" ext=".tsx" />
             <FileItem name="Footer" ext=".astro" />
           </FolderItem>
           <FileItem name="Footer" ext=".astro" />
         </FolderItem>
-        <FolderItem name="api" icon="api" isOpen={true}>
+        <FolderItem name="api" icon="api">
           <FileItem name="users" ext=".py" />
           <FileItem name="tasks" ext=".py" />
         </FolderItem>
@@ -77,30 +85,37 @@ console.log("Hello, World!");
         <FileItem name="tasks" ext=".py" />
       </FolderItem>
       <FolderItem name="services" icon="services" />
-      <FolderItem name="libs" icon="lib" isOpen={true}>
-        <FolderItem name="components" icon="components" isOpen={true}>
-          <FileItem name="Header" ext=".tsx" />
-          <FileItem name="Footer" ext=".astro" />
-        </FolderItem>
-        <FolderItem name="views" icon="views" isOpen={true}>
-          <FileItem name="Header" ext=".tsx" />
-          <FolderItem name="components" icon="components" isOpen={true}>
-            <FileItem name="Header" ext=".tsx" />
-            <FileItem name="Footer" ext=".astro" />
-          </FolderItem>
-          <FileItem name="Footer" ext=".astro" />
-        </FolderItem>
-        <FolderItem name="api" icon="api" isOpen={true}>
-          <FileItem name="users" ext=".py" />
-          <FileItem name="tasks" ext=".py" />
-        </FolderItem>
-        <FolderItem name="services" icon="services" />
-        <FileItem name="index" ext=".html" />
-      </FolderItem>
-      <FileItem name="index" ext=".html" />
     </FolderItem>
+    <FolderItem name="layouts" icon="layouts" />
+    <FolderItem name="libs" icon="lib">
+      <FolderItem name="components" icon="components">
+        <FileItem name="Header" ext=".tsx" />
+        <FileItem name="Footer" ext=".astro" />
+      </FolderItem>
+      <FolderItem name="services" icon="services" />
+      <FileItem name="index" ext=".ts" />
+    </FolderItem>
+    <FolderItem name="public" icon="public" />
   </FolderItem>
+  <FileItem name="package" ext=".json" />
 </FileTree>
+
+<details>
+  <summary>Click me</summary>
+  
+  ##### Heading
+  1. Foo
+  2. Bar
+     * Baz
+     * Qux
+
+  ##### Some Javascript
+  ```js
+  function logSomething(something) {
+    console.log('Something', something);
+  }
+  ```
+</details>
 
 MDX is a special flavor of Markdown that supports embedded JavaScript & JSX syntax. This unlocks the ability to [mix JavaScript and UI Components into your Markdown content](https://docs.astro.build/en/guides/markdown-content/#mdx-features) for things like interactive charts or alerts.
 
@@ -111,11 +126,9 @@ If you have existing content authored in MDX, this integration will hopefully ma
 Here is how you import and use a UI component inside of MDX.  
 When you open this page in the browser, you should see the clickable button below.
 
-import HeaderLink from "../../../components/HeaderLink.astro";
-
-<HeaderLink href="#" onclick="alert('clicked!')">
+<Link href="#" onclick="alert('clicked!')">
   Embedded component in MDX
-</HeaderLink>
+</Link>
 
 ## More Links
 

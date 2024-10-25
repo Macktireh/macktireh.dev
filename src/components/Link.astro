@@ -1,0 +1,16 @@
+---
+import { DEFAULT_LANG, type LangType } from "@src/i18n/utils";
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"a"> & { lang?: LangType };
+
+const { href, lang = DEFAULT_LANG, class: className, ...props } = Astro.props;
+
+const { pathname } = Astro.url;
+const url = `/${lang}/${(href as string).startsWith("/") ? (href as string).slice(1) : href}`;
+const isActive = url === pathname || url === pathname.replace(/\/$/, "");
+---
+
+<a href={url} class:list={[className, { active: isActive }]} {...props}>
+  <slot />
+</a>

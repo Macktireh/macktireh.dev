@@ -9,6 +9,7 @@ import { type PageType } from "@src/helpers/types";
 import Layout from "@src/layouts/Layout.astro";
 import { DEFAULT_LANG, LOCALES, useTranslations } from "@src/i18n/utils";
 import { PAGE_SIZE } from "@src/consts";
+import Link from "@src/components/Link.astro";
 
 export async function getStaticPaths({ paginate }) {
   let posts = await getBlogPosts();
@@ -45,7 +46,7 @@ const isTranslated = async () => {
         {
           page.data.map((post) => (
             <li>
-              <a href={`/${lang}/blog/${post.blog_slug}`}>
+              <Link href={`/blog/${post.blog_slug}`} lang={lang}>
                 <img
                   width={720}
                   height={360}
@@ -56,7 +57,7 @@ const isTranslated = async () => {
                 <p class="date">
                   <FormattedDate date={post.data.pubDate} />
                 </p>
-              </a>
+              </Link>
             </li>
           ))
         }

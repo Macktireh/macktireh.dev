@@ -17,15 +17,15 @@ export function getLangFromUrl(url: URL) {
   return DEFAULT_LANG;
 }
 
-export function useTranslations(lang?: LangType) {
+export function useTranslations(lang: LangType = DEFAULT_LANG) {
   return function t(
     key: keyof (typeof ui)[typeof DEFAULT_LANG],
     ...args: any[]
   ) {
-    let translation = ui[lang ?? DEFAULT_LANG][key] || ui[DEFAULT_LANG][key];
+    let translation = ui[lang][key];
     if (args.length > 0) {
       for (let i = 0; i < args.length; i++) {
-        translation = translation.replace(`{${i}}`, args[i]);
+        translation = (translation.replace(`{${i}}`, args[i]) as typeof translation);
       }
     }
     return translation;
