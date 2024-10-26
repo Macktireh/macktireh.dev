@@ -5,11 +5,9 @@ export const LANGUAGES = {
   fr: "Français",
 };
 
-export const LOCALES = Object.keys(LANGUAGES) as LangType[];
-
-export const DEFAULT_LANG = "en";
-
 export type LangType = keyof typeof LANGUAGES;
+export const DEFAULT_LANG = "en";
+export const LOCALES = Object.keys(LANGUAGES) as LangType[];
 
 export function getLangFromUrl(url: URL) {
   const [, lang] = url.pathname.split("/");
@@ -22,7 +20,7 @@ export function useTranslations(lang: LangType = DEFAULT_LANG) {
     key: keyof (typeof ui)[typeof DEFAULT_LANG],
     ...args: any[]
   ) {
-    let translation = ui[lang][key];
+    let translation = Object.keys(ui).includes(lang) ? ui[lang][key] : ui[DEFAULT_LANG][key];
     if (args.length > 0) {
       for (let i = 0; i < args.length; i++) {
         translation = (translation.replace(`{${i}}`, args[i]) as typeof translation);

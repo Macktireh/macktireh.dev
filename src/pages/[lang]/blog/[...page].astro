@@ -3,12 +3,18 @@ import { getPosts, getPostsByLang, type BlogType } from "@src/content/config";
 import FormattedDate from "@src/components/FormattedDate.astro";
 import { type PageType } from "@src/helpers/types";
 import Layout from "@src/layouts/Layout.astro";
-import { DEFAULT_LANG, LOCALES, useTranslations } from "@src/i18n/utils";
+import {
+  DEFAULT_LANG,
+  LOCALES,
+  useTranslations,
+  type LangType,
+} from "@src/i18n/utils";
 import { PAGE_SIZE } from "@src/consts";
 import Link from "@src/components/Link.astro";
+import LangSelector from "@src/components/LangSelector.astro";
 
 export async function getStaticPaths({ paginate }) {
-  let posts = await getPosts();
+  const posts = await getPosts();
   return LOCALES.flatMap((lang) => {
     const posts_filtered = posts.filter((blog) => {
       return blog?.data?.lang === lang;
@@ -21,19 +27,22 @@ const { lang } = Astro.params;
 const { page } = Astro.props as { page: PageType<BlogType> };
 const t = useTranslations(lang);
 
-const isTranslated = async () => {
-  const _posts = await getPostsByLang(lang === DEFAULT_LANG ? "fr" : "en");
-  const lastPage = Math.ceil(_posts.length / PAGE_SIZE);
-  return lastPage >= page.currentPage;
-};
+let locales: LangType[] = [];
+let postsByLang: { [key: string]: any } = {};
+
+for (const _lang of LOCALES) {
+  const posts = await getPostsByLang(_lang);
+  postsByLang[_lang] = posts;
+
+  const totalPages = Math.ceil(posts.length / PAGE_SIZE);
+  if (totalPages >= page.currentPage) {
+    locales.push(_lang);
+  }
+}
 ---
 
-<Layout
-  title="Blog"
-  description="Blog"
-  lang={lang}
-  translated={await isTranslated()}
->
+<Layout title="Blog" description="Blog" lang={lang} translated={false}>
+  <LangSelector slot="lang-selector" locales={locales} />
   <main class="main-posts">
     <section id="posts-list">
       <ul>
@@ -60,10 +69,10 @@ const isTranslated = async () => {
         {
           page.url.first ? (
             <a href={page.url.first} class="page-link first-page">
-              {t("pagination.firts")}
+              {t("pagination.first")}
             </a>
           ) : (
-            <span class="disabled">{t("pagination.firts")}</span>
+            <span class="disabled">{t("pagination.first")}</span>
           )
         }
         {
