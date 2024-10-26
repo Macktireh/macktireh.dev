@@ -20,27 +20,16 @@
   transform: translate($x, $y);
 }
 
-@mixin hr($m-t, $m-b, $width, $color) {
-  margin: $m-t auto $m-b;
-  width: $width;
-  border: none;
-  outline: none;
-}
-
-@mixin srolled() {
+@mixin srolled($width: 10px, $radius: 10px, $color: color($gray, $shade: 600)) {
   ::-webkit-scrollbar {
-    width: 8px;
-    @media (max-width: 900px) {
-      width: 0px;
-    }
-    
+    width: $width;
   }
   ::-webkit-scrollbar-track {
     background: transparent;
-    border-radius: 10px;
+    border-radius: $radius;
   }
   ::-webkit-scrollbar-thumb {
-    background: color($gray, $alpha: 0.7);
-    border-radius: 10px;
+    background: $color;
+    border-radius: $radius;
   }
 }

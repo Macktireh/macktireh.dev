@@ -1,17 +1,16 @@
-// * {
-//   transition: all 0.1s ease-out;
-// }
-
 html,
 body {
   background: color($background);
   height: 100%;
 }
 
+html {
+  @include srolled();
+}
+
 body {
   font-family: $Atkinson;
   font-size: 1.2em;
-  // font-size: calc(1em + 0.390625vw);
   color: color($text);
   text-align: left;
   background-size: 100% 600px;
@@ -158,8 +157,7 @@ time {
   color: color($text, $alpha: 0.7);
 }
 .social-links {
-  display: flex;
-  justify-content: center;
+  @extend .flex-center;
   gap: 1em;
   margin-top: 1em;
 }
