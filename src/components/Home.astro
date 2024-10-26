@@ -1,10 +1,11 @@
 ---
 import FormattedDate from "@src/components/FormattedDate.astro";
+import LangSelector from "@src/components/LangSelector.astro";
 import Link from "@src/components/Link.astro";
 import SocialLinks from "@src/components/SocialLinks.astro";
 import { getPostsByLang } from "@src/content/config";
 import Layout from "@src/layouts/Layout.astro";
-import { useTranslations, type LangType } from "@src/i18n/utils";
+import { LOCALES, useTranslations, type LangType } from "@src/i18n/utils";
 
 type Props = {
   lang: LangType;
@@ -19,8 +20,9 @@ const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
   title={t("site.title")}
   description={t("site.description")}
   lang={lang}
-  translated={true}
+  translated={false}
 >
+  <LangSelector slot="lang-selector" locales={LOCALES} />
   <main>
     <section class="hero">
       <div class="hero-content">

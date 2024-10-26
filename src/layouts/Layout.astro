@@ -32,6 +32,7 @@ const t = useTranslations(lang as LangType);
     <BaseHead lang={lang} title={title} description={description} />
   </head>
   <body>
+    <slot name="lang-selector" />
     {translated ? <LangSelector /> : null}
     <Header title={t("site.title")} lang={lang} />
     <slot />

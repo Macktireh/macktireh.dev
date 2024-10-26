@@ -1,13 +1,30 @@
 ---
 import TranslateCurrentLink from "@src/components/TranslateCurrentLink.astro";
+import { LOCALES, type LangType } from "@src/i18n/utils";
+
+type Props = {
+  locales?: LangType[];
+};
+
+const { locales = LOCALES } = Astro.props;
 ---
 
-<div class="lang-links">
-  <TranslateCurrentLink lang="fr"
-    ><img src="/images/fr.png" alt="fr" width="18" height="18" /></TranslateCurrentLink
-  >
-  <span>/</span>
-  <TranslateCurrentLink lang="en"
-    ><img src="/images/en.png" alt="en" width="18" height="18" /></TranslateCurrentLink
-  >
-</div>
+{
+  locales.length > 1 && (
+    <div class="lang-links">
+      {locales.toSorted().toReversed().map((lang, index) => (
+        <>
+          <TranslateCurrentLink lang={lang}>
+            <img
+              src={`/images/${lang}.png`}
+              alt={lang}
+              width="18"
+              height="18"
+            />
+          </TranslateCurrentLink>
+          {index < locales.length - 1 ? <span>/</span> : null}
+        </>
+      ))}
+    </div>
+  )
+}

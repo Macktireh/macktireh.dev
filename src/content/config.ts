@@ -3,15 +3,13 @@ import { getCollection } from "astro:content";
 import { LOCALES, type LangType } from "@src/i18n/utils";
 
 const blog = defineCollection({
-  // Type-check frontmatter using a schema
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    // Transform string to Date object
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     heroImage: z.string().optional(),
-    lang: z.enum(LOCALES as [string, ...string[]]),
+    lang: z.enum(LOCALES as [LangType, ...LangType[]]),
     author: z.string().optional(),
   }),
 });
