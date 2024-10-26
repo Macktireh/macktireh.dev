@@ -1,9 +1,9 @@
 ---
-import { getBlogPosts } from "@src/content/config";
+import { getPosts } from "@src/content/config";
 import BlogPost from "@src/layouts/BlogPost.astro";
 
 export async function getStaticPaths() {
-  const pages = await getBlogPosts();
+  const pages = await getPosts();
 
   const paths = pages.map((page) => {
     return {
@@ -19,7 +19,7 @@ const { lang, slug } = Astro.params;
 const page = Astro.props;
 
 const translated =
-  (await getBlogPosts()).filter((post) => post.blog_slug === slug).length > 1;
+  (await getPosts()).filter((post) => post.blog_slug === slug).length > 1;
 
 const { Content } = await page.render();
 ---
