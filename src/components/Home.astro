@@ -1,0 +1,59 @@
+---
+import FormattedDate from "@src/components/FormattedDate.astro";
+import Link from "@src/components/Link.astro";
+import SocialLinks from "@src/components/SocialLinks.astro";
+import { getPostsByLang } from "@src/content/config";
+import Layout from "@src/layouts/Layout.astro";
+import { useTranslations, type LangType } from "@src/i18n/utils";
+
+type Props = {
+  lang: LangType;
+};
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
+---
+
+<Layout
+  title={t("site.title")}
+  description={t("site.description")}
+  lang={lang}
+  translated={true}
+>
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>{t("home.hello")}</h1>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto
+          architecto dolorem velit? Perferendis molestias totam voluptate et
+          consequuntur exercitationem explicabo voluptatum nostrum distinctio
+          recusandae, iquid. Tempore, eos!
+        </p>
+        <SocialLinks />
+      </div>
+      <div class="card-img">
+        <img src="/images/mack.png" alt="Macktireh ABDI SOUBANEH" />
+      </div>
+    </section>
+    <hr />
+    <section class="latest-posts">
+      <h3>📜 Latest Posts</h3>
+      <ul>
+        {
+          latestPosts.map((post) => (
+            <li>
+              <Link href={post.pathname} lang={lang}>
+                {post.data.title}
+              </Link>
+              <FormattedDate date={post.data.pubDate} />
+              <p>{post.data.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <Link href="/blog" lang={lang} class="all-posts">All posts →</Link>
+    </section>
+  </main>
+</Layout>

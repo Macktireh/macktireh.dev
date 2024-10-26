@@ -46,19 +46,19 @@ h6 {
   line-height: 1.2;
 }
 h1 {
-  font-size: 3.052em;
+  font-size: 2.652em;
 }
 h2 {
-  font-size: 2.441em;
+  font-size: 2.141em;
 }
 h3 {
-  font-size: 1.953em;
+  font-size: 1.714em;
 }
 h4 {
-  font-size: 1.563em;
+  font-size: 1.386em;
 }
 h5 {
-  font-size: 1.25em;
+  font-size: 1.143em;
 }
 ul,
 ol {
@@ -144,15 +144,8 @@ svg,
 path {
   width: 20px;
   height: 20px;
-  // fill: color($text, $alpha: 0.7);
   stroke: color($text, $alpha: 0.7);
   transition: color 0.1s ease-out;
-  // &:hover {
-  //   path {
-  //     fill: color($primary, $alpha: 0.7);
-  //     stroke: color($primary, $alpha: 0.7);
-  //   }
-  // }
 }
 
 button {
@@ -164,4 +157,17 @@ time {
   font-size: calc(12px + 0.390625vw);
   color: color($text, $alpha: 0.7);
 }
-
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  margin-top: 1em;
+}
+.social-links a {
+  text-decoration: none;
+  color: color($text);
+  svg,
+  path {
+    stroke: none;
+  }
+}
