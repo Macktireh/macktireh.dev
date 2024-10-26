@@ -1,9 +1,5 @@
 ---
-import {
-  getBlogPosts,
-  getBlogPostsByLang,
-  type BlogType,
-} from "@src/content/config";
+import { getPosts, getPostsByLang, type BlogType } from "@src/content/config";
 import FormattedDate from "@src/components/FormattedDate.astro";
 import { type PageType } from "@src/helpers/types";
 import Layout from "@src/layouts/Layout.astro";
@@ -12,13 +8,11 @@ import { PAGE_SIZE } from "@src/consts";
 import Link from "@src/components/Link.astro";
 
 export async function getStaticPaths({ paginate }) {
-  let posts = await getBlogPosts();
+  let posts = await getPosts();
   return LOCALES.flatMap((lang) => {
-    const posts_filtered = posts
-      ?.filter((blog) => {
-        return blog?.data?.lang === lang;
-      })
-      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+    const posts_filtered = posts.filter((blog) => {
+      return blog?.data?.lang === lang;
+    });
     return paginate(posts_filtered, { params: { lang }, pageSize: PAGE_SIZE });
   });
 }
@@ -28,7 +22,7 @@ const { page } = Astro.props as { page: PageType<BlogType> };
 const t = useTranslations(lang);
 
 const isTranslated = async () => {
-  const _posts = await getBlogPostsByLang(lang === DEFAULT_LANG ? "fr" : "en");
+  const _posts = await getPostsByLang(lang === DEFAULT_LANG ? "fr" : "en");
   const lastPage = Math.ceil(_posts.length / PAGE_SIZE);
   return lastPage >= page.currentPage;
 };
@@ -46,7 +40,7 @@ const isTranslated = async () => {
         {
           page.data.map((post) => (
             <li>
-              <Link href={`/blog/${post.blog_slug}`} lang={lang}>
+              <Link href={post.pathname} lang={lang}>
                 <img
                   width={720}
                   height={360}

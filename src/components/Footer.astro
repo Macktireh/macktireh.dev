@@ -1,6 +1,6 @@
 ---
 import { SITE_TITLE } from "@src/consts";
-import Icon from "@src/components/Icon.astro";
+import SocialLinks from "@src/components/SocialLinks.astro";
 
 const today = new Date();
 ---
@@ -12,15 +12,5 @@ const today = new Date();
       >.dev</span
     ></a
   >. All rights reserved.
-  <div class="social-links">
-    <a href="https://linkedin.com/in/macktireh" target="_blank">
-      <Icon name="linkedin" />
-    </a>
-    <a href="https://twitter.com/macktireh" target="_blank">
-      <Icon name="twitter" />
-    </a>
-    <a href="https://github.com/Macktireh" target="_blank">
-      <Icon name="github" />
-    </a>
-  </div>
+  <SocialLinks />
 </footer>
