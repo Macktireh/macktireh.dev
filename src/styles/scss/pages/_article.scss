@@ -1,8 +1,6 @@
 article {
   .meta {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @extend .flex-center;
     flex-direction: column;
     gap: 0.8em;
     margin: 0.4em 0 1em;
@@ -15,9 +13,7 @@ article {
       // padding: 0.5em;
     }
     .author {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @extend .flex-center;
       gap: 0.4em;
       font-size: 16px;
       img {
@@ -27,9 +23,7 @@ article {
       }
     }
     .time-read {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @extend .flex-center;
       gap: 0.2em;
       font-size: 16px;
       color: color($text, $alpha: 0.7);
