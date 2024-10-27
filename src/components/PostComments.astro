@@ -1,0 +1,51 @@
+---
+import { IsDark } from "@src/consts";
+import { DEFAULT_LANG } from "@src/i18n/utils";
+---
+
+<section class="giscus">
+  <script
+    src="https://giscus.app/client.js"
+    data-repo="Macktireh/macktireh.dev"
+    data-repo-id="R_kgDOM_8MfQ"
+    data-category="Blog Posts Comments"
+    data-category-id="DIC_kwDOM_8Mfc4Cjspm"
+    data-mapping="url"
+    data-strict="1"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme={IsDark ? "dark" : "light"}
+    data-lang={DEFAULT_LANG}
+    data-loading="lazy"
+    crossorigin="anonymous"
+    async></script>
+</section>
+
+<script>
+  function setGiscusThemeAndLang(theme, lang) {
+    const iframe = document.querySelector(
+      ".giscus-frame"
+    ) as HTMLIFrameElement | null;
+
+    if (iframe) {
+      const url = new URL(iframe.src);
+      url.searchParams.set("theme", theme);
+      url.searchParams.set("lang", lang);
+      console.log("url.searchParams: " + url.searchParams);
+      iframe.src = url.toString();
+    }
+  }
+
+  function initializeGiscus() {
+    const theme =
+      document.querySelector("html")?.getAttribute("data-theme") || "light";
+    const lang = document.querySelector("html")?.getAttribute("lang");
+    const scriptGiscus = document.querySelector('script[src="https://giscus.app/client.js"]');
+    scriptGiscus?.setAttribute("data-theme", theme);
+    scriptGiscus?.setAttribute("data-lang", lang as string);
+    setGiscusThemeAndLang(theme, lang);
+  }
+  initializeGiscus();
+  document.addEventListener("astro:after-swap", initializeGiscus);
+</script>
