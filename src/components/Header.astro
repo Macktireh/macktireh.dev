@@ -2,8 +2,10 @@
 import { SITE_TITLE } from "@src/consts";
 import Link from "@src/components/Link.astro";
 import Theme from "@src/components/Theme.astro";
+import { useTranslations } from "@src/i18n/utils";
 
 const { lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
 <header>
@@ -16,7 +18,7 @@ const { lang } = Astro.props;
       >
     </h2>
     <div class="internal-links">
-      <Link href="/blog" lang={lang}>Blog</Link>
+      <Link href="/posts" lang={lang}>{t("navbar.posts")}</Link>
       <Theme />
     </div>
   </nav>

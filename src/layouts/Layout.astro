@@ -8,7 +8,7 @@ import { ViewTransitions } from "astro:transitions";
 import LangSelector from "@src/components/LangSelector.astro";
 import { IsDark } from "@src/consts";
 
-type Props = Omit<CollectionEntry<"blog">["data"], "pubDate"> & {
+type Props = Omit<CollectionEntry<"posts">["data"], "pubDate"> & {
   pubDate?: Date;
   translated?: boolean;
 };

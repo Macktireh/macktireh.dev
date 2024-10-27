@@ -3,6 +3,7 @@ import type { LangType } from "@src/i18n/utils";
 const defaultUi = {
   "site.title": "Astro Blog",
   "site.description": "Welcome to my website!",
+  "navbar.posts": "Posts",
   "home.hello": "👋 Hello!",
   "home.p1": ``,
   page: "Page",
@@ -22,6 +23,7 @@ export const ui: Record<LangType, UiTranslationType> = {
   fr: {
     "site.title": "Astro Blog",
     "site.description": "Bienvenue sur mon site web !",
+    "navbar.posts": "Articles",
     "home.hello": "👋 Hello!",
     "home.p1": ``,
     page: "Page",

@@ -3,12 +3,7 @@ import { getPosts, getPostsByLang, type BlogType } from "@src/content/config";
 import FormattedDate from "@src/components/FormattedDate.astro";
 import { type PageType } from "@src/helpers/types";
 import Layout from "@src/layouts/Layout.astro";
-import {
-  DEFAULT_LANG,
-  LOCALES,
-  useTranslations,
-  type LangType,
-} from "@src/i18n/utils";
+import { LOCALES, useTranslations, type LangType } from "@src/i18n/utils";
 import { PAGE_SIZE } from "@src/consts";
 import Link from "@src/components/Link.astro";
 import LangSelector from "@src/components/LangSelector.astro";
@@ -16,8 +11,8 @@ import LangSelector from "@src/components/LangSelector.astro";
 export async function getStaticPaths({ paginate }) {
   const posts = await getPosts();
   return LOCALES.flatMap((lang) => {
-    const posts_filtered = posts.filter((blog) => {
-      return blog?.data?.lang === lang;
+    const posts_filtered = posts.filter((post) => {
+      return post?.data?.lang === lang;
     });
     return paginate(posts_filtered, { params: { lang }, pageSize: PAGE_SIZE });
   });
