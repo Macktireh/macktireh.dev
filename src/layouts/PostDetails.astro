@@ -6,7 +6,7 @@ import { useTranslations, type LangType } from "@src/i18n/utils";
 import Icon from "@src/components/Icon.astro";
 import PostComments from "@src/components/PostComments.astro";
 
-type Props = CollectionEntry<"blog">["data"] & {
+type Props = CollectionEntry<"posts">["data"] & {
   translated?: boolean;
   content: string;
 };
