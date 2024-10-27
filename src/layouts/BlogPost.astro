@@ -4,6 +4,7 @@ import FormattedDate from "@src/components/FormattedDate.astro";
 import Layout from "@src/layouts/Layout.astro";
 import { useTranslations, type LangType } from "@src/i18n/utils";
 import Icon from "@src/components/Icon.astro";
+import PostComments from "@src/components/PostComments.astro";
 
 type Props = CollectionEntry<"blog">["data"] & {
   translated?: boolean;
@@ -78,5 +79,6 @@ function getTimeRead(content: string) {
         <slot />
       </div>
     </article>
+    <PostComments />
   </main>
 </Layout>
