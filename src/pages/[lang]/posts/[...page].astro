@@ -36,7 +36,7 @@ for (const _lang of LOCALES) {
 }
 ---
 
-<Layout title="Blog" description="Blog" lang={lang} translated={false}>
+<Layout title=`${t("navbar.posts")} | ${t("site.title")}` description={t("site.description")} lang={lang} translated={false}>
   <LangSelector slot="lang-selector" locales={locales} />
   <main class="main-posts">
     <section id="posts-list">

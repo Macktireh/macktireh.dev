@@ -28,10 +28,7 @@ const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
       <div class="hero-content">
         <h1>{t("home.hello")}</h1>
         <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto
-          architecto dolorem velit? Perferendis molestias totam voluptate et
-          consequuntur exercitationem explicabo voluptatum nostrum distinctio
-          recusandae, iquid. Tempore, eos!
+          <Fragment set:html={t("site.description")} />
         </p>
         <SocialLinks />
       </div>
@@ -41,7 +38,7 @@ const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
     </section>
     <hr />
     <section class="latest-posts">
-      <h3>📜 Latest Posts</h3>
+      <h3>📜 {t("home.latest-post")}</h3>
       <ul>
         {
           latestPosts.map((post) => (

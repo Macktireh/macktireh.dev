@@ -1,8 +1,6 @@
 ---
-import { getLangFromUrl } from "@src/i18n/utils";
+import { DEFAULT_LANG } from "@src/i18n/utils";
 import Home from "@src/components/Home.astro";
-
-const lang = getLangFromUrl(Astro.url);
 ---
 
-<Home lang={lang} />
+<Home lang={DEFAULT_LANG} />
