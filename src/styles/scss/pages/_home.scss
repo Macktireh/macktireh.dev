@@ -18,6 +18,7 @@
     }
   }
   .hero-content {
+    flex: 1;
     .social-links {
       justify-content: start;
       @media (max-width: 768px) {

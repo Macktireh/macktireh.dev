@@ -1,5 +1,5 @@
 ---
-import { LOCALES, useTranslations } from "@src/i18n/utils";
+import { LOCALES } from "@src/i18n/utils";
 import Home from "@src/components/Home.astro";
 
 export async function getStaticPaths() {
@@ -9,7 +9,6 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
-const t = useTranslations(lang);
 ---
 
 <Home lang={lang} />
