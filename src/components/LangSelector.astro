@@ -1,18 +1,23 @@
 ---
 import TranslateCurrentLink from "@src/components/TranslateCurrentLink.astro";
-import { LOCALES, type LangType } from "@src/i18n/utils";
+import { DEFAULT_LANG, LOCALES, type LangType } from "@src/i18n/utils";
 
 type Props = {
   locales?: LangType[];
 };
 
 const { locales = LOCALES } = Astro.props;
+const _locales = locales.sort((a, b) => {
+  if (a === DEFAULT_LANG) return -1;
+  if (b === DEFAULT_LANG) return 1;
+  return a.localeCompare(b);
+});
 ---
 
 {
   locales.length > 1 && (
     <div class="lang-links">
-      {locales.toSorted().toReversed().map((lang, index) => (
+      {_locales.map((lang, index) => (
         <>
           <TranslateCurrentLink lang={lang}>
             <img

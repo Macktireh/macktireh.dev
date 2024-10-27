@@ -6,7 +6,7 @@ export const LANGUAGES = {
 };
 
 export type LangType = keyof typeof LANGUAGES;
-export const DEFAULT_LANG = "en";
+export const DEFAULT_LANG: LangType = "en";
 export const LOCALES = Object.keys(LANGUAGES) as LangType[];
 
 export function getLangFromUrl(url: URL) {
