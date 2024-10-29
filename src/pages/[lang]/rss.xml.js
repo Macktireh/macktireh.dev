@@ -1,6 +1,7 @@
 import rss from "@astrojs/rss";
 import { getPostsByLang } from "@src/services/posts";
 import { LOCALES, useTranslations } from "@src/i18n/utils";
+import { SITE } from "@src/consts"
 
 export function getStaticPaths() {
   const paths = LOCALES.map((lang) => ({
