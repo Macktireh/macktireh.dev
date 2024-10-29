@@ -2,8 +2,8 @@
 title: "Guide de Style Markdown"
 description: "Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro."
 pubDate: "Jul 01 2023"
+updatedDate: "Jul 01 2024"
 heroImage: "/images/hero/blog-placeholder-1.jpg"
-author: "Me"
 lang: "fr"
 ---
 

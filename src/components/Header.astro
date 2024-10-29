@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE } from "@src/consts";
+import { SITE } from "@src/consts";
 import Link from "@src/components/Link.astro";
 import Theme from "@src/components/Theme.astro";
 import { useTranslations } from "@src/i18n/utils";
@@ -12,7 +12,7 @@ const t = useTranslations(lang);
   <nav>
     <h2>
       <a href="/"
-        >{SITE_TITLE.replace(".dev", "")}<span
+        >{SITE.authorFirstName.toLowerCase()}<span
           style="color: rgba(var(--color-primary), 1);">.dev</span
         ></a
       >

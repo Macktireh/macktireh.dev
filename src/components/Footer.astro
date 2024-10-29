@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE } from "@src/consts";
+import { SITE } from "@src/consts";
 import SocialLinks from "@src/components/SocialLinks.astro";
 
 const today = new Date();
@@ -8,7 +8,7 @@ const today = new Date();
 <footer>
   &copy; {today.getFullYear()}
   <a href="/"
-    >{SITE_TITLE.replace(".dev", "")}<span style="color: var(--primary-500);"
+    >{SITE.authorFirstName.toLowerCase()}<span style="color: var(--primary-500);"
       >.dev</span
     ></a
   >. All rights reserved.

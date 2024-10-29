@@ -1,5 +1,5 @@
 ---
-import { IsDark } from "@src/consts";
+import { SITE } from "@src/consts";
 import { DEFAULT_LANG } from "@src/i18n/utils";
 ---
 
@@ -15,7 +15,7 @@ import { DEFAULT_LANG } from "@src/i18n/utils";
     data-reactions-enabled="1"
     data-emit-metadata="0"
     data-input-position="top"
-    data-theme={IsDark ? "dark" : "light"}
+    data-theme={SITE.defaultTheme}
     data-lang={DEFAULT_LANG}
     data-loading="lazy"
     crossorigin="anonymous"
