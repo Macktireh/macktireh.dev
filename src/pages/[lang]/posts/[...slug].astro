@@ -1,11 +1,11 @@
 ---
 import LangSelector from "@src/components/LangSelector.astro";
-import { getPosts } from "@src/content/config";
+import { getPostsSorted } from "@src/services/posts";
 import { DEFAULT_LANG } from "@src/i18n/utils";
 import PostDetails from "@src/layouts/PostDetails.astro";
 
 export async function getStaticPaths() {
-  const pages = await getPosts();
+  const pages = await getPostsSorted();
 
   const paths = pages.map((page) => {
     return {
@@ -20,13 +20,13 @@ export async function getStaticPaths() {
 const { lang, slug } = Astro.params;
 const page = Astro.props;
 
-const locales = (await getPosts())
+const locales = (await getPostsSorted())
   .filter((post) => post.blog_slug === slug)
   .map((post) => post.data.lang);
 const { Content } = await page.render();
 ---
 
-<PostDetails {...page.data} content={page.body} lang={lang} translated={false}>
+<PostDetails {...page.data} content={page.body} lang={lang}>
   <LangSelector slot="lang-selector" locales={locales} />
   <Content />
 </PostDetails>

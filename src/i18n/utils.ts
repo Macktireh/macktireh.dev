@@ -1,13 +1,9 @@
-import { ui } from "@src/i18n/ui";
+import { SITE } from "@src/consts";
+import { uiTranslation } from "@src/i18n/ui";
 
-export const LANGUAGES = {
-  en: "English",
-  fr: "Français",
-};
-
-export type LangType = keyof typeof LANGUAGES;
-export const DEFAULT_LANG: LangType = "en";
-export const LOCALES = Object.keys(LANGUAGES) as LangType[];
+export type LangType = keyof typeof SITE.languages;
+export const DEFAULT_LANG = SITE.defaultLang as LangType;
+export const LOCALES = Object.keys(SITE.languages) as LangType[];
 
 export function getLangFromUrl(url: URL) {
   const [, lang] = url.pathname.split("/");
@@ -17,13 +13,18 @@ export function getLangFromUrl(url: URL) {
 
 export function useTranslations(lang: LangType = DEFAULT_LANG) {
   return function t(
-    key: keyof (typeof ui)[typeof DEFAULT_LANG],
-    ...args: any[]
+    key: keyof (typeof uiTranslation)[typeof DEFAULT_LANG],
+    args?: Record<string, string>
   ) {
-    let translation = Object.keys(ui).includes(lang) ? ui[lang][key] : ui[DEFAULT_LANG][key];
-    if (args.length > 0) {
-      for (let i = 0; i < args.length; i++) {
-        translation = (translation.replace(`{${i}}`, args[i]) as typeof translation);
+    let translation = Object.keys(uiTranslation).includes(lang)
+      ? uiTranslation[lang][key]
+      : uiTranslation[DEFAULT_LANG][key];
+    if (args) {
+      for (let key of Object.keys(args)) {
+        translation = translation.replaceAll(
+          `{${key}}`,
+          args[key]
+        ) as typeof translation;
       }
     }
     return translation;
@@ -39,10 +40,9 @@ export function pathNameIsInLanguage(pathname: string, lang: LangType) {
 
 function pathNameStartsWithLanguage(pathname: string) {
   let startsWithLanguage = false;
-  const languages = Object.keys(LANGUAGES);
 
-  for (let i = 0; i < languages.length; i++) {
-    const lang = languages[i];
+  for (let i = 0; i < LOCALES.length; i++) {
+    const lang = LOCALES[i];
     if (pathname.startsWith(`/${lang}`)) {
       startsWithLanguage = true;
       break;
@@ -54,7 +54,7 @@ function pathNameStartsWithLanguage(pathname: string) {
 
 export function getLocalizedPathname(pathname: string, lang: LangType) {
   if (pathNameStartsWithLanguage(pathname)) {
-    const availableLanguages = Object.keys(LANGUAGES).join("|");
+    const availableLanguages = LOCALES.join("|");
     const regex = new RegExp(`^\/(${availableLanguages})`);
     return pathname.replace(regex, `/${lang}`);
   }

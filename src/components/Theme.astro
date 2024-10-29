@@ -1,10 +1,12 @@
 ---
-import { IsDark } from "@src/consts";
+import { SITE } from "@src/consts";
 import Icon from "@src/components/Icon.astro";
+
+const isDark = SITE.defaultTheme === "dark";
 ---
 
 <button data-theme-toggle>
-  {IsDark ? <Icon name="dark" /> : <Icon name="light" />}</button
+  {isDark ? <Icon name="dark" /> : <Icon name="light" />}</button
 >
 
 <script>
@@ -63,7 +65,6 @@ import Icon from "@src/components/Icon.astro";
     buttonThemeToggle.addEventListener("click", toggleThme);
   }
 
-  // Set Theme giscus theme
   function setGiscusTheme(theme) {
     const iframe = document.querySelector('.giscus-frame') as HTMLIFrameElement | null;
 

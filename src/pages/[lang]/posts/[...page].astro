@@ -1,20 +1,27 @@
 ---
-import { getPosts, getPostsByLang, type BlogType } from "@src/content/config";
+import {
+  getPostsSorted,
+  getPostsByLang,
+  type BlogType,
+} from "@src/services/posts";
 import FormattedDate from "@src/components/FormattedDate.astro";
 import { type PageType } from "@src/helpers/types";
 import Layout from "@src/layouts/Layout.astro";
 import { LOCALES, useTranslations, type LangType } from "@src/i18n/utils";
-import { PAGE_SIZE } from "@src/consts";
+import { SITE } from "@src/consts";
 import Link from "@src/components/Link.astro";
 import LangSelector from "@src/components/LangSelector.astro";
 
 export async function getStaticPaths({ paginate }) {
-  const posts = await getPosts();
+  const posts = await getPostsSorted();
   return LOCALES.flatMap((lang) => {
     const posts_filtered = posts.filter((post) => {
       return post?.data?.lang === lang;
     });
-    return paginate(posts_filtered, { params: { lang }, pageSize: PAGE_SIZE });
+    return paginate(posts_filtered, {
+      params: { lang },
+      pageSize: SITE.postsPaginationSize,
+    });
   });
 }
 
@@ -29,14 +36,18 @@ for (const _lang of LOCALES) {
   const posts = await getPostsByLang(_lang);
   postsByLang[_lang] = posts;
 
-  const totalPages = Math.ceil(posts.length / PAGE_SIZE);
+  const totalPages = Math.ceil(posts.length / SITE.postsPaginationSize);
   if (totalPages >= page.currentPage) {
     locales.push(_lang);
   }
 }
 ---
 
-<Layout title=`${t("navbar.posts")} | ${t("site.title")}` description={t("site.description")} lang={lang} translated={false}>
+<Layout
+  title=`${t("navbar.posts")} | ${t("site.title")}`
+  description={t("site.description", { firstname: SITE.authorFirstName })}
+  lang={lang}
+>
   <LangSelector slot="lang-selector" locales={locales} />
   <main class="main-posts">
     <section id="posts-list">
