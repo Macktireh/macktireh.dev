@@ -1,3 +1,32 @@
+.go-back {
+  @extend .flex-center;
+  justify-content: start;
+  margin-bottom: 0.5em;
+  button {
+    @extend .flex-center;
+    span {
+      font-size: 16px;
+      color: color($text, $alpha: 0.8);
+    }
+    svg {
+      width: 16px;
+      height: 16px;
+      transform: rotate(90deg);
+      path {
+        stroke: none;
+        fill: color($text, $alpha: 0.8);
+      }
+    }
+      &:hover {
+        span {
+          color: color($primary);
+        }
+        path {
+          fill: color($primary);
+        }
+    }
+  }
+}
 article {
   .meta {
     @extend .flex-center;
@@ -10,7 +39,17 @@ article {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      // padding: 0.5em;
+      gap: 0.5em;
+      @media (max-width: 366px) {
+        flex-direction: column;
+      }
+    }
+    time {
+      font-size: 14px;
+    }
+    span {
+      font-size: 14px;
+      color: color($text, $alpha: 0.7);
     }
     .author {
       @extend .flex-center;
@@ -25,11 +64,11 @@ article {
     .time-read {
       @extend .flex-center;
       gap: 0.2em;
-      font-size: 16px;
+      font-size: 14px;
       color: color($text, $alpha: 0.7);
       svg {
-        width: 22px;
-        height: 22px;
+        width: 14px;
+        height: 14px;
       }
     }
   }
