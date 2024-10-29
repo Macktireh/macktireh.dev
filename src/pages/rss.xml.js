@@ -1,6 +1,7 @@
 import rss from "@astrojs/rss";
 import { getPostsByLang } from "@src/services/posts";
 import { DEFAULT_LANG, useTranslations } from "@src/i18n/utils";
+import { SITE } from "@src/consts"
 
 
 export async function GET(context) {

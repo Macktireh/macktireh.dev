@@ -26,7 +26,7 @@ const currentIconUri = getFolderIconUrl(icon, isOpen);
     folder-icon-closed={folderIconClosedUri}
   >
     <Icon name="arrow" />
-    <img src={currentIconUri} />
+    <img src={currentIconUri} alt={name} />
     <span>{prefix && prefix}{name}</span>
   </div>
   {
