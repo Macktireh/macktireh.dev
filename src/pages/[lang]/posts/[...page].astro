@@ -51,26 +51,33 @@ for (const _lang of LOCALES) {
   <LangSelector slot="lang-selector" locales={locales} />
   <main class="main-posts">
     <section id="posts-list">
-      <ul>
-        {
-          page.data.map((post) => (
-            <li>
-              <Link href={post.pathname} lang={lang}>
-                <img
-                  width={720}
-                  height={360}
-                  src={post.data.heroImage}
-                  alt=""
-                />
-                <h4 class="title">{post.data.title}</h4>
-                <p class="date">
-                  <FormattedDate date={post.data.pubDate} />
-                </p>
-              </Link>
-            </li>
-          ))
-        }
-      </ul>
+      {
+        page.data.length > 0 ? (
+          <ul>
+            {page.data.map((post) => (
+              <li>
+                <Link href={post.pathname} lang={lang}>
+                  <img
+                    width={720}
+                    height={360}
+                    src={post.data.heroImage}
+                    alt=""
+                  />
+                  <h4 class="title">{post.data.title}</h4>
+                  <p class="date">
+                    <FormattedDate date={post.data.pubDate} />
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div class="coming-soon">
+            <h2>{t("coming.soon")}</h2>
+            <h5>{t("coming.soon.description")}</h5>
+          </div>
+        )
+      }
       <div class="pagination">
         {
           page.url.first ? (
