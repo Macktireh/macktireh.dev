@@ -43,20 +43,31 @@ const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
     <hr />
     <section class="latest-posts">
       <h3>📜 {t("home.latest-post")}</h3>
-      <ul>
-        {
-          latestPosts.map((post) => (
-            <li>
-              <Link href={post.pathname} lang={lang}>
-                {post.data.title}
-              </Link>
-              <FormattedDate date={post.data.pubDate} />
-              <p>{post.data.description}</p>
-            </li>
-          ))
-        }
-      </ul>
-      <Link href="/posts" lang={lang} class="all-posts">All posts →</Link>
+      {
+        latestPosts.length > 0 ? (
+          <Fragment>
+            <ul>
+              {latestPosts.map((post) => (
+                <li>
+                  <Link href={post.pathname} lang={lang}>
+                    {post.data.title}
+                  </Link>
+                  <FormattedDate date={post.data.pubDate} />
+                  <p>{post.data.description}</p>
+                </li>
+              ))}
+            </ul>
+            <Link href="/posts" lang={lang} class="all-posts">
+              All posts →
+            </Link>
+          </Fragment>
+        ) : (
+          <div class="coming-soon">
+            <strong>{t("coming.soon")}</strong>
+            <p>{t("coming.soon.description")}</p>
+          </div>
+        )
+      }
     </section>
   </main>
 </Layout>

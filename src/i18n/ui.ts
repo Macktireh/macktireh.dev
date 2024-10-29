@@ -20,6 +20,8 @@ const defaultUiTranslation = {
   "pagination.last": "Last",
   "go.back": "Go back",
   "time-read": "min read",
+  "coming.soon": "🚧 Coming soon!",
+  "coming.soon.description": "💻 I'm working on it! 💪✨",
 };
 
 type UiTranslationType = typeof defaultUiTranslation;
@@ -45,6 +47,8 @@ const _uiTranslation: Partial<Record<LangType, UiTranslationType>> = {
     "pagination.last": "Dernier",
     "go.back": "Retourner",
     "time-read": "min de lecture",
+    "coming.soon": "🚧 Bientôt disponible!",
+    "coming.soon.description": "💻 Je travaille dessus ! 💪✨",
   },
 };
 
