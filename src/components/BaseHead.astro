@@ -90,3 +90,19 @@ const alternateLinks = LOCALES.map((_lang: LangType) => {
   type="font/woff"
   crossorigin
 />
+
+<script define:vars={{ LOCALES }} is:inline>
+  function redirectPreferredLocale() {
+    const preferredLang = navigator.language.split("-")[0];
+    const currentLang = document.documentElement.lang;
+    if (preferredLang !== currentLang && LOCALES.includes(preferredLang)) {
+      window.location.href = getPathName(preferredLang);
+    }
+  }
+  function getPathName(preferredLang) {
+    const pathNames = window.location.pathname.split("/");
+    pathNames[1] = preferredLang;
+    return pathNames.join("/");
+  }
+  redirectPreferredLocale()
+</script>
