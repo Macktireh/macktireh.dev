@@ -22,7 +22,7 @@ const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
   description={t("site.description", { firstname: SITE.authorFirstName })}
   lang={lang}
 >
-  <LangSelector slot="lang-selector" locales={LOCALES} />
+  <LangSelector slot="lang-selector" />
   <main>
     <section class="hero">
       <div class="hero-content">

@@ -48,7 +48,10 @@ for (const _lang of LOCALES) {
   description={t("site.description", { firstname: SITE.authorFirstName })}
   lang={lang}
 >
-  <LangSelector slot="lang-selector" locales={locales} />
+  <LangSelector
+    slot="lang-selector"
+    locales={locales.length > 0 ? locales : undefined}
+  />
   <main class="main-posts">
     <section id="posts-list">
       {
