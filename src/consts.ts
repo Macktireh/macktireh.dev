@@ -5,6 +5,7 @@ const AUTHOR_FIRST_NAME = 'Macktireh';
 const AUTHOR_LAST_NAME = 'ABDI SOUBANEH';
 
 export const SITE = {
+  website: import.meta.env.PUBLIC_SITE_URL,
   authorFirstName: AUTHOR_FIRST_NAME,
   authorLastName: AUTHOR_LAST_NAME,
   author: `${AUTHOR_FIRST_NAME} ${AUTHOR_LAST_NAME}`,
