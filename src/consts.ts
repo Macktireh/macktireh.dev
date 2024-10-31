@@ -9,7 +9,8 @@ export const SITE = {
   authorFirstName: AUTHOR_FIRST_NAME,
   authorLastName: AUTHOR_LAST_NAME,
   author: `${AUTHOR_FIRST_NAME} ${AUTHOR_LAST_NAME}`,
-  ogImage: "/images/og.png",
+  ogImageSite: "/images/og-site.png",
+  ogImagePost: "./public/images/og-post.png",
   postsPaginationSize: 2,
   defaultLang: "en",
   languages: {

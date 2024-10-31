@@ -8,6 +8,7 @@ import PostComments from "@src/components/PostComments.astro";
 
 type Props = CollectionEntry<"posts">["data"] & {
   content: string;
+  slug: string;
 };
 
 const {
@@ -19,6 +20,7 @@ const {
   heroImage,
   lang,
   content,
+  slug,
 } = Astro.props;
 
 const t = useTranslations(lang as LangType);
@@ -29,12 +31,15 @@ function getTimeRead(content: string) {
   const time = Math.ceil(words / wpm);
   return time;
 }
+
+const ogImage = `/images/og/${slug}/${lang}.png`;
 ---
 
 <Layout
   title={`${title} | ${t("site.title")}`}
   description={description}
   heroImage={heroImage}
+  ogImage={ogImage}
   pubDate={pubDate}
   updatedDate={updatedDate}
   lang={lang}

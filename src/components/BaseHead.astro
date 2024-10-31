@@ -12,11 +12,13 @@ import {
 import "@src/styles/style.css";
 
 interface Props {
-  title: string;
-  description: string;
-  author?: string;
-  image?: string;
-  lang: string;
+  metadata: {
+    title: string;
+    description: string;
+    author?: string;
+    ogImage?: string;
+    lang?: LangType;
+  };
 }
 
 const canonicalPathname = pathNameIsInLanguage(Astro.url.pathname, DEFAULT_LANG)
@@ -25,12 +27,15 @@ const canonicalPathname = pathNameIsInLanguage(Astro.url.pathname, DEFAULT_LANG)
 const canonicalURL = new URL(canonicalPathname, Astro.site);
 
 const {
-  lang,
   title,
   description,
   author,
-  image = SITE.ogImage,
-} = Astro.props;
+  ogImage = SITE.ogImageSite,
+  lang = DEFAULT_LANG,
+} = Astro.props.metadata;
+
+const socialImageURL = new URL(ogImage ?? SITE.ogImageSite, Astro.url.origin)
+  .href;
 
 const alternateLinks = LOCALES.map((_lang: LangType) => {
   return {
@@ -66,14 +71,14 @@ const alternateLinks = LOCALES.map((_lang: LangType) => {
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image" content={socialImageURL} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:image" content={socialImageURL} />
 
 <!-- Font preloads -->
 <link

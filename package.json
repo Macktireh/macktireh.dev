@@ -15,7 +15,8 @@
     "@astrojs/rss": "^4.0.8",
     "@astrojs/sitemap": "^3.2.0",
     "astro": "^4.16.0",
-    "astro-expressive-code": "^0.37.1"
+    "astro-expressive-code": "^0.37.1",
+    "astro-og-canvas": "^0.5.4"
   },
   "devDependencies": {
     "sass": "^1.79.5"
