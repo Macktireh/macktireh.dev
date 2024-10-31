@@ -12,9 +12,10 @@ type Props = Omit<CollectionEntry<"posts">["data"], "pubDate" | "author"> & {
   author?: string;
   pubDate?: Date;
   ogImage?: string
+  hasRedirect?: boolean;
 };
 
-const { title, description, author = SITE.author, ogImage } = Astro.props;
+const { title, description, author = SITE.author, ogImage, hasRedirect } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang as LangType);
 
@@ -37,7 +38,7 @@ const metadata = {
         document.querySelector("html")?.setAttribute("data-theme", "dark");
       }
     </script>
-    <BaseHead metadata={metadata} />
+    <BaseHead metadata={metadata} hasRedirect={hasRedirect} />
     <ViewTransitions />
   </head>
   <body>
