@@ -19,6 +19,7 @@ interface Props {
     ogImage?: string;
     lang?: LangType;
   };
+  hasRedirect?: boolean;
 }
 
 const canonicalPathname = pathNameIsInLanguage(Astro.url.pathname, DEFAULT_LANG)
@@ -33,6 +34,8 @@ const {
   ogImage = SITE.ogImageSite,
   lang = DEFAULT_LANG,
 } = Astro.props.metadata;
+
+const { hasRedirect = true } = Astro.props;
 
 const socialImageURL = new URL(ogImage ?? SITE.ogImageSite, Astro.url.origin)
   .href;
@@ -96,25 +99,28 @@ const alternateLinks = LOCALES.map((_lang: LangType) => {
   crossorigin
 />
 
-<script define:vars={{ LOCALES }} is:inline>
-  async function redirectPreferredLocale() {
-    const preferredLang = navigator.language.split("-")[0];
-    const currentLang = document.documentElement.lang;
-    if (preferredLang !== currentLang && LOCALES.includes(preferredLang)) {
-      const pathName = getPathName(preferredLang);
-      if (await checkUrlExists(pathName)) {
-        window.location.href = pathName;
+{hasRedirect && (
+  <script define:vars={{ LOCALES }} is:inline>
+    async function redirectPreferredLocale() {
+      const preferredLang = navigator.language.split("-")[0];
+      const currentLang = document.documentElement.lang;
+      if (preferredLang !== currentLang && LOCALES.includes(preferredLang)) {
+        const pathName = getPathName(preferredLang);
+        if (await checkUrlExists(pathName)) {
+          window.location.href = pathName;
+        }
       }
     }
-  }
-  function getPathName(preferredLang) {
-    const pathNames = window.location.pathname.split("/");
-    pathNames[1] = preferredLang;
-    return pathNames.join("/");
-  }
-  async function checkUrlExists(url) {
-    const response = await fetch(url);
-    return response.status === 200;
-  }
-  redirectPreferredLocale();
-</script>
+    function getPathName(preferredLang) {
+      const pathNames = window.location.pathname.split("/");
+      pathNames[1] = preferredLang;
+      return pathNames.join("/");
+    }
+    async function checkUrlExists(url) {
+      const response = await fetch(url);
+      return response.status === 200;
+    }
+    redirectPreferredLocale();
+  </script>
+)}
+
