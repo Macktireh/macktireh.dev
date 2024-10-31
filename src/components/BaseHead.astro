@@ -97,11 +97,14 @@ const alternateLinks = LOCALES.map((_lang: LangType) => {
 />
 
 <script define:vars={{ LOCALES }} is:inline>
-  function redirectPreferredLocale() {
+  async function redirectPreferredLocale() {
     const preferredLang = navigator.language.split("-")[0];
     const currentLang = document.documentElement.lang;
     if (preferredLang !== currentLang && LOCALES.includes(preferredLang)) {
-      window.location.href = getPathName(preferredLang);
+      const pathName = getPathName(preferredLang);
+      if (await checkUrlExists(pathName)) {
+        window.location.href = pathName;
+      }
     }
   }
   function getPathName(preferredLang) {
@@ -109,5 +112,9 @@ const alternateLinks = LOCALES.map((_lang: LangType) => {
     pathNames[1] = preferredLang;
     return pathNames.join("/");
   }
-  redirectPreferredLocale()
+  async function checkUrlExists(url) {
+    const response = await fetch(url);
+    return response.status === 200;
+  }
+  redirectPreferredLocale();
 </script>
