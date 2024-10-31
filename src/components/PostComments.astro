@@ -32,7 +32,6 @@ import { DEFAULT_LANG } from "@src/i18n/utils";
       const url = new URL(iframe.src);
       url.searchParams.set("theme", theme);
       url.searchParams.set("lang", lang);
-      console.log("url.searchParams: " + url.searchParams);
       iframe.src = url.toString();
     }
   }
