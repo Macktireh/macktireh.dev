@@ -1,0 +1,17 @@
+---
+import { DEFAULT_LANG } from "@src/i18n/utils";
+import Layout from "@src/layouts/Layout.astro";
+import Link from "@src/components/Link.astro";
+---
+
+<Layout title="404 Not Found" description="Page not found" lang={DEFAULT_LANG}>
+  <main class="not-found">
+    <h1>404</h1>
+    <h5>Oops, this page not found</h5>
+    <p>
+      The page you are looking for does not exist. You may have mistyped the url
+      address or the page may have been moved.
+    </p>
+    <p>Try to go back to the <Link href="/">home page</Link>.</p>
+  </main>
+</Layout>

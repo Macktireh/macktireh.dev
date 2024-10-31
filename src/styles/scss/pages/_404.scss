@@ -1,0 +1,15 @@
+main.not-found {
+  @extend .flex-center;
+  justify-content: start;
+  flex-direction: column;
+  margin-top: 1rem;
+  text-align: center;
+  @media (max-width: 700px) {
+    margin-top: 3rem;
+  }
+
+  h1 {
+    font-size: calc(6em + 1vw);
+    margin-bottom: 1rem;
+  }
+}
