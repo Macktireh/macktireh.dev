@@ -37,6 +37,12 @@ npm run dev
 
 The development server should now be up and running.
 
+To compile SCSS files in CSS, use the following command:
+
+```bash
+npm run sass
+```
+
 ## ✨ Feedback & Suggestions
 
 If you have any feedback or suggestions, feel free to open an issue or submit a pull request.
