@@ -1,0 +1,44 @@
+---
+import { type PageType } from "@src/helpers/types";
+import { useTranslations, type LangType } from "@src/i18n/utils";
+import type { BlogType } from "@src/services/posts";
+import Icon from "@src/components/Icon.astro";
+
+type Props = {
+  page: PageType<BlogType>;
+  lang: LangType;
+};
+
+const { page, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<div class="pagination">
+  {
+    page.url.prev ? (
+      <a href={page.url.prev} class="page-link prev-page">
+        <Icon name="arrow-right" />
+        <span>{t("pagination.prev")}</span>
+      </a>
+    ) : (
+      <div class="disabled prev-page">
+        <Icon name="arrow-right" />
+        <span>{t("pagination.prev")}</span>
+      </div>
+    )
+  }
+  <span class="current-page">{page.currentPage}/{page.lastPage}</span>
+  {
+    page.url.next ? (
+      <a href={page.url.next} class="page-link next-page">
+        <span>{t("pagination.next")}</span>
+        <Icon name="arrow-right" />
+      </a>
+    ) : (
+      <div class="disabled next-page">
+        <span>{t("pagination.next")}</span>
+        <Icon name="arrow-right" />
+      </div>
+    )
+  }
+</div>
