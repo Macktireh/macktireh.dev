@@ -76,7 +76,6 @@ main.main-posts {
       align-items: center;
       margin-top: 20px;
       font-size: 13px;
-
       .page-link {
         padding: 5px 10px;
         margin: 0 5px;
@@ -85,18 +84,32 @@ main.main-posts {
         text-decoration: none;
         border-radius: 5px;
         transition: background-color 0.3s ease;
-
+        display: flex;
+        justify-content: center;
+        gap: 0.5em;
         &:hover {
           opacity: 0.8;
         }
+        path {
+          stroke: color($white);
+          fill: color($white);
+        }
       }
-
+      .prev-page {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
       .current-page {
         margin: 0 10px;
         font-weight: bold;
         color: color($text, $alpha: 0.6);
       }
-
+      .next-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       .disabled {
         padding: 5px 10px;
         margin: 0 5px;
@@ -104,8 +117,14 @@ main.main-posts {
         background-color: color($gray, $shade: 300, $alpha: 0.6);
         border-radius: 5px;
         cursor: not-allowed;
+        display: flex;
+        justify-content: center;
+        gap: 0.5em;
+        path {
+          stroke: color($black, $alpha: 0.8);
+          fill: color($black, $alpha: 0.8);
+        }
       }
-
       .first-page,
       .last-page {
         font-weight: bold;

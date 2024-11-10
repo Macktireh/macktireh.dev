@@ -11,6 +11,7 @@ import { LOCALES, useTranslations, type LangType } from "@src/i18n/utils";
 import { SITE } from "@src/consts";
 import Link from "@src/components/Link.astro";
 import LangSelector from "@src/components/LangSelector.astro";
+import Pagination from "@src/components/Pagination.astro";
 
 export async function getStaticPaths({ paginate }) {
   const posts = await getPostsSorted();
@@ -30,12 +31,9 @@ const { page } = Astro.props as { page: PageType<BlogType> };
 const t = useTranslations(lang);
 
 let locales: LangType[] = [];
-let postsByLang: { [key: string]: any } = {};
 
 for (const _lang of LOCALES) {
   const posts = await getPostsByLang(_lang);
-  postsByLang[_lang] = posts;
-
   const totalPages = Math.ceil(posts.length / SITE.postsPaginationSize);
   if (totalPages >= page.currentPage) {
     locales.push(_lang);
@@ -81,47 +79,7 @@ for (const _lang of LOCALES) {
           </div>
         )
       }
-      <div class="pagination">
-        {
-          page.url.first ? (
-            <a href={page.url.first} class="page-link first-page">
-              {t("pagination.first")}
-            </a>
-          ) : (
-            <span class="disabled">{t("pagination.first")}</span>
-          )
-        }
-        {
-          page.url.prev ? (
-            <a href={page.url.prev} class="page-link prev-page">
-              {t("pagination.prev")}
-            </a>
-          ) : (
-            <span class="disabled">{t("pagination.prev")}</span>
-          )
-        }
-        <span class="current-page"
-          >{t("page")} {page.currentPage}/{page.lastPage}</span
-        >
-        {
-          page.url.next ? (
-            <a href={page.url.next} class="page-link next-page">
-              {t("pagination.next")}
-            </a>
-          ) : (
-            <span class="disabled">{t("pagination.next")}</span>
-          )
-        }
-        {
-          page.url.last ? (
-            <a href={page.url.last} class="page-link last-page">
-              {t("pagination.last")}
-            </a>
-          ) : (
-            <span class="disabled">{t("pagination.last")}</span>
-          )
-        }
-      </div>
+      <Pagination page={page} lang={lang} />
     </section>
   </main>
 </Layout>
