@@ -1,17 +1,17 @@
-# [📄 macktireh.dev](https://macktireh.dev)
+# [📃 macktireh.dev](https://macktireh.dev)
 
 This repository holds the source code for my personal website and blog, built with [Astro](https://astro.build/).
 
 ## 💻 Tech Stack
 
-- **Main Framework** - [Astro](https://astro.build/)
 - **Language** - [TypeScript](https://www.typescriptlang.org/)
+- **Main Framework** - [Astro](https://astro.build/)
 - **Styling** - [SCSS](https://sass-lang.com/)
 - **Icons** - [Iconbuddy](https://iconbuddy.com/)
 - **Code Formatting** - [Prettier](https://prettier.io/)
-- **Deployment** - [Cloudflare Pages](https://pages.cloudflare.com/)
 - **IDE** - [VSCode](https://code.visualstudio.com/)
 - **Browser** - [Zen Browser](https://zen-browser.app/)
+- **Deployment** - [Cloudflare Pages](https://pages.cloudflare.com/)
 
 ## 👨🏻‍💻 Running Locally
 
