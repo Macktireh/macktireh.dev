@@ -7,6 +7,11 @@ $white: "white";
 $black: "black";
 $gray: "gray";
 $dracula: "dracula";
+$info: "info";
+$success: "success";
+$important: "important";
+$warning: "warning";
+$danger: "danger";
 
 $themes: (
   light: (
@@ -90,6 +95,11 @@ $themes: (
     #{$black}: rgb(0, 0, 0),
     #{$white}: rgb(255, 255, 255),
     #{$dracula}: #0c0a20,
+    #{$info}: #0969DA,
+    #{$success}: #1A7F37,
+    #{$important}: #8250DF,
+    #{$warning}: #9A6700,
+    #{$danger}: #CF222E,
   ),
   dark: (
     #{$text}: rgb(234, 233, 252),
@@ -172,6 +182,11 @@ $themes: (
     #{$black}: rgb(0, 0, 0),
     #{$white}: rgb(255, 255, 255),
     #{$dracula}: #0c0a20,
+    #{$info}: #1F6FEB,
+    #{$success}: #238636,
+    #{$important}: #8957E5,
+    #{$warning}: #9E6A03,
+    #{$danger}: #DA3633,
   ),
 );
 

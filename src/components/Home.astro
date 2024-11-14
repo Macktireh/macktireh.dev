@@ -30,7 +30,7 @@ const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
         <p>
           <Fragment
             set:html={t("site.description", {
-              firstname: SITE.authorFirstName,
+              firstname: `<strong>${SITE.authorFirstName}</strong>`,
             })}
           />
         </p>
