@@ -17,58 +17,66 @@
         fill: color($text, $alpha: 0.8);
       }
     }
-      &:hover {
-        span {
-          color: color($primary);
-        }
-        path {
-          fill: color($primary);
-        }
+    &:hover {
+      span {
+        color: color($primary);
+      }
+      path {
+        fill: color($primary);
+      }
     }
   }
 }
 article {
-  .meta {
-    @extend .flex-center;
-    flex-direction: column;
-    gap: 0.8em;
-    margin: 0.4em 0 1em;
-    .date {
-      width: 100%;
-      padding: 0 0.5em;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5em;
-      @media (max-width: 366px) {
-        flex-direction: column;
-      }
+  p {
+    margin-bottom: 1rem !important;
+  }
+  .title {
+    hr {
+      margin-bottom: 2rem;
     }
-    time {
-      font-size: 14px;
-    }
-    span {
-      font-size: 14px;
-      color: color($text, $alpha: 0.7);
-    }
-    .author {
+    .meta {
       @extend .flex-center;
-      gap: 0.4em;
-      font-size: 16px;
-      img {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
+      flex-direction: column;
+      gap: 0.8em;
+      margin: 0.4em 0 1em;
+      .date {
+        width: 100%;
+        padding: 0 0.5em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5em;
+        @media (max-width: 366px) {
+          flex-direction: column;
+        }
       }
-    }
-    .time-read {
-      @extend .flex-center;
-      gap: 0.2em;
-      font-size: 14px;
-      color: color($text, $alpha: 0.7);
-      svg {
-        width: 14px;
-        height: 14px;
+      time {
+        font-size: 14px;
+      }
+      span {
+        font-size: 14px;
+        color: color($text, $alpha: 0.7);
+      }
+      .author {
+        @extend .flex-center;
+        gap: 0.4em;
+        font-size: 16px;
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+        }
+      }
+      .time-read {
+        @extend .flex-center;
+        gap: 0.2em;
+        font-size: 14px;
+        color: color($text, $alpha: 0.7);
+        svg {
+          width: 14px;
+          height: 14px;
+        }
       }
     }
   }

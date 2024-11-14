@@ -1,0 +1,77 @@
+.infobox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding: 0.1em 1.2em;
+  border-left: 4px solid;
+  font-size: 17px;
+  .infobox-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    svg {
+      width: 20px;
+    }
+  }
+  .infobox-content {
+    font-style: italic;
+    p {
+      margin-bottom: 0 !important;
+    }
+  }
+  &.note {
+    border-left-color: color($info);
+    .infobox-header {
+      svg {
+        stroke: color($info);
+        path {
+          stroke: color($info);
+        }
+      }
+    }
+  }
+  &.tip {
+    border-left-color: color($success);
+    .infobox-header {
+      svg {
+        stroke: color($success);
+        path {
+          stroke: color($success);
+        }
+      }
+    }
+  }
+  &.important {
+    border-left-color: color($important);
+    .infobox-header {
+      svg {
+        stroke: color($important);
+        path {
+          stroke: color($important);
+        }
+      }
+    }
+  }
+  &.warning {
+    border-left-color: color($warning);
+    .infobox-header {
+      svg {
+        stroke: color($warning);
+        path {
+          stroke: color($warning);
+        }
+      }
+    }
+  }
+  &.caution {
+    border-left-color: color($danger);
+    .infobox-header {
+      svg {
+        stroke: color($danger);
+        path {
+          stroke: color($danger);
+        }
+      }
+    }
+  }
+}
