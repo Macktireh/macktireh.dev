@@ -16,7 +16,7 @@ export async function getPostsSorted(): Promise<BlogType[]> {
   return posts
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
     .map((post) => {
-      const blog_slug = post.slug.split("/")[0];
+      const blog_slug = post.slug.split("/")[0].split("_")[1];
       const pathname = `/posts/${blog_slug}`;
       return {
         ...post,
