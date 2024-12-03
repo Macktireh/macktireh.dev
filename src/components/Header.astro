@@ -11,11 +11,7 @@ const t = useTranslations(lang);
 <header>
   <nav>
     <h2>
-      <a href="/"
-        >{SITE.authorFirstName.toLowerCase()}<span
-          style="color: rgba(var(--color-primary), 1);">.dev</span
-        ></a
-      >
+      <Link href="/" lang={lang}>{SITE.authorFirstName.toLowerCase()}.dev</Link>
     </h2>
     <div class="internal-links">
       <Link href="/posts" lang={lang}>{t("navbar.posts")}</Link>
