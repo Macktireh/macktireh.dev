@@ -5,7 +5,7 @@ import Icon from "@src/components/Icon.astro";
 const isDark = SITE.defaultTheme === "dark";
 ---
 
-<button data-theme-toggle>
+<button data-theme-toggle  aria-label=`Change to ${isDark ? "light" : "dark"} theme`>
   {isDark ? <Icon name="dark" /> : <Icon name="light" />}</button
 >
 
