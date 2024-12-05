@@ -42,7 +42,7 @@ const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
     </section>
     <hr />
     <section class="latest-posts">
-      <h3>📜 {t("home.latest-post")}</h3>
+      <h2>📜 {t("home.latest-post")}</h2>
       {
         latestPosts.length > 0 ? (
           <Fragment>

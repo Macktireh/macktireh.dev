@@ -22,11 +22,6 @@ interface Props {
   hasRedirect?: boolean;
 }
 
-const canonicalPathname = pathNameIsInLanguage(Astro.url.pathname, DEFAULT_LANG)
-  ? Astro.url.pathname
-  : getLocalizedPathname(Astro.url.pathname, DEFAULT_LANG);
-const canonicalURL = new URL(canonicalPathname, Astro.site);
-
 const {
   title,
   description,
@@ -34,8 +29,13 @@ const {
   ogImage = SITE.ogImageSite,
   lang = DEFAULT_LANG,
 } = Astro.props.metadata;
-
 const { hasRedirect = true } = Astro.props;
+
+const canonicalPathname = pathNameIsInLanguage(Astro.url.pathname, lang)
+  ? Astro.url.pathname
+  : getLocalizedPathname(Astro.url.pathname, DEFAULT_LANG);
+const canonicalURL = new URL(canonicalPathname, Astro.site);
+
 
 const socialImageURL = new URL(ogImage ?? SITE.ogImageSite, Astro.url.origin)
   .href;
