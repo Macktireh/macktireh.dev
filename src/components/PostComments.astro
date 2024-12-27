@@ -1,6 +1,12 @@
 ---
 import { SITE } from "@src/consts";
 import { DEFAULT_LANG } from "@src/i18n/utils";
+
+type Props = {
+  titleDiscussionsMapping: string;
+};
+
+const { titleDiscussionsMapping } = Astro.props as Props;
 ---
 
 <section class="giscus">
@@ -10,7 +16,8 @@ import { DEFAULT_LANG } from "@src/i18n/utils";
     data-repo-id="R_kgDOM_8MfQ"
     data-category="Blog Posts Comments"
     data-category-id="DIC_kwDOM_8Mfc4Cjspm"
-    data-mapping="title"
+    data-mapping="specific"
+    data-term={titleDiscussionsMapping}
     data-strict="1"
     data-reactions-enabled="1"
     data-emit-metadata="0"

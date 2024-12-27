@@ -21,6 +21,7 @@ const {
   lang,
   content,
   slug,
+  giscusTitleDiscussionsMapping,
 } = Astro.props;
 
 const t = useTranslations(lang as LangType);
@@ -89,6 +90,6 @@ const ogImage = `/images/og/${slug}/${lang}.png`;
         <slot />
       </div>
     </article>
-    <PostComments />
+    <PostComments titleDiscussionsMapping={giscusTitleDiscussionsMapping} />
   </main>
 </Layout>
