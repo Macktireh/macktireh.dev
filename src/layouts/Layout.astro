@@ -7,7 +7,7 @@ import { getLangFromUrl, useTranslations, type LangType } from "@src/i18n/utils"
 import { ViewTransitions } from "astro:transitions";
 import { SITE } from "@src/consts";
 
-type Props = Omit<CollectionEntry<"posts">["data"], "pubDate" | "author"> & {
+type Props = Omit<CollectionEntry<"posts">["data"], "pubDate" | "author" | "giscusTitleDiscussionsMapping"> & {
   slug?: string;
   author?: string;
   pubDate?: Date;

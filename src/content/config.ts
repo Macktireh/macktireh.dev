@@ -11,6 +11,7 @@ const posts = defineCollection({
     updatedDate: z.coerce.date().optional(),
     heroImage: z.string().optional(),
     lang: z.enum(LOCALES as [LangType, ...LangType[]]).default(DEFAULT_LANG),
+    giscusTitleDiscussionsMapping: z.string().min(10),
     draft: z.boolean().optional(),
   }),
 });
