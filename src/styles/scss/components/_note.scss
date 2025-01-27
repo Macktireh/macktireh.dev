@@ -21,6 +21,7 @@
   }
   &.note {
     border-left-color: color($info);
+    background-color: color($info, $alpha: 0.1);
     .infobox-header {
       svg {
         stroke: color($info);
@@ -32,6 +33,7 @@
   }
   &.tip {
     border-left-color: color($success);
+    background-color: color($success, $alpha: 0.1);
     .infobox-header {
       svg {
         stroke: color($success);
@@ -43,6 +45,7 @@
   }
   &.important {
     border-left-color: color($important);
+    background-color: color($important, $alpha: 0.1);
     .infobox-header {
       svg {
         stroke: color($important);
@@ -54,6 +57,7 @@
   }
   &.warning {
     border-left-color: color($warning);
+    background-color: color($warning, $alpha: 0.1);
     .infobox-header {
       svg {
         stroke: color($warning);
@@ -65,6 +69,7 @@
   }
   &.caution {
     border-left-color: color($danger);
+    background-color: color($danger, $alpha: 0.1);
     .infobox-header {
       svg {
         stroke: color($danger);

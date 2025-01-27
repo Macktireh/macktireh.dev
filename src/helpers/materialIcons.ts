@@ -1,18 +1,22 @@
 const FileIconsType = {
-  ".astro": "astro",
-  ".css": "css",
-  ".html": "html",
-  ".js": "javascript",
-  ".jsx": "react",
-  ".json": "json",
-  ".md": "markdown",
-  ".mdx": "mdx",
-  ".py": "python",
-  ".scss": "sass",
-  ".ts": "typescript",
-  ".tsx": "react_ts",
-  ".vue": "vue",
-  ".yaml": "yaml",
+  astro: "astro",
+  css: "css",
+  git: "git",
+  html: "html",
+  js: "javascript",
+  jsx: "react",
+  json: "json",
+  md: "markdown",
+  mdx: "mdx",
+  pdm: "pdm",
+  py: "python",
+  pyproject: "python-misc",
+  settings: "settings",
+  scss: "sass",
+  ts: "typescript",
+  tsx: "react_ts",
+  vue: "vue",
+  yaml: "yaml",
 };
 
 export type FileIconType = keyof typeof FileIconsType;
@@ -23,6 +27,7 @@ const FolderIconsType = {
   app: "app",
   apps: "apps",
   assets: "assets",
+  bin: "dist",
   components: "components",
   config: "config",
   data: "data",
@@ -44,6 +49,7 @@ const FolderIconsType = {
   styles: "styles",
   tests: "tests",
   utils: "utils",
+  venv: "environment",
   views: "views",
 };
 
@@ -52,7 +58,7 @@ export function getFileIconUri(ext: FileIconType | string) {
     return `https://raw.githubusercontent.com/material-extensions/vscode-material-icon-theme/7f6543ceb62a238b1e45b194563e72de0d2a41a1/icons/${FileIconsType[ext]}.svg`;
   }
   return `https://raw.githubusercontent.com/Macktireh/Media/d1d8a2a09883ba6b3e4deaab05e5d52f05709607/svg/file.svg`;
-};
+}
 
 export function getFolderIconUrl(type: string, isOpen: boolean = false) {
   if (FolderIconsType[type]) {
@@ -63,4 +69,4 @@ export function getFolderIconUrl(type: string, isOpen: boolean = false) {
   return `https://raw.githubusercontent.com/Macktireh/Media/d1d8a2a09883ba6b3e4deaab05e5d52f05709607/svg/folder${
     isOpen ? "-open" : ""
   }.svg`;
-};
+}

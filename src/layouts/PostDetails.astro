@@ -27,7 +27,7 @@ const {
 const t = useTranslations(lang as LangType);
 
 function getTimeRead(content: string) {
-  const wpm = 200;
+  const wpm = 300;
   const words = content.trim().split(/\s+/).length;
   const time = Math.ceil(words / wpm);
   return time;
