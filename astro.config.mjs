@@ -4,6 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import expressiveCode from "astro-expressive-code";
 import { pluginLanguageBadge } from "./plugins/expressiveCode";
 import { loadEnv } from "vite";
+import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers';
 
 const { PUBLIC_SITE_URL } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 
@@ -24,7 +25,17 @@ export default defineConfig({
   integrations: [
     expressiveCode({
       theme: "dracula",
-      plugins: [pluginLanguageBadge()],
+      plugins: [pluginLanguageBadge(), pluginLineNumbers()],
+      defaultProps: {
+        // Disable line numbers by default
+        showLineNumbers: false,
+        // But enable line numbers for certain languages
+        overridesByLang: {
+          'js,ts,html,css,scss,md,mdx,py,json,toml,yaml': {
+            showLineNumbers: true,
+          },
+        },
+      },
     }),
     mdx(),
     sitemap(),
