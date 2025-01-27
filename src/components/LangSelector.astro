@@ -1,5 +1,6 @@
 ---
 import TranslateCurrentLink from "@src/components/TranslateCurrentLink.astro";
+import { Image } from 'astro:assets';
 import { DEFAULT_LANG, LOCALES, type LangType } from "@src/i18n/utils";
 
 type Props = {
@@ -20,7 +21,7 @@ const _locales = locales.sort((a, b) => {
       {_locales.map((lang, index) => (
         <>
           <TranslateCurrentLink lang={lang}>
-            <img
+            <Image
               src={`/images/flag/${lang}.png`}
               alt={lang}
               width="18"

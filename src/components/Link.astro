@@ -2,15 +2,15 @@
 import { DEFAULT_LANG, type LangType } from "@src/i18n/utils";
 import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<"a"> & { lang?: LangType };
+type Props = HTMLAttributes<"a"> & { lang?: LangType, external?: boolean };
 
-const { href, lang = DEFAULT_LANG, class: className, ...props } = Astro.props;
+const { href, external, lang = DEFAULT_LANG, class: className, ...props } = Astro.props;
 
 const { pathname } = Astro.url;
 const url = `/${lang}/${(href as string).startsWith("/") ? (href as string).slice(1) : href}`;
 const isActive = url === pathname || url === pathname.replace(/\/$/, "");
 ---
 
-<a href={url} class:list={[className, { active: isActive }]} {...props}>
+<a href={external ? href : url} class:list={[className, { active: isActive }]} {...props} target={external ? "_blank" : undefined}>
   <slot />
 </a>

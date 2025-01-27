@@ -77,7 +77,7 @@ a:hover {
   color: color($primary, $alpha: 0.7);
 }
 p {
-  margin-bottom: 1em;
+  margin-bottom: 0 !important;
 }
 .prose p {
   margin-bottom: 2em;
@@ -168,4 +168,8 @@ time {
   path {
     stroke: none;
   }
+}
+
+.expressive-code {
+  margin-bottom: 1.5em;
 }
