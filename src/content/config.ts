@@ -4,7 +4,7 @@ import { SITE } from "@src/consts";
 
 const posts = defineCollection({
   schema: z.object({
-    title: z.string().min(10).max(50),
+    title: z.string().min(10).max(55),
     description: z.string().min(50).max(180),
     author: z.string().default(SITE.authorFirstName),
     pubDate: z.coerce.date(),

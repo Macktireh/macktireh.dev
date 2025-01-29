@@ -1,0 +1,484 @@
+---
+title: "Tout savoir sur la gestion des projets Python avec PDM"
+description: "Découvrez comment PDM révolutionne la gestion de projets Python avec ses fonctionnalités puissantes et flexibles, et apprenez à l'utiliser efficacement pour vos projets."
+pubDate: "Jan 04 2025"
+lang: "fr"
+heroImage: "https://pdm-project.org/en/latest/assets/logo_big.png"
+giscusTitleDiscussionsMapping: "Know everything about managing Python projects with PDM"
+draft: true
+---
+
+import FileTree from "@src/components/FileTree.astro";
+import FileItem from "@src/components/FileItem.astro";
+import FolderItem from "@src/components/FolderItem.astro";
+import Link from "@src/components/Link.astro";
+import Note from "@src/components/Note.astro";
+
+### Table des matières
+
+- [Introduction](#introduction)
+- [Pourquoi utiliser un gestionnaire de projet ?](#pourquoi-utiliser-un-gestionnaire-de-projet)
+- [Qu’est-ce que PDM ?](#quest-ce-que-pdm)
+  - [Caractéristiques principales de PDM](#caractéristiques-principales-de-pdm)
+  - [Alternatives à PDM](#alternatives-à-pdm)
+- [Création et gestion d'un projet Python avec PDM](#création-et-gestion-dun-projet-python-avec-pdm)
+  - [Initialisation d'un projet avec PDM](#initialisation-dun-projet-avec-pdm)
+  - [Gestion des dépendances avec PDM](#gestion-des-dépendances-avec-pdm)
+  - [Scripts PDM](#scripts-pdm)
+    - [Scripts arbitraires](#scripts-arbitraires)
+    - [Scripts à fichier unique](#scripts-à-fichier-unique)
+    - [Scripts utilisateur personnalisés](#scripts-utilisateur-personnalisés)
+    - [Scripts pré et post-exécution](#scripts-pré-et-post-exécution)
+  - [Verrouillage des versions et exportation de `requirements.txt`](#verrouillage-des-versions-et-exportation-de-requirementstxt)
+    - [Verrouillage des versions des dépendances](#verrouillage-des-versions-des-dépendances)
+    - [Exportation de `requirements.txt`](#exportation-de-requirementstxt)
+- [Conclusion](#conclusion)
+
+
+<br />
+
+### Introduction
+
+La gestion de projets Python est une pratique essentielle pour assurer la productivité et la maintenabilité des projets. Que vous travailliez seul ou en équipe, un bon outil de gestion vous aide à organiser vos dépendances, à créer des environnements reproductibles et à simplifier le cycle de vie des applications. Historiquement, les développeurs Python ont utilisé pip et virtualenv, mais ces outils montrent leurs limites face aux exigences modernes. Aujourd'hui, plusieurs outils comme `Conda`, `Hatch`, `PDM`, `Pipenv`, `Poetry` et `UV` proposent des solutions plus complètes. Cet article se concentre sur `PDM`, un outil moderne et respectueux des standards Python.
+
+<br />
+
+### Pourquoi utiliser un gestionnaire de projet ?
+
+L'utilisation d'un gestionnaire de projet moderne comme PDM résout plusieurs problèmes cruciaux du développement Python :
+
+- **Gestion cohérente des dépendances**
+  - Résolution automatique des conflits de versions
+  - Verrouillage précis des versions pour garantir la reproductibilité
+  - Séparation claire entre dépendances de production et de développement
+- **Isolation de l'environnement**
+  - Création automatique d'environnements virtuels
+  - Évite les conflits avec les paquets système
+  - Garantit la portabilité entre différentes machines
+- **Standardisation du projet**
+  - Structure de projet cohérente
+  - Configuration centralisée dans pyproject.toml
+  - Respect des standards Python modernes (PEP 517, PEP 518, PEP 621)
+- **Automatisation des tâches**
+  - Scripts de développement intégrés
+  - Commandes standardisées pour le build, les tests, le linting
+  - Hooks pour automatiser des tâches récurrentes
+- **Collaboration facilitée**
+  - Garantit que tous les développeurs utilisent les mêmes versions
+  - Simplifie l'intégration continue
+  - Facilite l'onboarding des nouveaux développeurs
+
+<br />
+
+### Qu’est-ce que PDM ?
+
+PDM est un gestionnaire de paquets et de dépendances moderne pour Python, conçu pour simplifier et optimiser le flux de travail des développeurs. Il prend en charge les dernières normes PEP, notamment PEP 517 et PEP 621, et offre une approche flexible et puissante de la gestion des projets Python.
+
+#### Caractéristiques principales de PDM :
+
+- **Résolution rapide des dépendances** : `PDM` utilise un résolveur de dépendances efficace, particulièrement adapté aux distributions binaires volumineuses, garantissant une installation rapide et fiable des paquets.
+
+- **Backend de construction conforme à PEP 517** : Il offre un backend de construction compatible avec la spécification PEP 517, facilitant la création et la distribution de paquets Python.
+
+- **Métadonnées de projet selon PEP 621** : `PDM` utilise le format de métadonnées de projet défini par PEP 621, permettant une configuration claire et standardisée des projets Python.
+
+- **Système de plugins flexible** : Il dispose d'un système de plugins puissant, permettant d'étendre ses fonctionnalités selon les besoins spécifiques du projet.
+
+- **Scripts utilisateur polyvalents** : `PDM` permet l'utilisation de scripts personnalisés, offrant une flexibilité accrue dans la gestion des tâches de développement.
+
+- **Installation de Python intégrée** : Il inclut la possibilité d'installer des versions spécifiques de Python, simplifiant la gestion des environnements de développement.
+
+- **Cache d'installation centralisé** : `PDM` propose une installation centralisée en cache, similaire à des outils comme `pnpm`, optimisant l'utilisation de l'espace disque et la vitesse d'installation.
+
+<Note>
+  `PDM` <Link href="https://pdm-project.org/en/latest/usage/uv/" external>prend en charge expérimentalement `UV` comme résolveur et installateur</Link>, rendant ainsi le processus plus rapide et performant.
+</Note>
+<br />
+
+
+#### Alternatives à PDM :
+
+Le choix d’un gestionnaire de projet dépend avant tout de vos besoins spécifiques et de vos préférences personnelles. Chaque outil a ses points forts et ses limites, et il est important de trouver celui qui s'intègre le mieux à votre flux de travail. Bien que PDM ne soit pas la seule solution disponible, il se distingue par sa simplicité et sa flexibilité, ce qui en fait une excellente option pour de nombreux développeurs. Cela dit, voici un aperçu des alternatives populaires à PDM :
+
+<table style="border: 1px solid rgba(var(--color-text), 1); border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr style="border: 1px solid rgba(var(--color-text), 1);">
+      <th style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;"></th>
+      <th style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        Points forts
+      </th>
+      <th style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        Points faibles
+      </th>
+    </tr>
+  </thead>
+  <tbody style="font-size: 0.85em;">
+    <tr style="border: 1px solid rgba(var(--color-text), 1);">
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        <strong>Conda</strong>
+      </td>
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        - Crée et gère facilement des environnements virtuels, même pour des bibliothèques non Python (C++, R, etc.).<br />
+        - Fonctionne non seulement avec Python, mais aussi avec R et d'autres langages scientifiques. <br />
+        - Livré avec Anaconda ou Miniconda, avec de nombreux packages précompilés.
+      </td>
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        - Les environnements sont souvent volumineux en termes de taille. <br />
+        - Certaines bibliothèques récentes ne sont pas immédiatement disponibles. <br />
+        - Moins optimisé pour les workflows purement Python. <br />
+        - Plus lent pour résoudre les dépendances comparé à d'autres outils modernes.
+      </td>
+    </tr>
+    <tr style="border: 1px solid rgba(var(--color-text), 1);">
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        <strong>Hatch</strong>
+      </td>
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        - Très modulaire. <br />
+        - Excellente gestion des environnements. <br />
+        - Scripts puissants.
+      </td>
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        - Documentation est parfois moins détaillée que celle de ses concurrents. <br />
+        - Communauté plus petite.
+      </td>
+    </tr>
+    <tr style="border: 1px solid rgba(var(--color-text), 1);">
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        <strong>Pipenv</strong>
+      </td>
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        - Utilise ``Pipfile`` et ``Pipfile.lock`` pour gérer les dépendances, ce qui est plus lisible que ``requirements.txt``. <br />
+        - Crée automatiquement un environnement virtuel. <br />
+        - Facile à utiliser pour les débutants.
+      </td>
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        - Le processus de résolution des dépendances est souvent plus long que les outils modernes. <br />
+        - Moins de fonctionnalités. <br />
+        - Moins flexible pour les workflows modernes.
+      </td>
+    </tr>
+    <tr style="border: 1px solid rgba(var(--color-text), 1);">
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        <strong>Poetry</strong>
+      </td>
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        - Prise en charge de ``pyproject.toml``, avec un support natif pour la publication sur PyPI. <br />
+        - Interface élégante et intuitive. <br />
+        - Excellent gestionnaire de dépendances. <br />
+        - Outil de build intégré.
+      </td>
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        - Moins flexible pour les scripts personnalisés. <br />
+        - Configuration parfois complexe.
+      </td>
+    </tr>
+    <tr style="border: 1px solid rgba(var(--color-text), 1);">
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        <strong>UV</strong>
+      </td>
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        - Ultra rapide et performant (écrit en Rust); <br />
+        - Interface élégante et intuitive. <br />
+        - Excellent gestionnaire de dépendances. <br />
+        - Compatible avec pip; <br />
+        - Développement très actif. <br />
+      </td>
+      <td style="border: 1px solid rgba(var(--color-text), 1); padding: 8px;">
+        - Ne prend pas en charge les scripts utilisateur personnalisés.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+
+### Création et gestion d'un projet Python avec PDM
+
+Pour commencer à utiliser PDM, vous devez d'abord l'installer sur votre système. Veuillez suivre les instructions d'installation officielles dans la [documentation PDM](https://pdm-project.org/en/latest/#installation). Une fois l'installation terminée, vous pouvez vérifier la version de PDM en exécutant la commande `pdm --version` dans votre terminal :
+
+```shell frame="terminal" title="Terminal"
+$ pdm --version
+```
+
+#### Initialisation d'un projet avec PDM
+
+Pour initialiser un nouveau projet Python avec PDM, nous utiliseron la commande `pdm init minimal`. Cette commande crée un projet minimal avec un fichier `pyproject.toml` contenant les informations de base du projet.
+
+Créons d'abord un nouveau répertoire pour notre projet nommé `my-project` et déplaçons-nous dedans :
+
+```shell frame="terminal" title="Terminal"
+$ mkdir my-project && cd my-project
+```
+
+Ensuite, initialisons le projet avec la commande `pdm init minimal` :
+
+```shell frame="terminal" title="Terminal"
+$ pdm init minimal
+```
+
+Lors d'initialisation `PDM` vous posera plusieurs questions _l'interpréteur Python à utiliser, le nom du projet, la version, la licence, l'auteur, etc_. Une fois les questions répondues, vous obtiendrez une structure de projet minimal similaire à celle-ci :
+
+<FileTree>
+  <FolderItem name="my-project" icon="folder" isOpen={true}>
+    <FolderItem name=".venv" icon="venv">
+      <FolderItem name="bin" icon="bin" />
+      <FolderItem name="lib" icon="lib" />
+      <FileItem name=".gitignore" ext="git" />
+      <FileItem name="pyvenv.cfg" ext="settings" />
+    </FolderItem>
+    <FileItem name="pyproject.toml" ext="pyproject" />
+    <FileItem name=".pdm-python" ext="pdm" />
+  </FolderItem>
+</FileTree>
+
+Expliquons un peu les fichiers générés lors de l'initialisation du projet :
+
+- **`pyproject.toml`** : Ce fichier est le cœur de votre projet. Il contient les métadonnées de votre projet (nom, version, description, etc.), ainsi que les dépendances et scripts personnalisés.
+- **`.pdm-python`** : Ce fichier stocke le chemin d'accès à l'interpréteur Python utilisée pour ce projet spécifique.
+- **`.venv/`** : Le répertoire de l'environnement virtuel qui isole vos dépendances de votre système global.
+
+<br />
+
+#### Gestion des dépendances avec PDM
+
+L'une des fonctionnalités principales de PDM est la gestion simple et efficace des dépendances. Voici quelques commandes courantes que vous utiliserez pour manipuler les dépendances :
+
+**1. Installation de dépendances**
+
+Pour ajouter une nouvelle dépendance à votre projet, utilisez la commande suivante :
+
+```shell frame="terminal" title="Terminal"
+$ pdm add <nom_du_paquet>
+```
+
+Exemple : Ajoutons Django à notre projet :
+
+```shell frame="terminal" title="Terminal"
+$ pdm add django
+```
+
+Cette commande met automatiquement à jour le fichier `pyproject.toml` et verrouille les versions dans `pdm.lock`. Après l'installation, le fichier pyproject.toml est mis à jour avec la dépendance ajoutée :
+
+```toml title="pyproject.toml" ins={12}
+[project]
+name = "my-project"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "<your name>", email = "<your email>"},
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5.1.4",
+]
+
+
+[tool.pdm]
+distribution = false
+```
+
+**2. Installation de dépendances de développement**
+
+Pour ajouter des dépendances spécifiques au développement, utilisez l'option `-dG <nom_du_groupe>` :
+
+```shell frame="terminal" title="Terminal"
+$ pdm add -dG dev django-debug-toolbar
+```
+
+```shell frame="terminal" title="Terminal"
+$ pdm add -dG test pytest-django
+```
+
+Cela ajoute ``django-debug-toolbar`` et `pytest-django` à des sections distinctes des dépendances dans `pyproject.toml`, vous permettant de séparer les outils nécessaires uniquement pour le développement et les tests. Le fichier ``pyproject.toml`` inclut maintenant une section pour les dépendances de développement et une autre pour les tests :
+
+```toml title="pyproject.toml" ins={15-21}
+[project]
+name = "my-project"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "<your name>", email = "<your email>"},
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5.1.4",
+]
+
+[dependency-groups]
+dev = [
+    "django-debug-toolbar>=4.4.6",
+]
+test = [
+    "pytest-django>=4.9.0",
+]
+
+
+[tool.pdm]
+distribution = false
+```
+
+**3. Mise à jour et suppression de dépendances**
+
+Mettre à jour une dépendance :
+
+  ```shell frame="terminal" title="Terminal"
+  $ pdm update <nom_du_paquet>
+  ```
+
+Supprimer une dépendance :
+  ```shell frame="terminal" title="Terminal"
+  $ pdm remove <nom_du_paquet>
+  ```
+
+<br />
+#### Scripts PDM
+
+Avec PDM, vous avez la possibilité de gérer des scripts de manière flexible et puissante, ce qui simplifie les tâches courantes ou complexes dans vos projets. Inspiré par des systèmes comme npm run, PDM permet de définir et d'exécuter des scripts directement dans le contexte de votre projet, tout en intégrant vos dépendances locales. Voici un aperçu des que fonctionnalités et des types de scripts que PDM propose. Encore une fois, je vous invite à consulter <Link href="https://pdm-project.org/en/latest/usage/scripts/" external>la documentation officielle</Link> pour plus de détails.
+
+##### Scripts arbitraires
+
+PDM permet d'exécuter n'importe quelle commande ou script dans un environnement qui inclut automatiquement les packages de votre projet. Par exemple :
+
+```shell frame="terminal" title="Terminal"
+$ pdm run python manage.py runserver
+```
+
+Ici, la commande est exécutée avec l'ensemble des dépendances du projet déjà disponibles, sans avoir besoin de gérer manuellement un environnement virtuel.
+
+##### Scripts à fichier unique
+
+Introduits à partir de la version ``2.16.0``, les scripts à fichier unique permettent d’inclure directement des métadonnées dans vos fichiers Python. Ces métadonnées définissent des dépendances ou des paramètres spécifiques nécessaires à l'exécution du script. Exemple :
+
+```python title="script.py"
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#   "httpx",
+# ]
+# ///
+
+import requests
+
+response = requests.get("https://jsonplaceholder.typicode.com/todos")
+todos = response.json()
+print(todos)
+```
+
+En lançant ce script avec :
+
+```shell frame="terminal" title="Terminal"
+$ pdm run script.py
+```
+
+PDM créera automatiquement un environnement temporaire avec les dépendances spécifiées (``httpx``), exécutera le script, puis nettoiera l'environnement une fois terminé. Vous pouvez également utiliser l’option ``--reuse-env`` pour conserver l'environnement temporaire et éviter de le recréer à chaque exécution.
+
+##### Scripts utilisateur personnalisés
+
+Vous pouvez définir des scripts directement dans la section ``[tool.pdm.scripts]`` du fichier ``pyproject.toml``. Ces scripts sont parfaits pour automatiser les tâches de développement et de tests, sans nécessiter que votre projet soit installé comme un package Python. Voici un exemple :
+
+```toml title="pyproject.toml" ins={23-27}
+[project]
+name = "my-project"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "<your name>", email = "<your email>"},
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.12"
+dependencies = [
+    "django>=5.1.4",
+]
+
+[dependency-groups]
+dev = [
+    "django-debug-toolbar>=4.4.6",
+]
+test = [
+    "pytest-django>=4.9.0",
+]
+
+[tool.pdm.scripts]
+dev = "python manage.py runserver"
+mm = "python manage.py makemigrations"
+migrate = "python manage.py migrate"
+test = "pytest tests/"
+
+[tool.pdm]
+distribution = false
+```
+
+Dans le terminal, vous pouvez exécuter ce script avec :
+
+```shell frame="terminal" title="Terminal"
+$ pdm run dev
+```
+
+Tous les arguments supplémentaires seront automatiquement ajoutés à la commande. Par exemple :
+
+```shell frame="terminal" title="Terminal"
+$ pdm run dev --version
+```
+
+<Note>
+  Également, PDM permet de définir différents types de scripts pour répondre à une grande variété de besoins, tels que les scripts de type <Link href="https://pdm-project.org/en/latest/usage/scripts/#cmd" external>**cmd**</Link>, <Link href="https://pdm-project.org/en/latest/usage/scripts/#shell" external>**shell**</Link>, <Link href="https://pdm-project.org/en/latest/usage/scripts/#call" external>**call**</Link> et les <Link href="https://pdm-project.org/en/latest/usage/scripts/#composite" external>**composites**</Link>.
+</Note>
+<br />
+
+##### Scripts pré et post-exécution
+
+PDM prend également en charge l'exécution de scripts avant et après un script principal, ce qui permet de composer des pipelines complexes et automatisés. Par exemple :
+
+```toml title="pyproject.toml"
+[tool.pdm.scripts]
+pre_compress = "echo 'Préparation à la compression...'"
+compress = "tar czvf compressed.tar.gz data/"
+post_compress = "echo 'Compression terminée !'"
+```
+
+Dans cet exemple :
+- ``pre_compress`` affiche un message indiquant que la préparation est en cours.
+- ``compress`` exécute la commande de compression des fichiers du dossier ``data/`` dans une archive ``compressed.tar.gz``.
+- ``post_compress`` affiche un message confirmant que l’opération de compression est terminée.
+
+<br />
+<Note variant="tip">
+  Pour voir tous les scripts disponibles dans votre projet, utilisez la commande ``pdm run --list``.
+</Note>
+<br />
+
+#### Verrouillage des versions et exportation de `requirements.txt`
+
+PDM fournit des outils puissants pour gérer et partager les dépendances de votre projet de manière cohérente. Voici comment verrouiller les versions des dépendances et générer un fichier ``requirements.txt`` pour une compatibilité maximale avec d'autres outils.
+
+##### Verrouillage des versions des dépendances
+
+Lorsque vous travaillez sur un projet collaboratif, il est essentiel que tous les développeurs utilisent les mêmes versions des dépendances pour garantir un environnement homogène. PDM facilite cette tâche avec la commande suivante :
+
+```shell frame="terminal" title="Terminal"
+$ pdm lock
+```
+
+Cela garantit que votre application ou service fonctionnera de manière identique, quelle que soit la machine sur laquelle il est exécuté.
+
+##### Exportation de ``requirements.txt``
+
+Bien que PDM utilise son propre fichier de verrouillage (``pdm.lock``), il est parfois nécessaire de générer un fichier requirements.txt pour des outils ou environnements qui ne prennent pas encore en charge PDM, comme certains systèmes CI/CD ou plateformes cloud.
+
+Pour exporter un fichier requirements.txt :
+
+```shell frame="terminal" title="Terminal"
+$ pdm export -f requirements --without-hashes
+```
+
+Cela génère un fichier `requirements.txt` contenant toutes les dépendances verrouillées.
+
+### Conclusion
+
+En résumé, ``PDM`` s’impose comme un outil de gestion de projet Python moderne et efficace, offrant des fonctionnalités qui simplifient et améliorent considérablement le workflow des développeurs. En intégrant des concepts inspirés de l’écosystème JavaScript (comme ``npm``) et en adoptant les standards modernes de Python (PEP 582, PEP 621), il redéfinit la manière de gérer les dépendances et les environnements.
