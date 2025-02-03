@@ -6,9 +6,8 @@ const posts = await getPostsSorted();
 
 // Transform the collection into an object
 const pages = Object.fromEntries(
-  posts.map(({ id, blog_slug, data }) => [id, { blog_slug, data }])
+  posts.map(({ id, blog_slug, data }) => [id.split("_")[1], { blog_slug, data }])
 );
-
 
 export const { getStaticPaths, GET } = OGImageRoute({
   // The name of your dynamic route segment.
@@ -19,7 +18,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
   pages,
 
   // For each page, this callback will be used to customize the OG image.
-  getImageOptions: async (_, { data, blog_slug }: (typeof pages)[string]) => {    
+  getImageOptions: async (_, { data, blog_slug }: (typeof pages)[string]) => {
     return {
       title: data.title,
       description: data.description,
@@ -28,7 +27,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
         path: SITE.ogImagePost,
         size: [1200, 630],
         fit: "cover",
-      }
+      },
     };
   },
 });
