@@ -23,6 +23,13 @@ export const { getStaticPaths, GET } = OGImageRoute({
       title: data.title,
       description: data.description,
       padding: 76,
+      font: {
+        /** Font style for the page title. */
+        title: { size: 64, weight: "Bold" },
+    
+        /** Font style for the page description. */
+        description: { size: 36, weight: "SemiBold" },
+      },
       bgImage: {
         path: SITE.ogImagePost,
         size: [1200, 630],
