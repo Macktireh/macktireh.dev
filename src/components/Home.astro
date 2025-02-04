@@ -52,7 +52,7 @@ const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
                   <Link href={post.pathname} lang={lang}>
                     {post.data.title}
                   </Link>
-                  <FormattedDate date={post.data.pubDate} />
+                  <FormattedDate date={post.data.pubDate} withEmoji/>
                   <p>{post.data.description}</p>
                 </li>
               ))}

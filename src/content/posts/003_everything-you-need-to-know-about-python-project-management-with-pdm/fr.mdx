@@ -1,11 +1,10 @@
 ---
-title: "Tout savoir sur la gestion des projets Python avec PDM"
-description: "Découvrez comment PDM révolutionne la gestion de projets Python avec ses fonctionnalités puissantes et flexibles, et apprenez à l'utiliser efficacement pour vos projets."
+title: "Tout ce que vous devez savoir sur la gestion de projets Python avec PDM"
+description: "Découvrez comment PDM révolutionne la gestion de projets Python avec ses fonctionnalités puissantes et flexibles, et apprenez à l'utiliser efficacement pour vos projets de développement."
 pubDate: "Jan 04 2025"
 lang: "fr"
 heroImage: "https://pdm-project.org/en/latest/assets/logo_big.png"
-giscusTitleDiscussionsMapping: "Know everything about managing Python projects with PDM"
-draft: true
+giscusTitleDiscussionsMapping: "Everything You Need to Know About Python Project Management with PDM"
 ---
 
 import FileTree from "@src/components/FileTree.astro";
@@ -29,9 +28,9 @@ import Note from "@src/components/Note.astro";
     - [Scripts à fichier unique](#scripts-à-fichier-unique)
     - [Scripts utilisateur personnalisés](#scripts-utilisateur-personnalisés)
     - [Scripts pré et post-exécution](#scripts-pré-et-post-exécution)
-  - [Verrouillage des versions et exportation de `requirements.txt`](#verrouillage-des-versions-et-exportation-de-requirementstxt)
+  - [Verrouillage des versions et exportation de requirements.txt](#verrouillage-des-versions-et-exportation-de-requirementstxt)
     - [Verrouillage des versions des dépendances](#verrouillage-des-versions-des-dépendances)
-    - [Exportation de `requirements.txt`](#exportation-de-requirementstxt)
+    - [Exportation de requirements.txt](#exportation-de-requirementstxt)
 - [Conclusion](#conclusion)
 
 
@@ -453,7 +452,7 @@ Dans cet exemple :
 </Note>
 <br />
 
-#### Verrouillage des versions et exportation de `requirements.txt`
+#### Verrouillage des versions et exportation de requirements.txt
 
 PDM fournit des outils puissants pour gérer et partager les dépendances de votre projet de manière cohérente. Voici comment verrouiller les versions des dépendances et générer un fichier ``requirements.txt`` pour une compatibilité maximale avec d'autres outils.
 
@@ -467,7 +466,7 @@ $ pdm lock
 
 Cela garantit que votre application ou service fonctionnera de manière identique, quelle que soit la machine sur laquelle il est exécuté.
 
-##### Exportation de ``requirements.txt``
+##### Exportation de requirements.txt
 
 Bien que PDM utilise son propre fichier de verrouillage (``pdm.lock``), il est parfois nécessaire de générer un fichier requirements.txt pour des outils ou environnements qui ne prennent pas encore en charge PDM, comme certains systèmes CI/CD ou plateformes cloud.
 

@@ -1,12 +1,13 @@
 ---
 interface Props {
 	date: Date;
+	withEmoji?: boolean;
 }
 
-const { date } = Astro.props;
+const { date, withEmoji = false } = Astro.props;
 ---
 
-<time datetime={date.toISOString()}>📆 
+<time datetime={date.toISOString()}>{withEmoji && "📆 "}
 	{
 		date.toLocaleDateString('en-us', {
 			year: 'numeric',
