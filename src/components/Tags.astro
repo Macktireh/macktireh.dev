@@ -1,0 +1,17 @@
+---
+type Props = {
+  tags?: string[];
+};
+
+const { tags } = Astro.props;
+---
+
+{
+  tags && tags.length > 0 ? (
+    <ul class="tags">
+      {tags.map((tag) => (
+        <li>#{tag}</li>
+      ))}
+    </ul>
+  ) : null
+}

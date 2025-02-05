@@ -95,9 +95,15 @@
         color: color($text);
         text-decoration: none;
         &:hover {
-          color: color($primary);
+          color: color($info);
           text-decoration: underline;
         }
+      }
+      .post-meta {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        flex-wrap: wrap;
       }
       time {
         font-size: 0.8em;

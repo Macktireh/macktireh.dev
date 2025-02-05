@@ -11,7 +11,7 @@ export const SITE = {
   author: `${AUTHOR_FIRST_NAME} ${AUTHOR_LAST_NAME}`,
   ogImageSite: "/images/og-site.png",
   ogImagePost: "./public/images/og-post.png",
-  postsPaginationSize: 2,
+  postsPaginationSize: 6,
   defaultLang: "en",
   languages: {
     en: "English",
