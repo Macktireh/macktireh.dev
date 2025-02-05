@@ -3,6 +3,7 @@ import FormattedDate from "@src/components/FormattedDate.astro";
 import LangSelector from "@src/components/LangSelector.astro";
 import Link from "@src/components/Link.astro";
 import SocialLinks from "@src/components/SocialLinks.astro";
+import Tags from "@src/components/Tags.astro";
 import { getPostsByLang } from "@src/services/posts";
 import Layout from "@src/layouts/Layout.astro";
 import { useTranslations, type LangType } from "@src/i18n/utils";
@@ -52,7 +53,11 @@ const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
                   <Link href={post.pathname} lang={lang}>
                     {post.data.title}
                   </Link>
-                  <FormattedDate date={post.data.pubDate} withEmoji/>
+                  <div class="post-meta">
+                    <FormattedDate date={post.data.pubDate} withEmoji />
+                    <span>&#8901;</span>
+                    <Tags tags={post.data.tags} />
+                  </div>
                   <p>{post.data.description}</p>
                 </li>
               ))}

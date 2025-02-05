@@ -9,6 +9,7 @@ const posts = defineCollection({
     author: z.string().default(SITE.authorFirstName),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
+    tags: z.array(z.string()).default(["others"]),
     heroImage: z.string().optional(),
     lang: z.enum(LOCALES as [LangType, ...LangType[]]).default(DEFAULT_LANG),
     giscusTitleDiscussionsMapping: z.string().min(10),

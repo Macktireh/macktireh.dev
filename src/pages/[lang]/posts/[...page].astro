@@ -12,6 +12,7 @@ import { SITE } from "@src/consts";
 import Link from "@src/components/Link.astro";
 import LangSelector from "@src/components/LangSelector.astro";
 import Pagination from "@src/components/Pagination.astro";
+import Tags from "@src/components/Tags.astro";
 
 export async function getStaticPaths({ paginate }) {
   const posts = await getPostsSorted();
@@ -65,8 +66,9 @@ for (const _lang of LOCALES) {
                     alt=""
                   />
                   <h3 class="title">{post.data.title}</h3>
+                  <Tags tags={post.data.tags} />
                   <p class="date">
-                    <FormattedDate date={post.data.pubDate} />
+                    <FormattedDate date={post.data.pubDate} withEmoji />
                   </p>
                 </Link>
               </li>
