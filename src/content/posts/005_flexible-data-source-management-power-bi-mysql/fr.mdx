@@ -1,0 +1,256 @@
+---
+title: "Gestion flexible des sources de données dans Power BI avec MySQL"
+description: "A practical approach to dynamically manage data sources in Power BI, switching between MySQL and CSV based on the environment to optimize connectivity and performance. 🚀"
+pubDate: "Jan 24 2025"
+tags: ["Power BI", "Power Query", "MySQL", "CSV", "Optimisation"]
+lang: "fr"
+heroImage: "https://github.com/user-attachments/assets/fc5d50c3-248d-4807-b1c1-8d45baddf6da"
+giscusTitleDiscussionsMapping: "Flexible Data Source Management in Power BI with MySQL"
+draft: true
+---
+
+import FileTree from "@src/components/FileTree.astro";
+import FileItem from "@src/components/FileItem.astro";
+import FolderItem from "@src/components/FolderItem.astro";
+import Link from "@src/components/Link.astro";
+import Note from "@src/components/Note.astro";
+
+### Table des matières
+
+- [Introduction](#introduction)
+- [Problématiques rencontrées](#problématiques-rencontrées)
+  - [1. Problèmes de connectivité](#1-problèmes-de-connectivité)
+  - [2. Performance et volume de données](#2-performance-et-volume-de-données)
+- [Solution mise en place](#solution-mise-en-place)
+  - [1. Architecture de la solution](#1-architecture-de-la-solution)
+  - [2. Préparation des données](#2-préparation-des-données)
+  - [3. Configuration des paramètres](#3-configuration-des-paramètres)
+- [Implémentation technique](#implémentation-technique)
+  - [1. Variable dynamique de détection d'environnement](#1-variable-dynamique-de-détection-denvironnement)
+  - [2. Fonction GetData](#2-fonction-getdata)
+  - [3. Utilisation de la Fonction GetData](#3-utilisation-de-la-fonction-getdata)
+  - [4. Optimisation des Transformations des Données](#4-optimisation-des-transformations-des-données)
+- [Conclusion](#conclusion)
+
+<br />
+### Introduction
+
+Dans le cadre d’un projet pour l’un de nos clients, sur lequel je travaille actuellement (au moment de la rédaction de cet article), nous avons été confrontés à un défi intéressant sur la création d’un tableau de bord Power BI connecté à une base de données MySQL contenant des millions de lignes. Cette expérience nous a permis de développer une solution élégante pour gérer différentes sources de données en fonction de l’environnement de travail. Dans cet article, je vais vous présenter les différentes étapes de construction de cette solution, en abordant les problématiques rencontrées et les solutions mises en place.
+
+### Problématiques rencontrées
+
+##### 1. Problèmes de connectivité
+
+Après l'installation du driver MySQL pour Power Query, nous avons rencontré des difficultés de connexion liées à la configuration du pare-feu sur le poste professionnel du client. Fait intéressant, la connexion fonctionnait parfaitement depuis mon ordinateur personnel et lors de l'actualisation des rapports dans le service Power BI.
+
+##### 2. Performance et volume de données
+
+La base de données contenait plusieurs millions de lignes, rendant le chargement local des données particulièrement chronophage. Cette situation nécessitait une approche alternative pour optimiser les performances en environnement de développement.
+
+### Solution mise en place
+
+##### 1. Architecture de la solution
+
+Pour résoudre ces problèmes, nous avons développé une approche hybride :
+
+- En environnement local (Power BI Desktop) : utilisation de fichiers CSV stockés sur SharePoint
+- En production (Power BI Service) : connexion directe à la base de données MySQL
+
+<br />
+##### 2. Préparation des données
+
+Pour simplifier le développement en local, nous avons d'abord rédigé la requête SQL permettant d'extraire les données nécessaires. Ensuite, nous avons conçu un script Python qui se connecte à la base de données, exécute la requête, exporte les résultats au format CSV, puis nous avons déposé les fichiers sur un site SharePoint.
+
+##### 3. Configuration des paramètres
+
+Nous avons mis en place cinq paramètres permettant de gérer dynamiquement les sources de données :
+
+![parameters](https://github.com/user-attachments/assets/b83a1abc-b0a4-4a45-a980-6571bf7d88bc)
+
+- **`ENVIRONMENT`** : choix entre LOCAL et PRODUCTION
+- **`URL_CSV_FILE`** : lien vers le fichier CSV
+- **`MySQL_HOSTNAME`** : nom d'hôte MySQL
+- **`MySQL_DATABASE_NAME`** : nom de la base de données
+- **`MySQL_QUERY`** : requête SQL préconstruite
+
+<br />
+
+### Implémentation technique
+
+##### 1. Variable dynamique de détection d'environnement
+
+Nous avons créé une variable dynamique booléenne `IS_PRODUCTION` qui simplifie la détection de l'environnement :
+
+![is_prod](https://github.com/user-attachments/assets/b008a278-203c-4c2a-bbe0-1e48310392ad)
+
+```powerquery
+let
+    Source = Text.Contains(Text.Upper(ENVIRONMENT), "PROD")
+in
+    Source
+```
+
+Cette variable retourne automatiquement :
+
+- `True` si le paramètre ENVIRONMENT contient "PROD"
+- `False` dans tous les autres cas
+
+Cette approche nous permet d'utiliser simplement `IS_PRODUCTION` dans nos conditions plutôt que de réécrire la formule complète `Text.Contains(Text.Upper(ENVIRONMENT), "PROD")` à chaque fois.
+
+##### 2. Fonction GetData
+
+Nous avons créé une fonction Power Query nommée `GetData`, permettant de récupérer les données depuis MySQL en production et depuis un fichier CSV en local.
+
+![getdata](https://github.com/user-attachments/assets/487fa3bf-198b-418d-b560-a751998720ad)
+
+```powerquery
+let
+    GetData = (NumberColumnsCSV as number, MySQLQuery as text) =>
+        let
+            CsvSource = Csv.Document(
+                Web.Contents(URL_CSV_FILE),
+                [
+                    Delimiter = ",",
+                    Columns = NumberColumnsCSV,
+                    Encoding = 1252,
+                    QuoteStyle = QuoteStyle.None
+                ]
+            ),
+            CsvPromotedHeaders = Table.PromoteHeaders(CsvSource, [PromoteAllScalars = true]),
+
+            SourceMySQL = MySQL.Database(
+                MySQL_HOSTNAME,
+                MySQL_DATABASE_NAME,
+                [
+                    ReturnSingleDatabase = true,
+                    Query = MySQLQuery,
+                    CreateNavigationProperties = false
+                ]
+            ),
+            Result = if IS_PRODUCTION then SourceMySQL else CsvPromotedHeaders
+        in
+            Result
+in
+    GetData
+```
+
+Cette fonction réalise trois opérations essentielles :
+
+1. **Chargement des données locales** :
+
+   - Récupère un fichier CSV depuis une URL
+   - Utilise un délimiteur de virgule
+   - Spécifie le nombre de colonnes
+   - Gère l'encodage et le style de citation
+   - Promeut automatiquement la première ligne comme en-têtes
+
+2. **Connexion à la base de données** :
+
+   - Établit une connexion à MySQL en production
+   - Exécute une requête SQL personnalisée
+   - Récupère les données directement depuis la base
+
+3. **Sélection dynamique de la source** :
+
+   - Bascule automatiquement entre CSV local et base MySQL
+   - Utilise la variable `IS_PRODUCTION` comme critère de sélection
+
+
+<br />
+##### 3. Utilisation de la Fonction GetData
+
+Pour utiliser la fonction GetData, il suffit de créer une nouvelle requête et de la renommer comme vous le souhaitez. Dans cet exemple, nous l'appelons "MyData".
+
+![mydata](https://github.com/user-attachments/assets/1425d395-2c12-498a-bb27-3731516e1b13)
+
+```powerquery
+let
+    Source = GetData(5, MySQL_QUERY)
+in
+    Source
+```
+
+
+Cette approche permet de récupérer les données en spécifiant uniquement deux arguments :
+
+- Le nombre de colonnes du fichier CSV (5 dans cet exemple)
+- La requête MySQL à exécuter (via le paramètre MySQL_QUERY)
+
+<br />
+*c'est simple, n'est-ce pas ? 🙂*
+
+##### 4. Optimisation des Transformations des Données
+
+Dans certains cas, nous devons appliquer des transformations spécifiques aux données CSV. Pour cela, nous avons identifié deux approches possibles :
+
+-- **Modification de la Fonction GetData**
+
+Une première approche consiste à intégrer les transformations directement dans la fonction GetData :
+
+```powerquery ins={"Ajouter les étapes de transformation spécifiques aux données CSV ici":14-17} del={"Supprimer":28} ins={"Remplacer":29}
+let
+    GetData = (NumberColumnsCSV as number, MySQLQuery as text) =>
+        let
+            CsvSource = Csv.Document(
+                Web.Contents(URL_CSV_FILE),
+                [
+                    Delimiter = ",",
+                    Columns = NumberColumnsCSV,
+                    Encoding = 1252,
+                    QuoteStyle = QuoteStyle.None
+                ]
+            ),
+            CsvPromotedHeaders = Table.PromoteHeaders(CsvSource, [PromoteAllScalars = true]),
+
+            CsvReplacedValue = Table.ReplaceValue(
+                CsvPromotedHeaders, ".", ",", Replacer.ReplaceText, {"my_column_numeric"}
+            ),
+
+            SourceMySQL = MySQL.Database(
+                MySQL_HOSTNAME,
+                MySQL_DATABASE_NAME,
+                [
+                    ReturnSingleDatabase = true,
+                    Query = MySQLQuery,
+                    CreateNavigationProperties = false
+                ]
+            ),
+            Result = if IS_PRODUCTION then SourceMySQL else CsvPromotedHeaders
+            Result = if IS_PRODUCTION then SourceMySQL else CsvReplacedValue
+        in
+            Result
+in
+    GetData
+```
+
+Cependant, cette approche n'est pas recommandée car elle va à l'encontre du principe de responsabilité unique : une fonction devrait idéalement n'avoir qu'une seule responsabilité.
+
+-- **Transformation dans la Requête MyData**
+
+Une approche plus élégante consiste à séparer la récupération des données de leur transformation. Mettons à jour notre requête "MyData" pour appliquer les transformations spécifiques aux données CSV :
+
+```powerquery ins={3-9}
+let
+    Source = GetData(5, MySQL_QUERY),
+    ReplacedValue = Table.ReplaceValue(
+        Source, ".", ",", Replacer.ReplaceText, {"my_column_numeric"}
+    ),
+    ChangedType = Table.TransformColumnTypes(
+        if IS_PRODUCTION then Source else ReplacedValue,
+        {{"my_column_numeric", type number}}
+    )
+in
+    ChangedType
+```
+
+Cette seconde approche offre plusieurs avantages :
+
+- Séparation claire des responsabilités
+- Meilleure maintenabilité du code
+- Plus grande flexibilité pour modifier les transformations
+- Possibilité d'appliquer des transformations conditionnelles selon l'environnement
+
+<br />
+### Conclusion
+
+Au final, nous avons trouvé une solution simple mais puissante pour contourner les défis de connexion et de performance. En quelques étapes, nous avons transformé un problème complexe en une approche flexible qui nous permet de travailler efficacement, que ce soit en local ou en production. Cette approche peut facilement être adaptée et étendue pour répondre à d'autres besoins par exemple ajout de nouveaux environnements (test, pré-production) ou support d'autres sources de données (PostgreSQL, Oracle, etc.).
