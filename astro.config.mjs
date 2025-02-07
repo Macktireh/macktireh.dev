@@ -31,7 +31,7 @@ export default defineConfig({
         showLineNumbers: false,
         // But enable line numbers for certain languages
         overridesByLang: {
-          'js,ts,html,css,scss,md,mdx,py,json,toml,yaml': {
+          'js,ts,html,css,scss,md,mdx,py,json,toml,yaml,powerquery': {
             showLineNumbers: true,
           },
         },

@@ -7,8 +7,9 @@ export type BlogType = CollectionEntry<"posts"> & {
 };
 
 export async function getPosts() {
-  if (import.meta.env.DEV) return await getCollection("posts");
-  return (await getCollection("posts")).filter((post) => !post.data.draft);
+  const posts = await getCollection("posts");
+  if (Boolean(import.meta.env.WITH_DRAFTS)) return posts
+  return posts.filter((post) => !post.data.draft);
 }
 
 export async function getPostsSorted(): Promise<BlogType[]> {

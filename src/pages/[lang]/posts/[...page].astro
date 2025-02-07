@@ -68,7 +68,11 @@ for (const _lang of LOCALES) {
                   <h3 class="title">{post.data.title}</h3>
                   <Tags tags={post.data.tags} />
                   <p class="date">
-                    <FormattedDate date={post.data.pubDate} withEmoji />
+                    <FormattedDate
+                      date={post.data.pubDate}
+                      lang={lang}
+                      withEmoji
+                    />
                   </p>
                 </Link>
               </li>

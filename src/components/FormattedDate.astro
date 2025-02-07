@@ -1,15 +1,18 @@
 ---
+import { DEFAULT_LANG } from '@src/i18n/utils';
+
 interface Props {
 	date: Date;
 	withEmoji?: boolean;
+	lang?: string;
 }
 
-const { date, withEmoji = false } = Astro.props;
+const { date, withEmoji = false, lang = DEFAULT_LANG } = Astro.props;
 ---
 
 <time datetime={date.toISOString()}>{withEmoji && "📆 "}
 	{
-		date.toLocaleDateString('en-us', {
+		date.toLocaleDateString(lang, {
 			year: 'numeric',
 			month: 'short',
 			day: 'numeric',
