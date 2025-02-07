@@ -1,0 +1,380 @@
+---
+title: "Importer Plusieurs Fichiers Excel/CSV dans Power BI avec une Fonction Power Query Personnalisée"
+description: "Découvrez comment importer et combiner facilement des fichiers Excel depuis SharePoint avec une fonction Power Query personnalisée, simplifiant radicalement votre processus d'intégration de données."
+pubDate: "Jan 16 2025"
+tags: ["Power BI", "Power Query", "Excel", "CSV", "SharePoint"]
+lang: "fr"
+heroImage: "https://github.com/user-attachments/assets/436bbc5e-ca3e-468a-926d-7303aaad42ee"
+giscusTitleDiscussionsMapping: "Import Multiple Excel/CSV Files into Power BI with a Custom Power Query Function"
+draft: true
+---
+
+import Link from "@src/components/Link.astro";
+import Note from "@src/components/Note.astro";
+
+### Table des matières
+
+<br />
+### Introduction
+
+Importer plusieurs fichiers Excel ou CSV dans Power BI ou Excel peut rapidement devenir un casse-tête. Heureusement, Power Query propose des connecteurs comme "Dossier" ou "Dossier SharePoint" pour récupérer et fusionner des fichiers stockés localement ou sur SharePoint/Teams. Cependant, ces connecteurs ajoutent parfois trop de requêtes inutiles, ce qui peut compliquer la gestion des données
+
+Dans cet article, nous allons voir :
+
+- Comment utiliser le connecteur "Dossier SharePoint" pour importer des fichiers
+- Pourquoi cette méthode peut devenir polluante
+- Une alternative plus propre et optimisée grâce à une fonction Power Query personnalisée
+
+<br />
+### Utilisation du connecteur "Dossier SharePoint"
+
+Généralement, lorsqu'on souhaite importer plusieurs fichiers CSV ou Excel, on utilise le connecteur "Dossier" (pour les fichiers locaux) ou "Dossier SharePoint" (pour les fichiers stockés sur SharePoint/Teams).
+
+Prenons un exemple concret : imaginons que vous ayez plusieurs fichiers de données financières stockés dans un dossier SharePoint, séparés par pays.
+
+![FinancialSample](https://github.com/user-attachments/assets/9e32d6c7-bc85-4d9c-8059-5ec17625db6c)
+
+<Note>
+  Vous pouvez télécharger les données d'exemple utilisées dans cet article via
+  ce{" "} <Link href="https://go.microsoft.com/fwlink/?LinkID=521962" external>lien</Link>. Ce sont des données fictives que j'ai séparées par pays pour illustrer notre
+  cas d'usage.
+</Note>
+
+<br />
+##### Processus d'importation traditionnel
+
+1. Dans le menu Ruban, cliquez sur : `Accueil > Nouvelle Source > Plus...`
+2. Recherchez "Dossier SharePoint"
+3. Sélectionnez-le et cliquez sur "Se connecter"
+
+![SharepointFolderConnector](https://github.com/user-attachments/assets/421d6756-d781-4b54-8ad1-07bb9f8d9700)
+
+4. Saisissez le lien de votre site SharePoint (ou utilisez un paramètre Power Query)
+5. Cliquez sur OK puis sur "Transformer les données"
+6. Dans la colonne "Folder Path", filtrez pour sélectionner le dossier contenant vos fichiers
+7. Cliquez sur les doubles flèches de la première colonne pour combiner tous les fichiers
+
+![FirstExample](https://github.com/user-attachments/assets/02dd0b9e-ca9d-47c2-95f1-7de49781da6f)
+
+**🎯 Problème :** À ce stade, vous remarquerez que Power Query crée de nombreux dossiers, requêtes et fonctions. C'est là que ça devient problématique : à chaque nouvelle importation similaire, vous vous retrouvez avec une multiplication de ces éléments qui "polluent" votre éditeur Power Query.
+
+💡 Solution ? Créer une fonction Power Query personnalisée !
+
+### Solution de contournement avec une fonction Power Query personnalisée
+
+L'idée est d'avoir une seule requête propre et optimisée qui importe et combine tous les fichiers, sans pollution inutile. Pour résoudre ce problème, j'ai développé une fonction Power Query utilitaire qui permet d'importer et de combiner des fichiers Excel stockés sur SharePoint ou Teams de manière plus propre.
+
+##### Code de la fonction Power Query (Excel) :
+
+```powerquery
+let
+    ImportAndCombineExcelFiles = (
+        Source as table, folderPath as list, fileExtension as text, SheetOrTableName as text, filterColumnName as text
+    ) =>
+        let
+            NavigateToFolder = List.Accumulate(
+                folderPath, Source, (current, item) => current{[Name = item]}[Content]
+            ),
+            FilterByExtension = Table.SelectRows(NavigateToFolder, each ([Extension] = "." & fileExtension)),
+            AddWorkbookContent = Table.AddColumn(FilterByExtension, "Tables", each Excel.Workbook([Content])),
+            KeepFileNameAndTables = Table.SelectColumns(AddWorkbookContent, {"Name", "Tables"}),
+            RenameFileNameColumn = Table.RenameColumns(KeepFileNameAndTables, {{"Name", "FileName"}}),
+            ExpandTablesColumn = Table.ExpandTableColumn(
+                RenameFileNameColumn, "Tables", {"Name", "Data"}, {"Name", "Data"}
+            ),
+            FilterByTableName = Table.SelectRows(ExpandTablesColumn, each ([Name] = SheetOrTableName)),
+            ExpandDataColumn =
+                let
+                    data = FilterByTableName{0}[Data],
+                    columns = Table.ColumnNames(data),
+                    expanded = Table.ExpandTableColumn(FilterByTableName, "Data", columns, columns)
+                in
+                    expanded,
+            RemoveNameColumn = Table.RemoveColumns(ExpandDataColumn, {"Name"}),
+            PromoteHeaders = Table.PromoteHeaders(RemoveNameColumn, [PromoteAllScalars = true]),
+            FilterOutHeaderRows = Table.SelectRows(
+                PromoteHeaders, each (Record.Field(_, filterColumnName) <> filterColumnName)
+            ),
+            firstColumnName = Table.ColumnNames(FilterOutHeaderRows){0},
+            RenameFirstColumn = Table.RenameColumns(FilterOutHeaderRows, {{firstColumnName, "FileName"}})
+        in
+            RenameFirstColumn
+in
+    ImportAndCombineExcelFiles
+```
+
+Explication détaillée de la fonction
+
+**📌 Signature de la fonction**
+
+```powerquery
+ImportAndCombineExcelFiles = (
+    Source as table, folderPath as list, fileExtension as text, SheetOrTableName as text, filterColumnName as text
+) => ...
+```
+
+Cette fonction prend **5 paramètres** :
+
+1. **`Source` (table)** : La source de données (généralement un SharePoint ou un dossier Teams).
+2. **`folderPath` (list)** : Une liste des sous-dossiers permettant de naviguer jusqu'à l'emplacement cible.
+3. **`fileExtension` (text)** : L'extension des fichiers à importer (ex. `"xlsx"`).
+4. **`SheetOrTableName` (text)** : Le nom de la table cible dans chaque fichier Excel (ex: nom de la feuille/table Excel).
+5. **`filterColumnName` (text)** : Le nom de la colonne qui servira à filtrer les lignes d'en-tête en double (une colonne qui est présente dans tous les fichiers).
+
+---
+
+**📌 Explication des étapes**
+
+1️⃣ Naviguer jusqu’au dossier cible
+
+```powerquery
+NavigateToFolder = List.Accumulate(
+    folderPath, Source, (current, item) => current{[Name = item]}[Content]
+),
+```
+
+- On utilise `List.Accumulate` pour **naviguer dans les sous-dossiers** spécifiés dans `folderPath`.
+- À chaque étape, on sélectionne le sous-dossier jusqu'à atteindre l’emplacement final.
+
+---
+
+2️⃣ Filtrer les fichiers par extension
+
+```powerquery
+FilterByExtension = Table.SelectRows(NavigateToFolder, each ([Extension] = "." & fileExtension)),
+```
+
+- On filtre les fichiers pour ne garder que ceux ayant l'extension spécifiée (ex. `.xlsx`).
+
+---
+
+3️⃣ Extraire les tables de chaque fichier Excel
+
+```powerquery
+AddWorkbookContent = Table.AddColumn(FilterByExtension, "Tables", each Excel.Workbook([Content])),
+```
+
+- On utilise `Excel.Workbook([Content])` pour extraire toutes les **tables et feuilles de calcul** des fichiers Excel.
+
+---
+
+4️⃣ Sélectionner uniquement les fichiers et leurs tables
+
+```powerquery
+KeepFileNameAndTables = Table.SelectColumns(AddWorkbookContent, {"Name", "Tables"}),
+RenameFileNameColumn = Table.RenameColumns(KeepFileNameAndTables, {{"Name", "FileName"}}),
+```
+
+- On garde uniquement deux colonnes :
+  - `Name` (nom du fichier).
+  - `Tables` (le contenu du fichier).
+- On renomme `Name` en `FileName` pour éviter toute confusion.
+
+---
+
+5️⃣ Déplier la colonne contenant les tables
+
+```powerquery
+ExpandTablesColumn = Table.ExpandTableColumn(
+    RenameFileNameColumn, "Tables", {"Name", "Data"}, {"Name", "Data"}
+),
+```
+
+- On **déplie** la colonne `Tables` pour extraire les noms des tables et leurs données (`Data`).
+
+---
+
+6️⃣ Filtrer uniquement la table souhaitée
+
+```powerquery
+FilterByTableName = Table.SelectRows(ExpandTablesColumn, each ([Name] = SheetOrTableName)),
+```
+
+- On **garde uniquement** la table dont le nom correspond à `SheetOrTableName`.
+
+---
+
+7️⃣ Déplier la colonne `Data` (les données de la table)
+
+```powerquery
+ExpandDataColumn =
+    let
+        data = FilterByTableName{0}[Data],
+        columns = Table.ColumnNames(data),
+        expanded = Table.ExpandTableColumn(FilterByTableName, "Data", columns, columns)
+    in
+        expanded,
+```
+
+- On récupère la **première ligne** contenant les données (`Data`).
+- On extrait **les noms des colonnes**.
+- On **déplie** la table en utilisant les noms des colonnes.
+
+---
+
+8️⃣ Supprimer la colonne du nom de la table
+
+```powerquery
+RemoveNameColumn = Table.RemoveColumns(ExpandDataColumn, {"Name"}),
+```
+
+- On supprime la colonne `Name` car elle n'est plus nécessaire.
+
+---
+
+9️⃣ Promouvoir les en-têtes
+
+```powerquery
+PromoteHeaders = Table.PromoteHeaders(RemoveNameColumn, [PromoteAllScalars = true]),
+```
+
+- On utilise `Table.PromoteHeaders` pour **transformer la première ligne en en-têtes de colonne**.
+
+---
+
+🔟 Supprimer les lignes d'en-tête en double
+
+```powerquery
+FilterOutHeaderRows = Table.SelectRows(
+    PromoteHeaders, each (Record.Field(_, filterColumnName) <> filterColumnName)
+),
+```
+
+- On supprime les **lignes où la colonne `filterColumnName` contient son propre nom** (celles-ci correspondent souvent à des doublons d'en-tête provenant des fichiers Excel).
+
+---
+
+1️⃣1️⃣ Renommer la première colonne en `FileName`
+
+```powerquery
+firstColumnName = Table.ColumnNames(FilterOutHeaderRows){0},
+RenameFirstColumn = Table.RenameColumns(FilterOutHeaderRows, {{firstColumnName, "FileName"}})
+```
+
+- On identifie la **première colonne** du tableau final.
+- On la renomme en `"FileName"` pour garder une trace de l’origine des données.
+
+<br />
+<Note variant="important">
+  Cette fonction ne fonctionne que pour des fichiers stockés sur
+  SharePoint/Teams.
+</Note>
+
+
+<br />
+##### Ajouter la fonction dans notre exemple précédent
+
+1. Dans le menu ruban, cliquez sur `Accueil > Nouvelle Source > Requête vide`.
+2. Sélectionnez la requête et cliquez sur `Accueil > Nouvelle Source > Éditeur avancé`.
+3. Remplacez tout le code par le bloc de code ci-dessus.
+4. Renommez la fonction comme vous le souhaitez. Personnellement, je nomme les fonctions avec des noms explicites, par exemple : `fxImportAndCombineMultipleExcelFilesFromSharepointOrTeams`
+
+![PowerQueryFunction](https://github.com/user-attachments/assets/21b9f16e-d08c-4336-8623-44f272f97f90)
+
+C’est fait ! La fonction est prête à être utilisée. 🎉
+
+
+<br />
+### Utilisation de la fonction
+
+Pour utiliser notre nouvelle fonction :
+
+1. Créez une nouvelle requête vide (Accueil > Nouvelle Source > Requête vide)
+2. Ouvrez l'Éditeur avancé
+3. Copiez-collez le code de la fonction
+4. Renommer comme vous le souhaitez. Dans cet exemple, nous l’appelons “MyData”
+
+![MyDataQuery](https://github.com/user-attachments/assets/af3e7585-2238-417d-ba95-dd06df45f3d4)
+
+```powerquery
+let
+    Source = SharePoint.Contents("VOTRE_LIEN_DU_SITE_SHAREPOINT", [ApiVersion = 15]),
+    ImportAndCombineExcelFiles = fxImportAndCombineMultipleExcelFilesFromSharepointOrTeams(
+        Source, {"Documents partages", "General", "FinancialSample"}, "xlsx", "Sheet1", "Segment"
+    )
+in
+    ImportAndCombineExcelFiles
+```
+
+Explication
+
+1️⃣ Définition de la source SharePoint :
+   ```powerquery
+   Source = SharePoint.Contents("VOTRE_LIEN_DU_SITE_SHAREPOINT", [ApiVersion = 15])
+   ```
+   - **SharePoint.Contents** : Cette fonction permet de récupérer le contenu d’un site SharePoint spécifié.
+   - **"VOTRE_LIEN_DU_SITE_SHAREPOINT"** : Remplace ce texte par l'URL de ton site SharePoint.
+   - **[ApiVersion = 15]** : Spécifie la version 15 de l’API SharePoint à utiliser pour l'extraction des données.
+
+2️⃣ Appel de la fonction `fxImportAndCombineMultipleExcelFilesFromSharepointOrTeams` :
+   ```powerquery
+   ImportAndCombineExcelFiles = fxImportAndCombineMultipleExcelFilesFromSharepointOrTeams(
+       Source, {"Documents partages", "General", "FinancialSample"}, "xlsx", "Sheet1", "Segment"
+   )
+   ```
+   - **Source** : La source définie précédemment, qui contient les données du site SharePoint.
+   - **`{"Documents partages", "General", "FinancialSample"}`** : Le chemin du dossier dans SharePoint où se trouvent les fichiers Excel à importer.
+   - **"xlsx"** : L’extension des fichiers à importer (ici, des fichiers Excel).
+   - **"Sheet1"** : Le nom de la feuille de calcul à extraire de chaque fichier Excel.
+   - **"Segment"** : La colonne utilisée pour filtrer les lignes dans chaque fichier (dans cet exemple, il s'agit de la première colonne de nos fichiers Excel).
+
+3️⃣ Retourner le résultat final :
+   ```powerquery
+   in
+       ImportAndCombineExcelFiles
+   ```
+   - Cette ligne renvoie le résultat combiné des données extraites et importées de SharePoint dans une seule requête.
+
+Et voilà, les fichiers sont automatiquement importés et combinés dans une seule requête. C’est vraiment propre et efficace, non ? 😎
+
+![SecondExample](https://github.com/user-attachments/assets/569eca1c-f153-4d8b-a051-60c547926ece)
+
+<br />
+### Bonus – Adaptation pour les fichiers CSV
+
+Si vos fichiers sont des CSV, voici une version modifiée de la fonction qui prend en compte un séparateur personnalisé. Je vous invite à la tester et à l'adapter selon vos besoins :
+
+```powerquery
+let
+    ImportAndCombineCSVFiles = (Source, folderPath as list, fileExtension as text, separator as text, filterColumnName as text) =>
+        let
+            NavigateToFolder = List.Accumulate(
+                folderPath, Source, (current, item) => current{[Name = item]}[Content]
+            ),
+            FilterByExtension = Table.SelectRows(NavigateToFolder, each ([Extension] = "." & fileExtension)),
+            AddCSVContent = Table.AddColumn(
+                FilterByExtension, "Tables", each Csv.Document([Content], [Delimiter = separator])
+            ),
+            KeepFileNameAndTables = Table.SelectColumns(AddCSVContent, {"Name", "Tables"}),
+            RenameFileNameColumn = Table.RenameColumns(KeepFileNameAndTables, {{"Name", "FileName"}}),
+            ExpandTablesColumn =
+                let
+                    data = RenameFileNameColumn{0}[Tables],
+                    columns = Table.ColumnNames(data),
+                    expanded = Table.ExpandTableColumn(RenameFileNameColumn, "Tables", columns, columns)
+                in
+                    expanded,
+            PromoteHeaders = Table.PromoteHeaders(ExpandTablesColumn, [PromoteAllScalars = true]),
+            FilterOutHeaderRows = Table.SelectRows(
+                PromoteHeaders, each (Record.Field(_, filterColumnName) <> filterColumnName)
+            ),
+            firstColumnName = Table.ColumnNames(FilterOutHeaderRows){0},
+            RenameFirstColumn = Table.RenameColumns(FilterOutHeaderRows, {{firstColumnName, "FileName"}})
+        in
+            RenameFirstColumn
+in
+    ImportAndCombineCSVFiles
+```
+
+📝 Et voilà ! Vous pouvez maintenant importer et fusionner des fichiers CSV aussi facilement que les fichiers Excel. 🚀
+
+<br />
+### Conclusion
+
+Dans cet article, nous avons exploré une solution de contournement pour importer et combiner efficacement plusieurs fichiers Excel/CSV stockés sur SharePoint ou Teams, en utilisant une fonction Power Query personnalisée. Cette approche résout plusieurs problèmes courants rencontrés lors de l'importation de fichiers multiples :
+
+- Réduction de la pollution de l'éditeur Power Query
+- Simplification du processus d'importation de fichiers
+- Création d'une méthode unique et réutilisable pour l'importation de données
+
+N'hésitez pas à adapter ces fonctions selon vos besoins et à partager vos améliorations dans les commentaires ! Je serai ravi d'enrichir ma collection de fonctions utilitaires avec vos contributions. 😊
