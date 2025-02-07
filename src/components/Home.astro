@@ -54,7 +54,7 @@ const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
                     {post.data.title}
                   </Link>
                   <div class="post-meta">
-                    <FormattedDate date={post.data.pubDate} withEmoji />
+                    <FormattedDate date={post.data.pubDate} lang={lang} withEmoji />
                     <span>&#8901;</span>
                     <Tags tags={post.data.tags} />
                   </div>
