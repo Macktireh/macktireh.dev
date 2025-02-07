@@ -31,6 +31,8 @@ const {
 } = Astro.props.metadata;
 const { hasRedirect = true } = Astro.props;
 
+const PROD = import.meta.env.PROD;
+
 const canonicalPathname = pathNameIsInLanguage(Astro.url.pathname, lang)
   ? Astro.url.pathname
   : getLocalizedPathname(Astro.url.pathname, DEFAULT_LANG);
@@ -100,7 +102,7 @@ const alternateLinks = LOCALES.map((_lang: LangType) => {
 />
 
 {hasRedirect && (
-  <script define:vars={{ LOCALES }} is:inline>
+  <script define:vars={{ LOCALES, PROD }} is:inline>
     async function redirectPreferredLocale() {
       const preferredLang = navigator.language.split("-")[0];
       const currentLang = document.documentElement.lang;
@@ -120,7 +122,7 @@ const alternateLinks = LOCALES.map((_lang: LangType) => {
       const response = await fetch(url);
       return response.status === 200;
     }
-    redirectPreferredLocale();
+    if (PROD) redirectPreferredLocale();
   </script>
 )}
 
