@@ -1,11 +1,10 @@
 ---
 title: "Import Multiple Excel/CSV Files into Power BI with a Custom Power Query Function"
 description: "Discover how to easily import and combine Excel files from SharePoint using a custom Power Query function, radically simplifying your data integration process."
-pubDate: "Jan 16 2025"
+pubDate: "Jan 17 2025"
 tags: ["Power BI", "Power Query", "Excel", "CSV", "SharePoint"]
 heroImage: "https://github.com/user-attachments/assets/1a08a154-7241-45ff-bee5-d0fcb16a1604"
 giscusTitleDiscussionsMapping: "Import Multiple Excel/CSV Files into Power BI with a Custom Power Query Function"
-draft: true
 ---
 
 import Link from "@src/components/Link.astro";
@@ -13,21 +12,31 @@ import Note from "@src/components/Note.astro";
 
 ### Table des matières
 
+- [Introduction](#introduction)
+- [Using the "SharePoint Folder" Connector](#using-the-sharepoint-folder-connector)
+  - [Traditional Import Process](#traditional-import-process)
+- [Workaround with a Custom Power Query Function](#workaround-with-a-custom-power-query-function)
+  - [Power Query Function Code](#power-query-function-code)
+  - [Adding the Function to Our Previous Example](#adding-the-function-to-our-previous-example)
+- [Using the function to import and combine Excel files](#using-the-function-to-import-and-combine-excel-files)
+- [Bonus – Adaptation for CSV Files](#bonus--adaptation-for-csv-files)
+- [Conclusion](#conclusion)
+
 <br />
 ### Introduction
 
-Importing multiple Excel or CSV files into Power BI or Excel can quickly become a headache. Fortunately, Power Query offers connectors like "Folder" or "SharePoint Folder" to retrieve and merge files stored locally or on SharePoint/Teams. However, these connectors sometimes add too many unnecessary queries, which can complicate data management.
+Importing and combining multiple Excel or CSV files into Power BI or Excel can quickly become a headache. Fortunately, Power Query offers connectors like "Folder" or "SharePoint Folder" to retrieve and merge files stored locally or on SharePoint/Teams. However, these connectors sometimes add too many unnecessary queries, which can complicate data management.
 
 In this article, we will cover:
 
-- How to use the "SharePoint Folder" connector to import files
+- How to use the “SharePoint folder” connector to import and combine files
 - Why this method can become polluting
 - A cleaner and optimized alternative using a custom Power Query function
 
 <br />
 ### Using the "SharePoint Folder" Connector
 
-Generally, when you want to import multiple CSV or Excel files, you use the "Folder" connector (for local files) or "SharePoint Folder" (for files stored on SharePoint/Teams).
+Generally, when you want to import and combine multiple CSV or Excel files, you use the "Folder" connector (for local files) or "SharePoint Folder" (for files stored on SharePoint/Teams).
 
 Let's take a concrete example: imagine you have several financial data files stored in a SharePoint folder, separated by country.
 
@@ -44,10 +53,10 @@ Let's take a concrete example: imagine you have several financial data files sto
 1. In the Ribbon menu, click: `Home > New Source > More...`
 2. Search for "SharePoint Folder"
 3. Select it and click "Connect"
+4. Enter your SharePoint site link (or use a Power Query parameter)
 
 ![SharepointFolderConnector](https://github.com/user-attachments/assets/421d6756-d781-4b54-8ad1-07bb9f8d9700)
 
-4. Enter your SharePoint site link (or use a Power Query parameter)
 5. Click OK then "Transform Data"
 6. In the "Folder Path" column, filter to select the folder containing your files
 7. Click the double arrows in the first column to combine all files
@@ -62,7 +71,7 @@ Let's take a concrete example: imagine you have several financial data files sto
 
 The idea is to have a single clean and optimized query that imports and combines all files without unnecessary pollution. To solve this problem, I developed a utility Power Query function that allows importing and combining Excel files stored on SharePoint or Teams more cleanly.
 
-##### Power Query Function Code (Excel):
+##### Power Query Function Code
 
 ```powerquery
 let
@@ -254,7 +263,7 @@ RenameFirstColumn = Table.RenameColumns(FilterOutHeaderRows, {{firstColumnName, 
 
 <br />
 <Note variant="important">
-  This function only works for files stored on SharePoint/Teams.
+  This function only works for Excel files stored on SharePoint/Teams.
 </Note>
 
 
@@ -270,7 +279,7 @@ RenameFirstColumn = Table.RenameColumns(FilterOutHeaderRows, {{firstColumnName, 
 
 And that's it! The function is ready to use. 🎉
 
-### Using the Function
+### Using the function to import and combine Excel files
 
 To use our new function:
 
@@ -284,11 +293,11 @@ To use our new function:
 ```powerquery
 let
     Source = SharePoint.Contents("YOUR_SHAREPOINT_SITE_LINK", [ApiVersion = 15]),
-    ImportAndCombineExcelFiles = fxImportAndCombineMultipleExcelFilesFromSharepointOrTeams(
+    ImportAndCombineFiles = fxImportAndCombineMultipleExcelFilesFromSharepointOrTeams(
         Source, {"Shared Documents", "General", "FinancialSample"}, "xlsx", "Sheet1", "Segment"
     )
 in
-    ImportAndCombineExcelFiles
+    ImportAndCombineFiles
 ```
 
 Explanation
@@ -303,7 +312,7 @@ Explanation
 
 2️⃣ Calling the `fxImportAndCombineMultipleExcelFilesFromSharepointOrTeams` function:
    ```powerquery
-   ImportAndCombineExcelFiles = fxImportAndCombineMultipleExcelFilesFromSharepointOrTeams(
+   ImportAndCombineFiles = fxImportAndCombineMultipleExcelFilesFromSharepointOrTeams(
        Source, {"Shared Documents", "General", "FinancialSample"}, "xlsx", "Sheet1", "Segment"
    )
    ```
@@ -313,16 +322,10 @@ Explanation
    - **"Sheet1"**: The worksheet name to extract from each Excel file.
    - **"Segment"**: The column used to filter rows in each file (in this example, the first column of our Excel files).
 
-3️⃣ Return the final result:
-   ```powerquery
-   in
-       ImportAndCombineExcelFiles
-   ```
-   - This line returns the combined result of data extracted and imported from SharePoint in a single query.
+![SecondExample](https://github.com/user-attachments/assets/569eca1c-f153-4d8b-a051-60c547926ece)
 
 And there you have it, files are automatically imported and combined into a single query. Pretty clean and efficient, right? 😎
 
-![SecondExample](https://github.com/user-attachments/assets/569eca1c-f153-4d8b-a051-60c547926ece)
 
 ### Bonus – Adaptation for CSV Files
 
@@ -330,7 +333,7 @@ If your files are CSV, here's a modified version of the function that takes into
 
 ```powerquery
 let
-    ImportAndCombineCSVFiles = (Source, folderPath as list, fileExtension as text, separator as text, filterColumnName as text) =>
+    ImportAndCombineCSVFiles = (Source as table, folderPath as list, fileExtension as text, separator as text, filterColumnName as text) =>
         let
             NavigateToFolder = List.Accumulate(
                 folderPath, Source, (current, item) => current{[Name = item]}[Content]
