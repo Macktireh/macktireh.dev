@@ -1,11 +1,10 @@
 ---
 title: "Flexible Data Source Management in Power BI with MySQL"
 description: "A practical approach to dynamically manage data sources in Power BI, switching between MySQL and CSV based on the environment to optimize connectivity and performance. 🚀"
-pubDate: "Feb 05 2025"
+pubDate: "Feb 07 2025"
 tags: ["Power BI", "Power Query", "MySQL", "CSV", "Optimization"]
 heroImage: "https://github.com/user-attachments/assets/6e668714-6169-43e7-8a36-fb1a60c5f3d6"
 giscusTitleDiscussionsMapping: "Flexible Data Source Management in Power BI with MySQL"
-draft: true
 ---
 
 import Link from "@src/components/Link.astro";
@@ -31,7 +30,7 @@ import Note from "@src/components/Note.astro";
 <br />
 ### Introduction
 
-As part of a current client project (at the time of writing this article), we faced an interesting challenge in creating a Power BI dashboard connected to a MySQL database containing millions of rows. This experience led us to develop an elegant solution for managing different data sources based on the working environment. In this article, I'll walk you through the different steps of building this solution, addressing the challenges encountered and the solutions implemented.
+As part of a client project I am currently working on, we encountered an exciting challenge: designing a Power BI dashboard connected to a MySQL database containing millions of rows. This experience allowed us to develop an efficient solution to manage data sources based on the working environment. In this article, I will walk you through the steps of implementing this solution, addressing the challenges encountered and the solutions implemented.
 
 ### Challenges Encountered
 
@@ -180,7 +179,7 @@ In some cases, we need to apply specific transformations to CSV data. For this, 
 
 A first approach involves integrating transformations directly into the GetData function:
 
-```powerquery
+```powerquery ins={"Add transformation steps specific to CSV data here":14-17} del={"Delete":28} ins={"New":29}
 let
     GetData = (NumberColumnsCSV as number, MySQLQuery as text) =>
         let
@@ -208,6 +207,7 @@ let
                     CreateNavigationProperties = false
                 ]
             ),
+            Result = if IS_PRODUCTION then SourceMySQL else CsvPromotedHeaders
             Result = if IS_PRODUCTION then SourceMySQL else CsvReplacedValue
         in
             Result
@@ -221,7 +221,7 @@ However, this approach is not recommended as it goes against the single responsi
 
 A more elegant approach involves separating data retrieval from transformation. Let's update our "MyData" query to apply specific transformations to CSV data:
 
-```powerquery
+```powerquery ins={3-9}
 let
     Source = GetData(5, MySQL_QUERY),
     ReplacedValue = Table.ReplaceValue(
@@ -245,4 +245,4 @@ This second approach offers several advantages:
 <br />
 ### Conclusion
 
-In the end, we found a simple yet powerful solution to overcome connectivity and performance challenges. In a few steps, we transformed a complex problem into a flexible approach that allows us to work efficiently, whether locally or in production. This approach can easily be adapted and extended to meet other needs, such as adding new environments (test, pre-production) or supporting other data sources (PostgreSQL, Oracle, etc.).
+In this article, we explored a solution to efficiently manage data sources in Power BI by implementing a dynamic switching system between local CSV files and a production MySQL database. The approach we developed not only solved our immediate connectivity and performance challenges but also provided a flexible framework that can be easily adapted to other environments or data sources. This approach can easily be adapted and extended to meet other needs, such as adding new environments (test, pre-production) or supporting other data sources (PostgreSQL, Oracle, etc.).

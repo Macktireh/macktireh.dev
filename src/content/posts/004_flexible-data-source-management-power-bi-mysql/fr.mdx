@@ -1,12 +1,11 @@
 ---
 title: "Gestion flexible des sources de données dans Power BI avec MySQL"
 description: "Une approche pratique pour gérer dynamiquement les sources de données dans Power BI, en alternant entre MySQL et CSV selon l’environnement, afin d’optimiser la connectivité et les performances. 🚀"
-pubDate: "Feb 05 2025"
+pubDate: "Feb 07 2025"
 tags: ["Power BI", "Power Query", "MySQL", "CSV", "Optimisation"]
 lang: "fr"
 heroImage: "https://github.com/user-attachments/assets/fc5d50c3-248d-4807-b1c1-8d45baddf6da"
 giscusTitleDiscussionsMapping: "Flexible Data Source Management in Power BI with MySQL"
-draft: true
 ---
 
 import Link from "@src/components/Link.astro";
@@ -32,7 +31,7 @@ import Note from "@src/components/Note.astro";
 <br />
 ### Introduction
 
-Dans le cadre d’un projet pour l’un de nos clients, sur lequel je travaille actuellement (au moment de la rédaction de cet article), nous avons été confrontés à un défi intéressant sur la création d’un tableau de bord Power BI connecté à une base de données MySQL contenant des millions de lignes. Cette expérience nous a permis de développer une solution élégante pour gérer différentes sources de données en fonction de l’environnement de travail. Dans cet article, je vais vous présenter les différentes étapes de construction de cette solution, en abordant les problématiques rencontrées et les solutions mises en place.
+Dans le cadre d’un projet client sur lequel je travaille actuellement, nous avons été confrontés à un défi passionnant : concevoir un tableau de bord Power BI connecté à une base de données MySQL contenant des millions de lignes. Cette expérience nous a permis de développer une solution efficace pour adapter les sources de données en fonction de l’environnement de travail. Dans cet article, je vous expliquerai les étapes de mise en place de cette solution, en abordant les problématiques rencontrées et les solutions mises en place.
 
 ### Problématiques rencontrées
 
@@ -184,7 +183,7 @@ Dans certains cas, nous devons appliquer des transformations spécifiques aux do
 
 Une première approche consiste à intégrer les transformations directement dans la fonction GetData :
 
-```powerquery ins={"Ajouter les étapes de transformation spécifiques aux données CSV ici":14-17} del={"Supprimer":28} ins={"Remplacer":29}
+```powerquery ins={"Ajouter les étapes de transformation spécifiques aux données CSV ici":14-17} del={"Supprimer":28} ins={"Nouveau":29}
 let
     GetData = (NumberColumnsCSV as number, MySQLQuery as text) =>
         let
@@ -250,4 +249,4 @@ Cette seconde approche offre plusieurs avantages :
 <br />
 ### Conclusion
 
-Au final, nous avons trouvé une solution simple mais puissante pour contourner les défis de connexion et de performance. En quelques étapes, nous avons transformé un problème complexe en une approche flexible qui nous permet de travailler efficacement, que ce soit en local ou en production. Cette approche peut facilement être adaptée et étendue pour répondre à d'autres besoins par exemple ajout de nouveaux environnements (test, pré-production) ou support d'autres sources de données (PostgreSQL, Oracle, etc.).
+Dans cet article, nous avons exploré une solution pour gérer efficacement les sources de données dans Power BI en mettant en place un système de basculement dynamique entre des fichiers CSV locaux et une base de données MySQL en production. L'approche que nous avons développée n'a pas seulement résolu nos défis immédiats de connectivité et de performance, mais a également fourni un cadre flexible qui peut être facilement adapté à d'autres environnements ou sources de données. Cette approche peut facilement être adaptée et étendue pour répondre à d'autres besoins par exemple ajout de nouveaux environnements (test, pré-production) ou support d'autres sources de données (PostgreSQL, Oracle, etc.).
