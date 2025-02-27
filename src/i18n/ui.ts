@@ -4,7 +4,7 @@ import { type LangType } from "@src/i18n/utils";
 const defaultUiTranslation = {
   "site.title": SITE.author,
   "site.description": `I am {firstname} and welcome to my blog, a dedicated space for developers and technology enthusiasts!
-    🚀 Here, I share 💡 ideas, 🔧 tips, 📘 tutorials, and inspiring projects related to development, covering technologies like Power BI 📊, Python 🐍, TypeScript 💻, Django 🗄️, React, and React Native 📱. 
+    🚀 Here, I share 💡 ideas, 🔧 tips, 📘 tutorials, and inspiring projects related to development, covering technologies like Power BI 📊, Python 🐍, AI 🧠, TypeScript 💻, Django 🗄️, React, and React Native 📱. 
     You’ll also find resources on low-code tools, including Power Apps and Power Automate 🔄, to create innovative solutions without complex coding. 
     Join me in exploring 🌐 the world of programming and low-code!`,
   "navbar.posts": "Posts",
@@ -34,7 +34,7 @@ const _uiTranslation: Partial<Record<LangType, UiTranslationType>> = {
   fr: {
     "site.title": SITE.author,
     "site.description": `Je suis {firstname} et bienvenue sur mon blog, un espace dédié aux passionnés de développement et de technologie !
-      🚀 Ici, je partage 💡 des idées, 🔧 des astuces, 📘 des tutoriels et des projets inspirants autour du développement, en couvrant des technologies telles que Power BI 📊, Python 🐍, TypeScript 💻, Django 🗄️, React et React Native 📱.
+      🚀 Ici, je partage 💡 des idées, 🔧 des astuces, 📘 des tutoriels et des projets inspirants autour du développement, en couvrant des technologies telles que Power BI 📊, Python 🐍, IA 🧠, TypeScript 💻, Django 🗄️, React, et React Native 📱.
       Vous trouverez également des ressources sur les outils low-code, notamment Power Apps et Power Automate 🔄, pour créer des solutions innovantes sans code complexe.
       Rejoignez-moi pour explorer 🌐 le monde de la programmation et du low-code !`,
     "navbar.posts": "Articles",
