@@ -8,7 +8,7 @@ import {
   useTranslations,
   type LangType,
 } from "@src/i18n/utils";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import { SITE } from "@src/consts";
 
 type Props = Omit<
@@ -52,7 +52,7 @@ const metadata = {
       }
     </script>
     <BaseHead metadata={metadata} hasRedirect={hasRedirect} />
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body>
     <slot name="lang-selector" />
