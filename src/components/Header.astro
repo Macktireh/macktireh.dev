@@ -3,6 +3,7 @@ import { SITE } from "@src/consts";
 import Link from "@src/components/Link.astro";
 import Theme from "@src/components/Theme.astro";
 import { useTranslations } from "@src/i18n/utils";
+import Icon2 from "@src/components/Icon2.astro";
 
 const { lang } = Astro.props;
 const t = useTranslations(lang);
@@ -11,10 +12,18 @@ const t = useTranslations(lang);
 <header>
   <nav>
     <h2>
-      <Link href="/" lang={lang}>{SITE.authorFirstName.toLowerCase()}.dev</Link>
+      <Link href="/" lang={lang}>
+        <img src="/favicon.svg" alt="logo" width="25" height="25" />
+        <span class="site-name">
+          {SITE.authorFirstName.toLowerCase()}.<span class="dev">dev</span>
+        </span>
+      </Link>
     </h2>
     <div class="internal-links">
-      <Link href="/posts" lang={lang}>{t("navbar.posts")}</Link>
+      <Link href="/posts" lang={lang}>📑{t("navbar.posts")}</Link>
+      <Link href="/rss.xml" lang={lang}>
+        <Icon2 name="rss" />
+      </Link>
       <Theme />
     </div>
   </nav>
