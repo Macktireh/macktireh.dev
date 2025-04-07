@@ -1,0 +1,33 @@
+---
+import { type BlogType } from "@src/services/posts";
+import FormattedDate from "@src/components/FormattedDate.astro";
+import Link from "@src/components/Link.astro";
+import Tags from "@src/components/Tags.astro";
+import type { LangType } from "@src/i18n/utils";
+
+type Props = {
+  post: BlogType;
+  lang: LangType;
+};
+
+const { post, lang } = Astro.props;
+---
+
+<li>
+  <Link href={post.pathname} lang={lang}>
+    <img
+      width={720}
+      height={360}
+      src={post.data.heroImage}
+      alt={post.data.title}
+      style={{ viewTransitionName: post.blog_slug + "-img" }}
+    />
+    <h3 class="title" style={{ viewTransitionName: post.blog_slug }}>
+      {post.data.title}
+    </h3>
+    <Tags tags={post.data.tags} />
+    <p class="date">
+      <FormattedDate date={post.data.pubDate} lang={lang} withEmoji />
+    </p>
+  </Link>
+</li>

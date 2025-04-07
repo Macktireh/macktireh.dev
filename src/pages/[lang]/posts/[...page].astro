@@ -4,15 +4,13 @@ import {
   getPostsByLang,
   type BlogType,
 } from "@src/services/posts";
-import FormattedDate from "@src/components/FormattedDate.astro";
 import { type PageType } from "@src/helpers/types";
 import Layout from "@src/layouts/Layout.astro";
 import { LOCALES, useTranslations, type LangType } from "@src/i18n/utils";
 import { SITE } from "@src/consts";
-import Link from "@src/components/Link.astro";
 import LangSelector from "@src/components/LangSelector.astro";
 import Pagination from "@src/components/Pagination.astro";
-import Tags from "@src/components/Tags.astro";
+import Card from "@src/components/Card.astro";
 
 export async function getStaticPaths({ paginate }) {
   const posts = await getPostsSorted();
@@ -57,25 +55,7 @@ for (const _lang of LOCALES) {
         page.data.length > 0 ? (
           <ul>
             {page.data.map((post) => (
-              <li>
-                <Link href={post.pathname} lang={lang}>
-                  <img
-                    width={720}
-                    height={360}
-                    src={post.data.heroImage}
-                    alt=""
-                  />
-                  <h3 class="title">{post.data.title}</h3>
-                  <Tags tags={post.data.tags} />
-                  <p class="date">
-                    <FormattedDate
-                      date={post.data.pubDate}
-                      lang={lang}
-                      withEmoji
-                    />
-                  </p>
-                </Link>
-              </li>
+              <Card post={post} lang={lang} />
             ))}
           </ul>
         ) : (
