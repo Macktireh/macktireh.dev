@@ -50,11 +50,19 @@ const latestPosts = (await getPostsByLang(lang)).slice(0, 5);
             <ul>
               {latestPosts.map((post) => (
                 <li>
-                  <Link href={post.pathname} lang={lang}>
+                  <Link
+                    href={post.pathname}
+                    lang={lang}
+                    style={{ viewTransitionName: post.blog_slug }}
+                  >
                     {post.data.title}
                   </Link>
                   <div class="post-meta">
-                    <FormattedDate date={post.data.pubDate} lang={lang} withEmoji />
+                    <FormattedDate
+                      date={post.data.pubDate}
+                      lang={lang}
+                      withEmoji
+                    />
                     <span>&#8901;</span>
                     <Tags tags={post.data.tags} />
                   </div>
