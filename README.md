@@ -52,5 +52,5 @@ If you have any feedback or suggestions, feel free to open an issue or submit a 
 This website is inspired by:
 
 - [Astro Starter Kit Blog template](https://github.com/withastro/astro/tree/latest/examples/blog)
-- [Astro Blog I18n Starter](https://github.com/i118n/astro-blog-i118n-starter)
+- [Astro Blog I18n Starter](https://github.com/rebecamurillo/astro-blog-i18n-starter)
 - [Astro Paper](https://astro-paper.pages.dev/)
