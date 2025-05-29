@@ -101,11 +101,20 @@ const props = Astro.props as Props;
 </style>
 
 <script>
-  document.querySelectorAll(".astro-post-image").forEach((img) => {
-    img.addEventListener("click", () => {
-      toggleFullScreen(img);
+  function initEventFullScreen() {
+    document.querySelectorAll(".astro-post-image").forEach((img) => {
+      img.addEventListener("click", () => {
+        toggleFullScreen(img);
+      });
     });
-  });
+
+    // Listen to fullscreen events to clean up classes
+    document.addEventListener("fullscreenchange", () => {
+      document.querySelectorAll(".astro-post-image").forEach((img) => {
+        img.classList.remove("entering-fullscreen", "exiting-fullscreen");
+      });
+    });
+  }
 
   function toggleFullScreen(image) {
     if (!document.fullscreenElement) {
@@ -141,10 +150,6 @@ const props = Astro.props as Props;
     }
   }
 
-  // Listen to fullscreen events to clean up classes
-  document.addEventListener("fullscreenchange", () => {
-    document.querySelectorAll(".astro-post-image").forEach((img) => {
-      img.classList.remove("entering-fullscreen", "exiting-fullscreen");
-    });
-  });
+  initEventFullScreen();
+  document.addEventListener("astro:after-swap", initEventFullScreen);
 </script>
