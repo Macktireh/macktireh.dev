@@ -1,0 +1,149 @@
+---
+type Props = {
+  src: string;
+  alt?: string;
+  width?: number | string;
+  height?: number | string;
+  loading?: "lazy" | "eager";
+  decoding?: "async" | "sync" | "auto";
+  class?: string;
+  style?: string;
+};
+
+const props = Astro.props as Props;
+---
+
+<img
+  {...props}
+  class:list={[props.class, "astro-post-image"]}
+  decoding={props.decoding || "async"}
+  loading={props.loading || "lazy"}
+/>
+
+<style>
+  .astro-post-image {
+    cursor: pointer;
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .astro-post-image:hover {
+    transform: scale(1.01);
+  }
+
+  /* Animation for fullscreen entry */
+  .astro-post-image.entering-fullscreen {
+    animation: enterFullscreen 0.4s ease-out forwards;
+  }
+
+  /* Animation for the release of fullscreen */
+  .astro-post-image.exiting-fullscreen {
+    animation: exitFullscreen 0.4s ease-out forwards;
+  }
+
+  /* Fullscreen styling */
+  .astro-post-image:fullscreen {
+    object-fit: contain;
+    background: rgba(0, 0, 0, 0.9);
+    cursor: zoom-out;
+  }
+
+  @keyframes enterFullscreen {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes exitFullscreen {
+    0% {
+      transform: scale(1.1);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Alternative with zoom effect */
+  @keyframes zoomIn {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes zoomOut {
+    0% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll(".astro-post-image").forEach((img) => {
+    img.addEventListener("click", () => {
+      toggleFullScreen(img);
+    });
+  });
+
+  function toggleFullScreen(image) {
+    if (!document.fullscreenElement) {
+      // Entrance animation
+      image.classList.add("entering-fullscreen");
+
+      // Short delay for animation to be visible before fullscreen
+      setTimeout(() => {
+        image
+          .requestFullscreen()
+          .then(() => {
+            image.classList.remove("entering-fullscreen");
+          })
+          .catch((err) => {
+            console.error("Erreur fullscreen:", err);
+            image.classList.remove("entering-fullscreen");
+          });
+      }, 100);
+    } else {
+      // Outing animation
+      image.classList.add("exiting-fullscreen");
+
+      setTimeout(() => {
+        document
+          .exitFullscreen?.()
+          .then(() => {
+            image.classList.remove("exiting-fullscreen");
+          })
+          .catch(() => {
+            image.classList.remove("exiting-fullscreen");
+          });
+      }, 100);
+    }
+  }
+
+  // Listen to fullscreen events to clean up classes
+  document.addEventListener("fullscreenchange", () => {
+    document.querySelectorAll(".astro-post-image").forEach((img) => {
+      img.classList.remove("entering-fullscreen", "exiting-fullscreen");
+    });
+  });
+</script>
