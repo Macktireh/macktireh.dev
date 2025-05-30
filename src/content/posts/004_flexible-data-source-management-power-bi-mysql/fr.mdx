@@ -9,6 +9,7 @@ giscusTitleDiscussionsMapping: "Flexible Data Source Management in Power BI with
 ---
 
 import Link from "@src/components/Link.astro";
+import PostImage from "@src/components/PostImage.astro";
 import Note from "@src/components/Note.astro";
 
 ### Table des matières
@@ -61,7 +62,10 @@ Pour simplifier le développement en local, nous avons d'abord rédigé la requ�
 
 Nous avons mis en place cinq paramètres permettant de gérer dynamiquement les sources de données :
 
-![parameters](https://github.com/user-attachments/assets/b83a1abc-b0a4-4a45-a980-6571bf7d88bc)
+<PostImage 
+    src="https://github.com/user-attachments/assets/b83a1abc-b0a4-4a45-a980-6571bf7d88bc"
+    alt="Paramètres Power Query pour la gestion des sources de données"
+/>
 
 - **`ENVIRONMENT`** : choix entre LOCAL et PRODUCTION
 - **`URL_CSV_FILE`** : lien vers le fichier CSV
@@ -77,7 +81,10 @@ Nous avons mis en place cinq paramètres permettant de gérer dynamiquement les 
 
 Nous avons créé une variable dynamique booléenne `IS_PRODUCTION` qui simplifie la détection de l'environnement :
 
-![is_prod](https://github.com/user-attachments/assets/b008a278-203c-4c2a-bbe0-1e48310392ad)
+<PostImage 
+    src="https://github.com/user-attachments/assets/b008a278-203c-4c2a-bbe0-1e48310392ad"
+    alt="Variable IS_PRODUCTION"
+/>
 
 ```powerquery
 let
@@ -97,7 +104,10 @@ Cette approche nous permet d'utiliser simplement `IS_PRODUCTION` dans nos condit
 
 Nous avons créé une fonction Power Query nommée `GetData`, permettant de récupérer les données depuis MySQL en production et depuis un fichier CSV en local.
 
-![getdata](https://github.com/user-attachments/assets/487fa3bf-198b-418d-b560-a751998720ad)
+<PostImage 
+    src="https://github.com/user-attachments/assets/487fa3bf-198b-418d-b560-a751998720ad"
+    alt="Fonction GetData"
+/>
 
 ```powerquery
 let
@@ -157,7 +167,10 @@ Cette fonction réalise trois opérations essentielles :
 
 Pour utiliser la fonction GetData, il suffit de créer une nouvelle requête et de la renommer comme vous le souhaitez. Dans cet exemple, nous l'appelons "MyData".
 
-![mydata](https://github.com/user-attachments/assets/1425d395-2c12-498a-bb27-3731516e1b13)
+<PostImage 
+    src="https://github.com/user-attachments/assets/1425d395-2c12-498a-bb27-3731516e1b13"
+    alt="Requête MyData"
+/>
 
 ```powerquery
 let
