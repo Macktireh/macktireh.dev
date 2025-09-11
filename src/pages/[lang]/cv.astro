@@ -1,0 +1,297 @@
+---
+import Layout from "@src/layouts/Layout.astro";
+import LangSelector from "@src/components/LangSelector.astro";
+import SocialLinks from "@src/components/SocialLinks.astro";
+import { LOCALES, useTranslations, type LangType } from "@src/i18n/utils";
+import { SITE } from "@src/consts";
+
+export async function getStaticPaths() {
+  return LOCALES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang);
+---
+
+<Layout
+  title={`${SITE.author} – ${t("cv.title")}`}
+  description={t("cv.description")}
+  lang={lang}
+>
+  <!-- Charge Iconify (Lucide) pour les icônes, fonctionne sans config supplémentaire -->
+  <script
+    is:inline
+    src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"
+  ></script>
+
+  <LangSelector slot="lang-selector" />
+
+  <main class="cv">
+    <!-- HERO -->
+    <section class="cv-hero">
+      <div class="avatar">
+        <img src="/images/mack.png" alt={SITE.author} />
+      </div>
+
+      <div class="hero-content">
+        <h1 class="name">{SITE.author}</h1>
+        <p class="role">{t("cv.role")}</p>
+
+        <div class="badges">
+          <span class="badge success">
+            <iconify-icon icon="lucide:award" width="16" height="16"></iconify-icon>
+            {t("cv.badge.powerbi")}
+          </span>
+        </div>
+
+        <p class="summary">{t("cv.about.text")}</p>
+
+        <!-- liens sociaux déjà stylés chez toi -->
+        <div class="social-links">
+          <SocialLinks />
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="cv-section">
+      <h2>
+        <iconify-icon icon="lucide:sparkles" width="20" height="20"></iconify-icon>
+        {t("cv.skills.title")}
+      </h2>
+
+      <div class="skills-grid">
+        <article class="skill-group">
+          <h3>
+            <iconify-icon icon="lucide:server" width="18" height="18"></iconify-icon>
+            {t("cv.skills.backend")}
+          </h3>
+          <ul class="chips">
+            <li>Python</li>
+            <li>Django</li>
+            <li>Flask</li>
+            <li>FastAPI</li>
+            <li>REST APIs</li>
+          </ul>
+        </article>
+
+        <article class="skill-group">
+          <h3>
+            <iconify-icon icon="lucide:layout" width="18" height="18"></iconify-icon>
+            {t("cv.skills.frontend")}
+          </h3>
+          <ul class="chips">
+            <li>TypeScript</li>
+            <li>React</li>
+            <li>React Native</li>
+            <li>Vite</li>
+            <li>Tailwind / SCSS</li>
+          </ul>
+        </article>
+
+        <article class="skill-group">
+          <h3>
+            <iconify-icon icon="lucide:panels-top-left" width="18" height="18"></iconify-icon>
+            {t("cv.skills.power")}
+          </h3>
+          <ul class="chips">
+            <li>Power BI</li>
+            <li>Power Apps</li>
+            <li>Power Automate</li>
+            <li>DAX / M</li>
+            <li>Data Modeling</li>
+          </ul>
+        </article>
+
+        <article class="skill-group">
+          <h3>
+            <iconify-icon icon="lucide:brain" width="18" height="18"></iconify-icon>
+            {t("cv.skills.data")}
+          </h3>
+          <ul class="chips">
+            <li>Pandas</li>
+            <li>SQL</li>
+            <li>ETL</li>
+            <li>Scikit-learn</li>
+            <li>Power Query</li>
+          </ul>
+        </article>
+
+        <article class="skill-group">
+          <h3>
+            <iconify-icon icon="lucide:settings" width="18" height="18"></iconify-icon>
+            {t("cv.skills.devops")}
+          </h3>
+          <ul class="chips">
+            <li>Docker</li>
+            <li>CI/CD</li>
+            <li>GitHub Actions</li>
+            <li>Nginx/Traefik</li>
+            <li>Cloudflare</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="cv-section">
+      <h2>
+        <iconify-icon icon="lucide:briefcase" width="20" height="20"></iconify-icon>
+        {t("cv.experience.title")}
+      </h2>
+
+      <div class="cards">
+        <article class="card">
+          <img src="/images/logos/eviden.png" alt="Eviden logo" />
+          <div class="card-body">
+            <h3>Eviden @ TotalEnergies <span class="period">2023 – {t("cv.now")}</span></h3>
+            <p>{t("cv.experience.eviden.desc")}</p>
+            <ul class="bullets">
+              <li>{t("cv.experience.eviden.b1")}</li>
+              <li>{t("cv.experience.eviden.b2")}</li>
+              <li>{t("cv.experience.eviden.b3")}</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="/images/logos/freelance.png" alt="Freelance logo" />
+          <div class="card-body">
+            <h3>{t("cv.experience.freelance.title")} <span class="period">2019 – 2023</span></h3>
+            <p>{t("cv.experience.freelance.desc")}</p>
+            <ul class="bullets">
+              <li>{t("cv.experience.freelance.b1")}</li>
+              <li>{t("cv.experience.freelance.b2")}</li>
+              <li>{t("cv.experience.freelance.b3")}</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="cv-section">
+      <h2>
+        <iconify-icon icon="lucide:code-2" width="20" height="20"></iconify-icon>
+        {t("cv.projects.title")}
+      </h2>
+
+      <div class="cards projects">
+        <article class="card project">
+          <img src="/images/logos/meteox.png" alt="MeteoX logo" />
+          <div class="card-body">
+            <h3>MeteoX</h3>
+            <p>{t("cv.projects.meteox")}</p>
+            <div class="tags">
+              <span class="tag">React Native</span>
+              <span class="tag">WeatherAPI</span>
+              <span class="tag">TypeScript</span>
+            </div>
+            <div class="links">
+              <a href="https://macktireh.dev/projects/meteoX" target="_blank" rel="noreferrer">
+                <iconify-icon icon="lucide:globe"></iconify-icon> {t("cv.projects.link.demo")}
+              </a>
+              <a href="https://github.com/macktireh/meteoX" target="_blank" rel="noreferrer">
+                <iconify-icon icon="lucide:github"></iconify-icon> {t("cv.projects.link.code")}
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card project">
+          <img src="/images/logos/dj.png" alt="djinitializr logo" />
+          <div class="card-body">
+            <h3>djinitializr.io</h3>
+            <p>{t("cv.projects.djinitializr")}</p>
+            <div class="tags">
+              <span class="tag">Starlette</span>
+              <span class="tag">React</span>
+              <span class="tag">Vite</span>
+            </div>
+            <div class="links">
+              <a href="https://djinitializr.io" target="_blank" rel="noreferrer">
+                <iconify-icon icon="lucide:globe"></iconify-icon> {t("cv.projects.link.demo")}
+              </a>
+              <a href="https://github.com/macktireh/djinitializr" target="_blank" rel="noreferrer">
+                <iconify-icon icon="lucide:github"></iconify-icon> {t("cv.projects.link.code")}
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card project">
+          <img src="/images/logos/event.png" alt="EventManager logo" />
+          <div class="card-body">
+            <h3>EventManager</h3>
+            <p>{t("cv.projects.eventmanager")}</p>
+            <div class="tags">
+              <span class="tag">Spring Boot</span>
+              <span class="tag">Invitations</span>
+              <span class="tag">Email</span>
+            </div>
+            <div class="links">
+              <a href="#" target="_blank" rel="noreferrer">
+                <iconify-icon icon="lucide:globe"></iconify-icon> {t("cv.projects.link.demo")}
+              </a>
+              <a href="#" target="_blank" rel="noreferrer">
+                <iconify-icon icon="lucide:github"></iconify-icon> {t("cv.projects.link.code")}
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- EDUCATION & CERTIFICATIONS -->
+    <section class="cv-section">
+      <h2>
+        <iconify-icon icon="lucide:book-open" width="20" height="20"></iconify-icon>
+        {t("cv.education.title")}
+      </h2>
+
+      <div class="cards">
+        <article class="card">
+          <img src="/images/logos/university.png" alt="University logo" />
+          <div class="card-body">
+            <h3>{t("cv.education.master.title")}</h3>
+            <p>{t("cv.education.master.meta")}</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <img src="/images/logos/powerbi.png" alt="Power BI logo" />
+          <div class="card-body">
+            <h3>{t("cv.certifications.powerbi.title")}</h3>
+            <p>{t("cv.certifications.powerbi.meta")}</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="cv-section">
+      <h2>
+        <iconify-icon icon="lucide:mail" width="20" height="20"></iconify-icon>
+        {t("cv.contact.title")}
+      </h2>
+      <div class="contact">
+        <a href="mailto:hello@macktireh.dev" class="contact-link">
+          <iconify-icon icon="lucide:mail"></iconify-icon>
+          hello@macktireh.dev
+        </a>
+        <a href="https://linkedin.com/in/macktireh" class="contact-link" target="_blank" rel="noreferrer">
+          <iconify-icon icon="lucide:linkedin"></iconify-icon>
+          LinkedIn
+        </a>
+        <a href="https://github.com/macktireh" class="contact-link" target="_blank" rel="noreferrer">
+          <iconify-icon icon="lucide:github"></iconify-icon>
+          GitHub
+        </a>
+        <a href="https://macktireh.dev" class="contact-link" target="_blank" rel="noreferrer">
+          <iconify-icon icon="lucide:globe"></iconify-icon>
+          macktireh.dev
+        </a>
+      </div>
+    </section>
+  </main>
+</Layout>
