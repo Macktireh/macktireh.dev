@@ -1,22 +1,88 @@
-.cv {
+.cv-container {
+  max-width: 1200px;
+  margin: 3rem auto 0;
   padding: 2rem 1rem;
-  max-width: 1040px;
-  margin: 6rem auto 0;
 
-  /* ---------- HERO ---------- */
-  .cv-hero {
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 3rem 2rem;
+  }
+}
+
+// Header Section
+.cv-header {
+  background: color($background);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px color($gray, $shade: 100, $alpha: 0.15);
+  border: 1px solid color($gray, $shade: 100, $alpha: 0.2);
+
+  &__content {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 1.25rem;
-    margin-bottom: 2rem;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
 
-    $padding-card-img: 4px;
-    .avatar {
+    @media (min-width: 768px) {
+      flex-direction: row;
+      text-align: left;
+      gap: 2rem;
+    }
+  }
+
+  &__info {
+    flex: 1;
+  }
+
+  &__name {
+    font-size: 2rem;
+    font-weight: 700;
+    color: color($text);
+    margin-bottom: 0.5rem;
+
+    @media (min-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+
+  &__title {
+    font-size: 1.125rem;
+    color: color($text, $alpha: 0.8);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  &__certification {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(
+      135deg,
+      color($success, $alpha: 0.5),
+      color($success)
+    );
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    box-shadow: 0 4px 8px color($text, $alpha: 0.3);
+  }
+
+  $padding-avatar: 3px;
+  &__avatar {
     width: 100%;
     height: 100%;
-    max-width: 250px;
-    padding: $padding-card-img;
+    max-width: 120px;
+    border-radius: 50%;
+    padding: $padding-avatar;
     position: relative;
     &::after,
     &::before {
@@ -35,8 +101,8 @@
       top: 50%;
       left: 50%;
       translate: -50% -50%;
-      padding: $padding-card-img;
-      border-radius: 1200px;
+      padding: $padding-avatar;
+      border-radius: 10px;
       animation: 3s spin linear infinite;
     }
     &::before {
@@ -45,289 +111,408 @@
     }
     img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
       z-index: 2;
-      border-radius: 1200px;
       position: relative;
     }
   }
-  @keyframes spin {
-    from {
-      --angle: 0deg;
-    }
-    to {
-      --angle: 360deg;
-    }
-  }
 
-    .hero-content {
-      flex: 1;
-
-      .name {
-        font-size: 2rem;
-        line-height: 1.2;
-      }
-
-      .role {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: color($primary);
-        margin: 0.35rem 0 0.6rem;
-      }
-
-      .badges {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 0.75rem;
-
-        .badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.4rem;
-          padding: 0.35rem 0.6rem;
-          font-size: 0.85rem;
-          border-radius: 999px;
-          background: color($gray, $shade: 100, $alpha: 0.18);
-          color: color($text, $alpha: 0.9);
-
-          &.success {
-            background: color($success, $alpha: 0.18);
-            color: color($success);
-          }
-
-          iconify-icon {
-            margin-top: -1px;
-          }
-        }
-      }
-
-      .summary {
-        font-size: 1rem;
-        color: color($text, $alpha: 0.85);
-        margin-bottom: 0.75rem;
-      }
-
-      .social-links {
-        display: flex;
-        justify-content: flex-start;
-      }
-    }
-
-    /* Mobile first responsiveness */
-    @media (max-width: 768px) {
-      flex-direction: column;
-      text-align: center;
-
-      .hero-content {
-        .social-links {
-          justify-content: center;
-          margin-top: 0.5rem;
-        }
-      }
-    }
-  }
-
-  /* ---------- TITLES ---------- */
-  .cv-section {
-    margin-bottom: 2.25rem;
-
-    h2 {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 1.35rem;
-      color: color($primary);
-      margin-bottom: 1rem;
-
-      iconify-icon {
-        color: color($primary);
-      }
-    }
-  }
-
-  /* ---------- SKILLS ---------- */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 1rem;
-
-    .skill-group {
-      grid-column: span 6;
-      background: color($background);
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 2px 6px color($gray, $alpha: 0.22);
-
-      h3 {
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-        font-size: 1rem;
-        margin-bottom: 0.6rem;
-        color: color($text, $alpha: 0.95);
-      }
-
-      .chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-
-        li {
-          list-style: none;
-          padding: 0.35rem 0.6rem;
-          border-radius: 999px;
-          font-size: 0.875rem;
-          background: color($gray, $shade: 100, $alpha: 0.18);
-          color: color($text, $alpha: 0.9);
-        }
-      }
-    }
-
-    /* 3 colonnes sur ≥1024px, 2 colonnes sur tablette, 1 sur mobile */
-    @media (min-width: 1024px) {
-      .skill-group { grid-column: span 4; }
-    }
-    @media (max-width: 1023px) and (min-width: 640px) {
-      .skill-group { grid-column: span 6; }
-    }
-    @media (max-width: 639px) {
-      .skill-group { grid-column: 1 / -1; }
-    }
-  }
-
-  /* ---------- CARDS GRID (exp + projects + education) ---------- */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-    gap: 1rem;
-  }
-
-  .card {
-    background: color($background);
-    border-radius: 14px;
-    padding: 1rem;
-    box-shadow: 0 2px 6px color($gray, $alpha: 0.25);
+  &__contacts {
     display: flex;
-    gap: 0.9rem;
-    align-items: flex-start;
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+
+    @media (min-width: 768px) {
+      justify-content: flex-start;
+    }
+  }
+}
+
+.cv-contact {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: color($gray, $shade: 50, $alpha: 0.5);
+  color: color($text, $alpha: 0.8);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: color($primary, $alpha: 0.1);
+    color: color($primary);
+    transform: translateY(-1px);
+  }
+}
+
+// Section Styles
+.cv-section {
+  margin-bottom: 3rem;
+  padding: 0 1rem;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: color($text);
+    margin-bottom: 1.5rem;
+
+    svg {
+      color: color($primary);
+    }
+  }
+}
+
+// Card Styles
+.cv-card {
+  background: color($background);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px color($gray, $shade: 100, $alpha: 0.1);
+  border: 1px solid color($gray, $shade: 100, $alpha: 0.15);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px color($gray, $shade: 100, $alpha: 0.2);
+  }
+}
+
+// About Section
+.cv-about {
+  color: color($text, $alpha: 0.85);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+// Skills Section
+.cv-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.cv-skill-category {
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: color($text);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid color($primary, $alpha: 0.3);
+  }
+}
+
+.cv-projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cv-project-card {
+  background: color($background);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px color($gray, $shade: 100, $alpha: 0.1);
+  border: 1px solid color($gray, $shade: 100, $alpha: 0.15);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px color($gray, $shade: 100, $alpha: 0.2);
+    border-color: color($primary, $alpha: 0.3);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  &__image {
+    width: 40px;
+    height: 40px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+  }
+
+  &__name {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: color($text);
+    margin: 0;
+  }
+
+  &__description {
+    color: color($text, $alpha: 0.75);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  &__links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+}
+
+.cv-project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  &--demo {
+    background: color($gray, $shade: 100, $alpha: 0.2);
+    color: color($text, $alpha: 0.8);
 
     &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 14px color($gray, $alpha: 0.28);
-    }
-
-    img {
-      width: 50px;
-      height: 50px;
-      object-fit: contain;
-      border-radius: 10px;
-      background: color($gray, $shade: 100, $alpha: 0.1);
-    }
-
-    .card-body {
-      flex: 1;
-
-      h3 {
-        font-size: 1.05rem;
-        margin: 0 0 0.3rem;
-
-        .period {
-          margin-left: 0.4rem;
-          font-size: 0.85rem;
-          color: color($text, $alpha: 0.65);
-        }
-      }
-
-      p {
-        font-size: 0.95rem;
-        color: color($text, $alpha: 0.9);
-      }
-
-      .bullets {
-        margin-top: 0.45rem;
-        padding-left: 1.1rem;
-
-        li {
-          margin: 0.2rem 0;
-          color: color($text, $alpha: 0.85);
-        }
+      background: color($primary, $shade: 800);
+      color: white;
+      transform: translateY(-1px);
+      svg,
+      path {
+        stroke: color($white, $alpha: 0.8);
       }
     }
   }
 
-  /* ---------- PROJECTS ---------- */
-  .projects .project {
-    flex-direction: row;
+  &--github {
+    background: color($gray, $shade: 100, $alpha: 0.2);
+    color: color($text, $alpha: 0.8);
 
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.5rem;
-
-      .tag {
-        font-size: 0.8rem;
-        padding: 0.25rem 0.5rem;
-        border-radius: 999px;
-        background: color($secondary, $alpha: 0.18);
-        color: color($secondary);
-      }
-    }
-
-    .links {
-      margin-top: 0.6rem;
-      display: flex;
-      gap: 0.9rem;
-      flex-wrap: wrap;
-
-      a {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-        font-size: 0.9rem;
-        color: color($primary);
-
-        &:hover {
-          color: color($accent);
-          text-decoration: underline;
-        }
-      }
+    &:hover {
+      background: color($gray, $shade: 200, $alpha: 0.3);
+      color: color($text);
     }
   }
 
-  /* ---------- CONTACT ---------- */
-  .contact {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.8rem;
+  &--pypi {
+    background: color($accent, $alpha: 0.1);
+    color: color($text);
 
-    .contact-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.8rem 1rem;
-      border-radius: 12px;
-      background: color($background);
-      box-shadow: 0 2px 6px color($gray, $alpha: 0.22);
-      font-weight: 500;
-      color: color($text, $alpha: 0.95);
+    &:hover {
+      background: color($accent, $alpha: 0.2);
+    }
+  }
+}
 
-      &:hover {
-        color: color($primary);
-        box-shadow: 0 4px 12px color($gray, $alpha: 0.26);
-      }
+// Timeline (Experience)
+.cv-timeline {
+  position: relative;
+  padding-left: 2rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(to bottom, color($primary), color($accent));
+  }
+}
+
+.cv-timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+
+  &__marker {
+    position: absolute;
+    left: -1.5rem;
+    top: 1.5rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: color($primary);
+    border: 3px solid color($background);
+    box-shadow: 0 0 0 2px color($primary, $alpha: 0.3);
+  }
+}
+
+.cv-experience-card {
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  &__logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    box-shadow: 0 2px 4px color($gray, $shade: 100, $alpha: 0.2);
+  }
+
+  &__info {
+    flex: 1;
+  }
+
+  &__company {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: color($text);
+    margin-bottom: 0.25rem;
+  }
+
+  &__position {
+    font-size: 1rem;
+    font-weight: 500;
+    color: color($info);
+    margin-bottom: 0.5rem;
+  }
+
+  &__period {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: color($text, $alpha: 0.6);
+    font-size: 0.875rem;
+  }
+
+  &__description {
+    color: color($text, $alpha: 0.8);
+    line-height: 1.6;
+  }
+}
+
+// Open Source
+.cv-opensource-card {
+  &__name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: color($text);
+    margin-bottom: 0.75rem;
+  }
+
+  &__description {
+    color: color($text, $alpha: 0.8);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  &__links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+}
+
+// Education
+.cv-education-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cv-education-card {
+  &--certification {
+    border: 2px solid color($accent, $alpha: 0.3);
+    background: linear-gradient(
+      135deg,
+      color($background) 0%,
+      color($accent, $alpha: 0.05) 100%
+    );
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  &__logo {
+    width: 40px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+  }
+
+  &__badge {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    background: color($primary, $alpha: 0.1);
+    color: color($text);
+    font-size: 0.8125rem;
+    font-weight: 500;
+
+    .cv-education-card--certification & {
+      background: color($primary, $alpha: 0.3);
     }
   }
 
-  /* ---------- SMALL TWEAKS FOR VERY SMALL VIEWPORTS ---------- */
-  @media (max-width: 366px) {
-    .cv-hero .avatar img {
-      width: 112px;
-      height: 112px;
+  &__degree {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: color($text);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+
+  &__institution {
+    color: color($text, $alpha: 0.7);
+    font-weight: 500;
+  }
+}
+
+// Responsive improvements
+@media (max-width: 767px) {
+  .cv-container {
+    padding: 1rem;
+  }
+
+  .cv-header {
+    padding: 1.5rem;
+  }
+
+  .cv-card {
+    padding: 1rem;
+  }
+
+  .cv-timeline {
+    padding-left: 1rem;
+
+    &::before {
+      left: 0.375rem;
     }
-    .projects .project {
-      flex-direction: column;
-    }
+  }
+
+  .cv-timeline-item__marker {
+    left: -0.75rem;
+  }
+
+  .cv-experience-card__header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }

@@ -4,13 +4,13 @@ import { type LangType } from "@src/i18n/utils";
 const defaultUiTranslation = {
   "site.title": SITE.author,
   "site.description": `
-    I’m {firstname}. Welcome to my blog!<br>
-    Here I share what I’m most passionate about: development and tech 🚀<br>
+    I'm {firstname}. Welcome to my blog!<br>
+    Here I share what I'm most passionate about: development and tech 🚀<br>
     <ul>
-      <li>💡 practical ideas and tips</li>
-      <li>📘 articles on development, data, and AI</li>
-      <li>🐍 projects with Power BI, Python, Django, TypeScript, React, and React Native</li>
-      <li>🔄 and also low-code with Power Apps and Power Automate</li>
+      <li>practical ideas and tips</li>
+      <li>articles on development, data, and AI</li>
+      <li>projects with Power BI, Python, Django, TypeScript, React, and React Native</li>
+      <li>and also low-code with Power Apps and Power Automate</li>
     </ul>
     <br>
     My goal: to make these tools accessible and show how to build useful and innovative solutions — with or without code.
@@ -33,63 +33,61 @@ const defaultUiTranslation = {
   "infobox.important": "Important",
   "infobox.warning": "Warning",
   "infobox.caution": "Caution",
-  "cv.title": "Curriculum Vitae",
-  "cv.description":
-    "Professional background, skills, projects, and certifications.",
-  "cv.role": "Full-Stack Developer Python / Django / Power Platform",
-  "cv.badge.powerbi": "Power BI Certified",
+  "cv.page.title": "Resume - Macktireh ABDI",
+  "cv.page.description":
+    "Full-Stack Developer specialized in Python/Django and Microsoft Power Platform",
+  "cv.title": "Full-Stack Developer Python / Django / Power Platform",
+  "cv.about":
+    "Software engineer specialized in Python/Django and Microsoft Power Platform. Experience covering data, machine learning, web/application development and DevOps. Passionate about creating applications, APIs and end-to-end data solutions, I particularly enjoy taking part in the entire lifecycle of a project, from initial idea to production deployment.",
+  "cv.contact.articles": "Articles",
+  "cv.section.about": "About",
+  "cv.section.skills": "Skills & Achievements",
+  "cv.section.experience": "Professional Experience",
+  "cv.section.opensource": "Open Source Contributions",
+  "cv.section.education": "Education & Certifications",
+  "cv.project.demo": "Demo",
+  "cv.project.code": "Code",
+  "cv.skills.desktop": "Desktop Applications (Python)",
 
-  "cv.now": "Present",
-
-  "cv.about.title": "About me",
-  "cv.about.text": `Software engineer specialized in Python/Django and Microsoft Power Platform.
-    Experience spans data, machine learning, web/application development, and DevOps.
-    Passionate about building end-to-end applications, APIs, and data-driven solutions, I enjoy taking part in the entire project lifecycle — from the initial idea to production deployment.
-`,
-
-  "cv.skills.title": "Skills",
-  "cv.skills.backend": "Backend",
-  "cv.skills.frontend": "Frontend",
-  "cv.skills.power": "Power Platform",
-  "cv.skills.data": "Data & ML",
-  "cv.skills.devops": "DevOps & Tools",
-
-  "cv.experience.title": "Professional Experience",
-  "cv.experience.freelance.title": "Freelance & Personal Projects",
-  "cv.experience.eviden.desc":
-    "Full-stack developer at Eviden (for TotalEnergies). Ownership of end-to-end lifecycle: from REST APIs to data visualization and low-code automation.",
-  "cv.experience.eviden.b1":
-    "Designed and maintained Django REST APIs with authentication, caching, and background tasks.",
-  "cv.experience.eviden.b2":
-    "Built Power BI dashboards with robust data models (DAX/M) for operational insights.",
-  "cv.experience.eviden.b3":
-    "Automated workflows with Power Automate and integrated services (SharePoint, email, webhooks).",
-  "cv.experience.freelance.desc":
-    "Delivered custom apps and dashboards for SMEs combining Python/Django/Flask and Power BI.",
-  "cv.experience.freelance.b1":
-    "Developed secure CRUD back-ends and admin tools.",
-  "cv.experience.freelance.b2":
-    "Created interactive BI reports connected to APIs/SQL sources.",
-  "cv.experience.freelance.b3": "Set up CI/CD with Docker and GitHub Actions.",
-
-  "cv.projects.title": "Projects",
-  "cv.projects.link.demo": "Demo",
-  "cv.projects.link.code": "Code",
+  // Projects
+  "cv.projects.ollaix":
+    "Unified API (Litestar) for real-time interaction with multiple LLMs (Ollama, Google Gemini), streaming and Dockerized deployment.",
+  "cv.projects.twitter-backend":
+    "Complete API in Django REST & Channels: authentication, tweets, likes, retweets, notifications and real-time chat.",
+  "cv.projects.mackdin":
+    "LinkedIn Clone (Django, PostgreSQL, Cloudinary) for managing profiles and professional feeds.",
+  "cv.projects.easycard-backend":
+    "Flask API (Flask-RESTx) for secure bank card management, authentication, CRUD, and number extraction via OCR (Tesseract), with modular architecture, Docker & PDM.",
+  "cv.projects.ollaix-ui":
+    "Modern LLM chat interface with real-time streaming, dark mode, multilingual (FR/EN).",
+  "cv.projects.twitter-frontend":
+    "Responsive PWA in React/Redux, integrating all backend social features.",
   "cv.projects.meteox":
-    "React Native weather app using WeatherAPI with clean UI and offline-friendly caching.",
-  "cv.projects.djinitializr":
-    "Online generator to scaffold Django projects (Starlette API + React UI).",
-  "cv.projects.eventmanager":
-    "Spring Boot app to manage events, invitations, and seat allocation with reminders.",
+    "Mobile weather app displaying current conditions, hourly and daily forecasts, city search, local storage and data expiration (WeatherAPI API).",
+  "cv.projects.easycard-desktop":
+    "Python graphical application for bank card management with AI extraction, analytical dashboard and customizable themes.",
 
-  "cv.education.title": "Education & Certifications",
-  "cv.education.master.title": "Master’s in Data Science & Engineering",
-  "cv.education.master.meta": "University (2019)",
-  "cv.certifications.powerbi.title":
+  // Experiences
+  "cv.experiences.fdj.position": "Power BI & Python Developer",
+  "cv.experiences.fdj.period": "06/2025 – Present",
+  "cv.experiences.fdj.description":
+    "Design and development of interactive Power BI dashboards (DAX/M) connected to various data sources (Teradata, APIs, Jira, etc.). Development of Python automation tools, including PDF report generation based on Jinja2 templates. User support and assistance during version upgrades and BI solution evolutions.",
+  "cv.experiences.total.position": "Full-Stack Developer & Power Platform",
+  "cv.experiences.total.period": "2021 – 04/2025",
+  "cv.experiences.total.description":
+    "Development of a Power Apps application for station data collection, with integration of Power BI reports for performance monitoring. Implementation of automated workflows with Power Automate, integrated with SharePoint, emails and webhooks. Application maintenance: bug fixes, feature optimization and writing technical and user documentation.",
+
+  // Open Source
+  "cv.opensource.description":
+    "Open-source library published on PyPI to simplify multi-provider social authentication (Google, GitHub, LinkedIn, Twitter).",
+
+  // Education
+  "cv.education.powerbi.title":
     "Microsoft Certified: Power BI Data Analyst Associate",
-  "cv.certifications.powerbi.meta": "Issued 2023",
-
-  "cv.contact.title": "Contact",
+  "cv.education.master.title": "Master in Data Science & Engineering",
+  "cv.education.master.institution": "South Brittany University",
+  "cv.download.pdf": "Download PDF",
+  "cv.download.print": "Print",
 };
 
 type UiTranslationType = typeof defaultUiTranslation;
@@ -99,13 +97,13 @@ const _uiTranslation: Partial<Record<LangType, UiTranslationType>> = {
   fr: {
     "site.title": SITE.author,
     "site.description": `
-      Moi c’est {firstname}. Bienvenue sur mon blog !<br>
+      Moi c'est {firstname}. Bienvenue sur mon blog !<br>
       Ici, je partage ce qui me passionne : le développement et la tech 🚀<br>
       <ul>
-        <li>💡 des idées et astuces pratiques</li>
-        <li>📘 des articles autour du développement, de la data et de l’IA</li>
-        <li>🐍 des projets avec Power BI, Python, Django, TypeScript, React et React Native</li>
-        <li>🔄 mais aussi du low-code avec Power Apps et Power Automate</li>
+        <li>des idées et astuces pratiques</li>
+        <li>des articles autour du développement, de la data et de l'IA</li>
+        <li>des projets avec Power BI, Python, Django, TypeScript, React et React Native</li>
+        <li>mais aussi du low-code avec Power Apps et Power Automate</li>
       </ul>
       <br>
       Mon objectif : rendre ces outils accessibles et montrer comment créer des solutions utiles et innovantes, avec ou sans code.
@@ -128,62 +126,61 @@ const _uiTranslation: Partial<Record<LangType, UiTranslationType>> = {
     "infobox.important": "Important",
     "infobox.warning": "Avertissement",
     "infobox.caution": "Attention",
-    "cv.title": "Curriculum Vitae",
-    "cv.description":
-      "Parcours professionnel, compétences, projets et certifications.",
-    "cv.role": "Développeur Full-Stack Python / Django / Power Platform",
-    "cv.badge.powerbi": "Certifié Power BI",
+    "cv.page.title": "CV - Macktireh ABDI",
+    "cv.page.description":
+      "Développeur Full-Stack spécialisé en Python/Django et Microsoft Power Platform",
+    "cv.title": "Développeur Full-Stack Python / Django / Power Platform",
+    "cv.about":
+      "Ingénieur logiciel spécialisé en Python/Django et Microsoft Power Platform. Expérience couvrant la data, le machine learning, le développement web/applicatif et le DevOps. Passionné par la création d'applications, APIs et solutions data de bout en bout, j'apprécie particulièrement de prendre part à tout le cycle de vie d'un projet, de l'idée initiale jusqu'à la mise en production.",
+    "cv.contact.articles": "Articles",
+    "cv.section.about": "À propos",
+    "cv.section.skills": "Compétences & Réalisations",
+    "cv.section.experience": "Expériences Professionnelles",
+    "cv.section.opensource": "Contributions Open Source",
+    "cv.section.education": "Formation & Certifications",
+    "cv.project.demo": "Démo",
+    "cv.project.code": "Code",
+    "cv.skills.desktop": "Applications Desktop (Python)",
 
-    "cv.now": "Aujourd’hui",
-
-    "cv.about.title": "À propos",
-    "cv.about.text": `Ingénieur logiciel spécialisé en Python/Django et Microsoft Power Platform.  
-      Expérience couvrant la data, le machine learning, le développement web/applicatif et le DevOps.  
-      Passionné par la création d’applications, APIs et solutions data de bout en bout, j’apprécie particulièrement de prendre part à tout le cycle de vie d’un projet, de l’idée initiale jusqu’à la mise en production.`,
-    "cv.skills.title": "Compétences",
-    "cv.skills.backend": "Backend",
-    "cv.skills.frontend": "Frontend",
-    "cv.skills.power": "Power Platform",
-    "cv.skills.data": "Data & ML",
-    "cv.skills.devops": "DevOps & Outils",
-
-    "cv.experience.title": "Expériences professionnelles",
-    "cv.experience.freelance.title": "Freelance & Projets personnels",
-    "cv.experience.eviden.desc":
-      "Développeur full-stack chez Eviden (pour TotalEnergies). Prise en charge du cycle complet : des APIs REST à la data viz et l’automatisation low-code.",
-    "cv.experience.eviden.b1":
-      "Conception et maintenance d’APIs Django REST avec auth, cache et tâches asynchrones.",
-    "cv.experience.eviden.b2":
-      "Création de tableaux de bord Power BI avec modèles de données solides (DAX/M) pour la décision.",
-    "cv.experience.eviden.b3":
-      "Automatisation de workflows avec Power Automate et intégrations (SharePoint, email, webhooks).",
-    "cv.experience.freelance.desc":
-      "Réalisation d’apps et de dashboards pour PME combinant Python/Django/Flask et Power BI.",
-    "cv.experience.freelance.b1":
-      "Développement de back-ends sécurisés et outils d’administration.",
-    "cv.experience.freelance.b2":
-      "Conception de rapports BI interactifs connectés à des APIs/sources SQL.",
-    "cv.experience.freelance.b3":
-      "Mise en place de CI/CD avec Docker et GitHub Actions.",
-
-    "cv.projects.title": "Projets",
-    "cv.projects.link.demo": "Démo",
-    "cv.projects.link.code": "Code",
+    // Projects
+    "cv.projects.ollaix":
+      "API unifiée (Litestar) pour interagir en temps réel avec plusieurs LLMs (Ollama, Google Gemini), streaming et déploiement Dockerisé.",
+    "cv.projects.twitter-backend":
+      "API complète en Django REST & Channels : authentification, tweets, likes, retweets, notifications et chat temps réel.",
+    "cv.projects.mackdin":
+      "Clone LinkedIn (Django, PostgreSQL, Cloudinary) pour la gestion de profils et de flux professionnels.",
+    "cv.projects.easycard-backend":
+      "API Flask (Flask-RESTx) pour gestion sécurisée de cartes bancaires, authentification, CRUD, et extraction de numéros via OCR (Tesseract), avec architecture modulaire, Docker & PDM.",
+    "cv.projects.ollaix-ui":
+      "Interface de chat LLM moderne avec streaming temps réel, mode sombre, multilingue (FR/EN).",
+    "cv.projects.twitter-frontend":
+      "PWA responsive en React/Redux, intégrant toutes les fonctionnalités sociales du backend.",
     "cv.projects.meteox":
-      "Application météo React Native (WeatherAPI), UI soignée et cache offline-friendly.",
-    "cv.projects.djinitializr":
-      "Générateur en ligne pour démarrer des projets Django (API Starlette + UI React).",
-    "cv.projects.eventmanager":
-      "App Spring Boot pour gérer événements, invitations et places, avec rappels.",
+      "Application mobile météo affichant conditions actuelles, prévisions horaires et journalières, recherche de villes, stockage local et expiration des données (API WeatherAPI).",
+    "cv.projects.easycard-desktop":
+      "Application graphique Python pour gestion de cartes bancaires avec extraction IA, tableau de bord analytique et thèmes personnalisables.",
 
-    "cv.education.title": "Formation & Certifications",
-    "cv.education.master.title": "Master en Data Science & Ingénierie",
-    "cv.education.master.meta": "Université (2019)",
-    "cv.certifications.powerbi.title":
+    // Experiences
+    "cv.experiences.fdj.position": "Développeur Power BI & Python",
+    "cv.experiences.fdj.period": "06/2025 – Aujourd'hui",
+    "cv.experiences.fdj.description":
+      "Conception et développement de dashboards Power BI interactifs (DAX/M) connectés à diverses sources de données (Teradata, APIs, Jira, etc.). Développement d'outils d'automatisation en Python, incluant la génération de rapports PDF basés sur des templates Jinja2. Support et accompagnement utilisateurs lors des montées de version et évolutions des solutions BI.",
+    "cv.experiences.total.position": "Développeur Full-Stack & Power Platform",
+    "cv.experiences.total.period": "2021 – 04/2025",
+    "cv.experiences.total.description":
+      "Développement d'une application Power Apps pour la collecte de données des stations, avec intégration de rapports Power BI pour le suivi des performances. Mise en place de workflows automatisés avec Power Automate, intégrés à SharePoint, emails et webhooks. Maintenance applicative : correction de bugs, optimisation des fonctionnalités et rédaction de documentation technique et utilisateur.",
+
+    // Open Source
+    "cv.opensource.description":
+      "Librairie open-source publiée sur PyPI pour simplifier l'authentification sociale multi-fournisseurs (Google, GitHub, LinkedIn, Twitter).",
+
+    // Education
+    "cv.education.powerbi.title":
       "Microsoft Certified : Power BI Data Analyst Associate",
-    "cv.certifications.powerbi.meta": "Délivrée en 2023",
-
-    "cv.contact.title": "Contact",
+    "cv.education.master.title": "Master en Data Science & Ingénierie",
+    "cv.education.master.institution": "Université Bretagne Sud",
+    "cv.download.pdf": "Télécharger PDF",
+    "cv.download.print": "Imprimer",
   },
 };
 
