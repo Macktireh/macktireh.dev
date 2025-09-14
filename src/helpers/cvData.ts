@@ -7,7 +7,7 @@ export function getCVData(lang: LangType) {
     personal: {
       name: SITE.author,
       title: t("cv.title"),
-      email: "hello@macktireh.dev",
+      email: "mack.abdisoubaneh@gmail.com",
       website: "macktireh.dev",
       linkedin: SITE.linkedinUrl,
       github: SITE.githubUrl,
