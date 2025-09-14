@@ -33,7 +33,7 @@ const defaultUiTranslation = {
   "infobox.important": "Important",
   "infobox.warning": "Warning",
   "infobox.caution": "Caution",
-  "cv.page.title": "Resume - Macktireh ABDI",
+  "cv.page.title": `Resume - ${SITE.author}`,
   "cv.page.description":
     "Full-Stack Developer specialized in Python/Django and Microsoft Power Platform",
   "cv.title": "Full-Stack Developer Python / Django / Power Platform",
@@ -126,7 +126,7 @@ const _uiTranslation: Partial<Record<LangType, UiTranslationType>> = {
     "infobox.important": "Important",
     "infobox.warning": "Avertissement",
     "infobox.caution": "Attention",
-    "cv.page.title": "CV - Macktireh ABDI",
+    "cv.page.title": `CV - ${SITE.author}`,
     "cv.page.description":
       "Développeur Full-Stack spécialisé en Python/Django et Microsoft Power Platform",
     "cv.title": "Développeur Full-Stack Python / Django / Power Platform",
