@@ -100,7 +100,7 @@ export function getCVData(lang: LangType) {
     ],
     experiences: [
       {
-        company: "Atos @ FDJ",
+        company: "Atos @ FDJ United",
         position: t("cv.experiences.fdj.position"),
         period: t("cv.experiences.fdj.period"),
         description: t("cv.experiences.fdj.description"),
