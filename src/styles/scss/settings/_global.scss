@@ -25,8 +25,7 @@ body {
 
 main {
   flex-grow: 1;
-  max-width: 800px;
-  // max-width: calc(100% - 2em);
+  max-width: calc(100% - 2em);
   margin: auto;
   padding: 7em 1em;
 }
