@@ -16,8 +16,7 @@ import {
 } from "@lucide/astro";
 import LangSelector from "@src/components/LangSelector.astro";
 import Layout from "@src/layouts/Layout.astro";
-import { LOCALES, useTranslations, type LangType } from "@src/i18n/utils";
-import { SITE } from "@src/consts";
+import { LOCALES, useTranslations } from "@src/i18n/utils";
 import { getCVData } from "@src/helpers/cvData";
 
 export async function getStaticPaths() {
