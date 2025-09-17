@@ -1,7 +1,8 @@
 import { SITE } from "@src/consts";
 import { useTranslations, type LangType } from "@src/i18n/utils";
+import type { CV } from "@src/helpers/types";
 
-export function getCVData(lang: LangType) {
+export function getCVData(lang: LangType): CV {
   const t = useTranslations(lang);
   return {
     personal: {
@@ -16,27 +17,21 @@ export function getCVData(lang: LangType) {
     about: t("cv.about"),
     skills: [
       {
-        category: "Python / Django / Litestar / Flask",
+        category: "Python / Django / FastAPI / Flask",
         projects: [
           {
             name: "Ollaix",
-            description: t("cv.projects.ollaix"),
+            title: t("cv.projects.ollaix.title"),
+            description: t("cv.projects.ollaix.description"),
             demo: "https://ollaix.macktireh.dev",
             github: "https://github.com/Macktireh/ollaix",
             image:
               "https://raw.githubusercontent.com/Macktireh/ollaix-ui/refs/heads/main/public/chatbot.png",
           },
           {
-            name: "Twitter Clone (backend)",
-            description: t("cv.projects.twitter-backend"),
-            demo: "https://twitter.macktireh.dev",
-            github: "https://github.com/Macktireh/clone-twitter-backend",
-            image:
-              "https://raw.githubusercontent.com/Macktireh/clone-twitter-frontend/refs/heads/main/public/static/img/logo192.png",
-          },
-          {
             name: "Mackdin",
-            description: t("cv.projects.mackdin"),
+            title: t("cv.projects.mackdin.title"),
+            description: t("cv.projects.mackdin.description"),
             demo: "https://mackdin.onrender.com",
             github: "https://github.com/Macktireh/mackdin",
             image:
@@ -44,20 +39,22 @@ export function getCVData(lang: LangType) {
           },
           {
             name: "EasyCardBackend",
-            description: t("cv.projects.easycard-backend"),
+            title: t("cv.projects.easycard.title"),
+            description: t("cv.projects.easycard.description"),
             demo: "https://easy-card-api.onrender.com",
-            github: "https://github.com/Macktireh/EasyCardBackend",
+            github: "https://github.com/Macktireh/EasyCardGUIDesktop",
             image:
               "https://raw.githubusercontent.com/Macktireh/EasyCardGUIDesktop/refs/heads/main/assets/images/logo1.png",
           },
         ],
       },
       {
-        category: "React / TypeScript / Tailwind",
+        category: "TypeScript / React / React Native & Expo / Tailwind",
         projects: [
           {
             name: "Ollaix UI",
-            description: t("cv.projects.ollaix-ui"),
+            title: t("cv.projects.ollaix-ui.title"),
+            description: t("cv.projects.ollaix-ui.description"),
             demo: "https://ollaix.macktireh.dev",
             github: "https://github.com/Macktireh/ollaix-ui",
             image:
@@ -65,35 +62,50 @@ export function getCVData(lang: LangType) {
           },
           {
             name: "Twitter Clone (frontend)",
-            description: t("cv.projects.twitter-frontend"),
+            title: t("cv.projects.twitter.title"),
+            description: t("cv.projects.twitter.description"),
             demo: "https://twitter.macktireh.dev",
             github: "https://github.com/Macktireh/clone-twitter-frontend",
             image:
               "https://raw.githubusercontent.com/Macktireh/clone-twitter-frontend/refs/heads/main/public/static/img/logo192.png",
           },
-        ],
-      },
-      {
-        category: "React Native (Expo)",
-        projects: [
           {
             name: "MeteoX",
-            description: t("cv.projects.meteox"),
+            title: t("cv.projects.meteox.title"),
+            description: t("cv.projects.meteox.description"),
             github: "https://github.com/Macktireh/MeteoX",
+            demo: null,
             image:
               "https://raw.githubusercontent.com/Macktireh/MeteoX/refs/heads/main/assets/images/weather.png",
           },
         ],
       },
       {
-        category: t("cv.skills.desktop"),
+        category: "DevOps / CI/CD / Docker",
         projects: [
           {
-            name: "EasyCardGUI Desktop",
-            description: t("cv.projects.easycard-desktop"),
-            github: "https://github.com/Macktireh/EasyCardGUIDesktop",
-            image:
-              "https://raw.githubusercontent.com/Macktireh/EasyCardGUIDesktop/refs/heads/main/assets/images/logo1.png",
+            name: t("cv.skills.containerization"),
+            title: t("cv.projects.dockerisation"),
+            description: t("cv.projects.dockerisation"),
+            github: null,
+            demo: null,
+            image: "https://skillicons.dev/icons?i=docker",
+          },
+          {
+            name: "CI/CD",
+            title: t("cv.projects.cicd"),
+            description: t("cv.projects.cicd"),
+            github: null,
+            demo: null,
+            image: "https://skillicons.dev/icons?i=githubactions",
+          },
+          {
+            name: "Packaging",
+            title: t("cv.projects.packaging"),
+            description: t("cv.projects.packaging"),
+            github: null,
+            demo: null,
+            image: "https://skillicons.dev/icons?i=ipfs",
           },
         ],
       },
@@ -114,12 +126,14 @@ export function getCVData(lang: LangType) {
         logo: "/images/totalenergies.png",
       },
     ],
-    openSource: {
-      name: "SimpleSocialAuthLib",
-      description: t("cv.opensource.description"),
-      pypi: "https://pypi.org/project/SimpleSocialAuthLib",
-      github: "https://github.com/Macktireh/SimpleSocialAuthLib",
-    },
+    openSource: [
+      {
+        name: "SimpleSocialAuthLib",
+        description: t("cv.opensource.description"),
+        pypi: "https://pypi.org/project/SimpleSocialAuthLib",
+        github: "https://github.com/Macktireh/SimpleSocialAuthLib",
+      },
+    ],
     education: [
       {
         degree: t("cv.education.powerbi.title"),

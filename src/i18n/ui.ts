@@ -38,7 +38,7 @@ const defaultUiTranslation = {
     "Full-Stack Developer specialized in Python/Django and Microsoft Power Platform",
   "cv.title": "Full-Stack Developer Python / Django / Power Platform",
   "cv.about":
-    "Software engineer specialized in Python/Django and Microsoft Power Platform. Experience covering data, machine learning, web/application development and DevOps. Passionate about creating applications, APIs and end-to-end data solutions, I particularly enjoy taking part in the entire lifecycle of a project, from initial idea to production deployment.",
+    "Software engineer specialized in Python/Django and Microsoft Power Platform. Experience covering data, web/application development and DevOps. Passionate about creating applications, APIs and end-to-end data solutions, I particularly enjoy taking part in the entire lifecycle of a project, from initial idea to production deployment.",
   "cv.contact.articles": "Articles",
   "cv.section.about": "About",
   "cv.section.skills": "Skills & Achievements",
@@ -47,25 +47,39 @@ const defaultUiTranslation = {
   "cv.section.education": "Education & Certifications",
   "cv.project.demo": "Demo",
   "cv.project.code": "Code",
-  "cv.skills.desktop": "Desktop Applications (Python)",
+  "cv.skills.containerization": "Containerization",
 
   // Projects
-  "cv.projects.ollaix":
-    "Unified API (Litestar) for real-time interaction with multiple LLMs (Ollama, Google Gemini), streaming and Dockerized deployment.",
-  "cv.projects.twitter-backend":
-    "Complete API in Django REST & Channels: authentication, tweets, likes, retweets, notifications and real-time chat.",
-  "cv.projects.mackdin":
-    "LinkedIn Clone (Django, PostgreSQL, Cloudinary) for managing profiles and professional feeds.",
-  "cv.projects.easycard-backend":
-    "Flask API (Flask-RESTx) for secure bank card management, authentication, CRUD, and number extraction via OCR (Tesseract), with modular architecture, Docker & PDM.",
-  "cv.projects.ollaix-ui":
-    "Modern LLM chat interface with real-time streaming, dark mode, multilingual (FR/EN).",
-  "cv.projects.twitter-frontend":
-    "Responsive PWA in React/Redux, integrating all backend social features.",
-  "cv.projects.meteox":
-    "Mobile weather app displaying current conditions, hourly and daily forecasts, city search, local storage and data expiration (WeatherAPI API).",
-  "cv.projects.easycard-desktop":
-    "Python graphical application for bank card management with AI extraction, analytical dashboard and customizable themes.",
+  "cv.projects.ollaix.title":
+    "OllaixAPI – Unified API enabling real-time interaction with multiple LLMs, featuring streaming.",
+  "cv.projects.ollaix.description":
+    "Unified API enabling real-time interaction with multiple LLMs (Ollama, Google Gemini), featuring streaming and Dockerized deployment.",
+  "cv.projects.mackdin.title":
+    "Mackdin – Full-stack LinkedIn clone with user profiles, professional feeds, notification management...",
+  "cv.projects.mackdin.description":
+    "Full-stack LinkedIn clone (Django, PostgreSQL) with user profiles, professional feeds, notifications, media management.",
+  "cv.projects.easycard.title":
+    "EasyCard – Complete app for secure bank card management with authentication, AI-powered OCR, and analytical dashboard.",
+  "cv.projects.easycard.description":
+    "Complete solution (Flask backend + Python desktop app) for secure bank card management with authentication, AI-powered OCR, and analytical dashboard.",
+  "cv.projects.ollaix-ui.title":
+    "OllaixUI – Modern interface for real-time LLM conversations, with multilingual support.",
+  "cv.projects.ollaix-ui.description":
+    "Modern React/TypeScript interface for real-time LLM conversations, featuring dark mode and multilingual support (FR/EN).",
+  "cv.projects.twitter.title":
+    "Twitter – Full-stack app replicating Twitter's core social and real-time features.",
+  "cv.projects.twitter.description":
+    "Full-stack application (Django REST + React/Redux PWA) replicating Twitter’s core social and real-time features (tweets, likes, retweets, notifications, chat).",
+  "cv.projects.meteox.title":
+    "Meteox – Cross-platform mobile app delivering real-time weather data and forecasts.",
+  "cv.projects.meteox.description":
+    "Cross-platform mobile app delivering real-time weather data and forecasts with city search and intelligent local storage.",
+  "cv.projects.dockerisation":
+    "Docker & Docker Compose orchestration for Ollaix, Twitter Clone, and EasyCard.",
+  "cv.projects.cicd":
+    "GitHub Actions pipelines (build, test, deploy) across multiple projects.",
+  "cv.projects.packaging":
+    "Publishing and maintaining Python libraries on PyPI",
 
   // Experiences
   "cv.experiences.fdj.position": "Power BI & Python Developer",
@@ -131,7 +145,7 @@ const _uiTranslation: Partial<Record<LangType, UiTranslationType>> = {
       "Développeur Full-Stack spécialisé en Python/Django et Microsoft Power Platform",
     "cv.title": "Développeur Full-Stack Python / Django / Power Platform",
     "cv.about":
-      "Ingénieur logiciel spécialisé en Python/Django et Microsoft Power Platform. Expérience couvrant la data, le machine learning, le développement web/applicatif et le DevOps. Passionné par la création d'applications, APIs et solutions data de bout en bout, j'apprécie particulièrement de prendre part à tout le cycle de vie d'un projet, de l'idée initiale jusqu'à la mise en production.",
+      "Ingénieur logiciel spécialisé en Python/Django et Microsoft Power Platform. Expérience couvrant la data, le développement web/applicatif et le DevOps. Passionné par la création d'applications, APIs et solutions data de bout en bout, j'apprécie particulièrement de prendre part à tout le cycle de vie d'un projet, de l'idée initiale jusqu'à la mise en production.",
     "cv.contact.articles": "Articles",
     "cv.section.about": "À propos",
     "cv.section.skills": "Compétences & Réalisations",
@@ -140,25 +154,39 @@ const _uiTranslation: Partial<Record<LangType, UiTranslationType>> = {
     "cv.section.education": "Formation & Certifications",
     "cv.project.demo": "Démo",
     "cv.project.code": "Code",
-    "cv.skills.desktop": "Applications Desktop (Python)",
+    "cv.skills.containerization": "Conteneurisation",
 
     // Projects
-    "cv.projects.ollaix":
-      "API unifiée (Litestar) pour interagir en temps réel avec plusieurs LLMs (Ollama, Google Gemini), streaming et déploiement Dockerisé.",
-    "cv.projects.twitter-backend":
-      "API complète en Django REST & Channels : authentification, tweets, likes, retweets, notifications et chat temps réel.",
-    "cv.projects.mackdin":
-      "Clone LinkedIn (Django, PostgreSQL, Cloudinary) pour la gestion de profils et de flux professionnels.",
-    "cv.projects.easycard-backend":
-      "API Flask (Flask-RESTx) pour gestion sécurisée de cartes bancaires, authentification, CRUD, et extraction de numéros via OCR (Tesseract), avec architecture modulaire, Docker & PDM.",
-    "cv.projects.ollaix-ui":
-      "Interface de chat LLM moderne avec streaming temps réel, mode sombre, multilingue (FR/EN).",
-    "cv.projects.twitter-frontend":
-      "PWA responsive en React/Redux, intégrant toutes les fonctionnalités sociales du backend.",
-    "cv.projects.meteox":
-      "Application mobile météo affichant conditions actuelles, prévisions horaires et journalières, recherche de villes, stockage local et expiration des données (API WeatherAPI).",
-    "cv.projects.easycard-desktop":
-      "Application graphique Python pour gestion de cartes bancaires avec extraction IA, tableau de bord analytique et thèmes personnalisables.",
+    "cv.projects.ollaix.title":
+      "OllaixAPI – API unifiée permettant d'interagir en streaming avec plusieurs LLMs.",
+    "cv.projects.ollaix.description":
+      "API unifiée permettant d'interagir en streaming avec plusieurs LLMs (Ollama, Google Gemini) via une architecture Dockerisée performante.",
+    "cv.projects.mackdin.title":
+      "Mackdin – Clone LinkedIn full-stack offrant profils utilisateurs, gestion de notification...",
+    "cv.projects.mackdin.description":
+      "Clone LinkedIn full-stack (Django, PostgreSQL) offrant profils utilisateurs, flux professionnels et gestion de notification.",
+    "cv.projects.easycard.title":
+      "EasyCard – App complète pour la gestion sécurisée de cartes bancaires avec auth, OCR IA et tableau de bord analytique.",
+    "cv.projects.easycard.description":
+      "Solution complète (Flask backend + app desktop Python) pour la gestion sécurisée de cartes bancaires avec authentification, OCR IA et tableau de bord analytique.",
+    "cv.projects.ollaix-ui.title":
+      "OllaixUI – Interface moderne en pour dialoguer avec des LLMs en temps réel, avec prise en charge multilingue.",
+    "cv.projects.ollaix-ui.description":
+      "Interface moderne en React/TypeScript pour dialoguer avec des LLMs en temps réel, avec mode sombre et multilingue (FR/EN).",
+    "cv.projects.twitter.title":
+      "Twitter – App full-stack reproduisant les principales fonctionnalités sociales et temps réel de Twitter.",
+    "cv.projects.twitter.description":
+      "Application full-stack (Django REST + React/Redux PWA) reproduisant les principales fonctionnalités sociales et temps réel de Twitter (tweets, likes, retweets, notifications, chat).",
+    "cv.projects.meteox.title":
+      "Meteox – Application mobile cross-platform offrant météo en temps réel et prévisions détaillées.",
+    "cv.projects.meteox.description":
+      "Application mobile cross-platform offrant météo en temps réel et prévisions détaillées, avec recherche de villes et stockage local intelligent.",
+    "cv.projects.dockerisation":
+      "Conteneurisation et orchestration avec Docker & Docker Compose pour Ollaix, Twitter Clone et EasyCard.",
+    "cv.projects.cicd":
+      "Automatisation des pipelines GitHub Actions (build, tests, déploiement) pour plusieurs projets.",
+    "cv.projects.packaging":
+      "Publication et maintenance de librairies Python sur PyPI",
 
     // Experiences
     "cv.experiences.fdj.position": "Développeur Power BI & Python",

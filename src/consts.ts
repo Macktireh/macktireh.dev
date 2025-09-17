@@ -20,5 +20,5 @@ export const SITE = {
   defaultTheme: "light",
   githubUrl: "https://github.com/macktireh",
   twitterUrl: "https://twitter.com/macktireh",
-  linkedinUrl: "https://www.linkedin.com/in/macktireh/",
+  linkedinUrl: "https://www.linkedin.com/in/macktireh",
 }

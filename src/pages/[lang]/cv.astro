@@ -27,7 +27,7 @@ export async function getStaticPaths() {
 
 const { lang } = Astro.params;
 const t = useTranslations(lang);
-const cvData = getCVData(lang)
+const cvData = getCVData(lang);
 ---
 
 <Layout
@@ -94,14 +94,14 @@ const cvData = getCVData(lang)
         <Code size={24} />
         {t("cv.section.skills")}
       </h2>
-      <div class="cv-skills">
+      <ul class="cv-skills">
         {
           cvData.skills.map((skillCategory) => (
-            <div class="cv-skill-category">
+            <li class="cv-skill-category">
               <h3 class="cv-skill-category__title">{skillCategory.category}</h3>
-              <div class="cv-projects-grid">
+              <ul class="cv-projects-grid">
                 {skillCategory.projects.map((project) => (
-                  <div class="cv-project-card">
+                  <li class="cv-project-card">
                     <div class="cv-project-card__header">
                       <img
                         src={project.image}
@@ -124,22 +124,24 @@ const cvData = getCVData(lang)
                           {t("cv.project.demo")}
                         </a>
                       )}
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        class="cv-project-link cv-project-link--github"
-                      >
-                        <Github size={14} />
-                        {t("cv.project.code")}
-                      </a>
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          class="cv-project-link cv-project-link--github"
+                        >
+                          <Github size={14} />
+                          {t("cv.project.code")}
+                        </a>
+                      )}
                     </div>
-                  </div>
+                  </li>
                 ))}
-              </div>
-            </div>
+              </ul>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </section>
 
     <!-- Experience Section -->
@@ -183,28 +185,30 @@ const cvData = getCVData(lang)
         <Github size={24} />
         {t("cv.section.opensource")}
       </h2>
-      <div class="cv-card cv-opensource-card">
-        <h3 class="cv-opensource-card__name">{cvData.openSource.name}</h3>
-        <p class="cv-opensource-card__description">
-          {cvData.openSource.description}
-        </p>
-        <div class="cv-opensource-card__links">
-          <a
-            href={cvData.openSource.pypi}
-            target="_blank"
-            class="cv-project-link cv-project-link--pypi"
-          >
-            📦 PyPI
-          </a>
-          <a
-            href={cvData.openSource.github}
-            class="cv-project-link cv-project-link--github"
-          >
-            <Github size={14} />
-            GitHub
-          </a>
-        </div>
-      </div>
+      {
+        cvData.openSource.map((project) => (
+          <div class="cv-card cv-opensource-card">
+            <h3 class="cv-opensource-card__name">{project.name}</h3>
+            <p class="cv-opensource-card__description">{project.description}</p>
+            <div class="cv-opensource-card__links">
+              <a
+                href={project.pypi}
+                target="_blank"
+                class="cv-project-link cv-project-link--pypi"
+              >
+                📦 PyPI
+              </a>
+              <a
+                href={project.github}
+                class="cv-project-link cv-project-link--github"
+              >
+                <Github size={14} />
+                GitHub
+              </a>
+            </div>
+          </div>
+        ))
+      }
     </section>
 
     <!-- Education Section -->
