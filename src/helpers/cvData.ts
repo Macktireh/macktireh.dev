@@ -61,7 +61,7 @@ export function getCVData(lang: LangType): CV {
               "https://raw.githubusercontent.com/Macktireh/ollaix-ui/refs/heads/main/public/chatbot.png",
           },
           {
-            name: "Twitter Clone (frontend)",
+            name: "Twitter Clone",
             title: t("cv.projects.twitter.title"),
             description: t("cv.projects.twitter.description"),
             demo: "https://twitter.macktireh.dev",
