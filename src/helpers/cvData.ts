@@ -9,7 +9,7 @@ export function getCVData(lang: LangType): CV {
       name: SITE.author,
       title: t("cv.title"),
       email: "mack.abdisoubaneh@gmail.com",
-      website: "macktireh.dev",
+      website: "macktireh.com",
       linkedin: SITE.linkedinUrl,
       github: SITE.githubUrl,
       articles: `/${lang}/posts`,
@@ -23,7 +23,7 @@ export function getCVData(lang: LangType): CV {
             name: "Ollaix",
             title: t("cv.projects.ollaix.title"),
             description: t("cv.projects.ollaix.description"),
-            demo: "https://ollaix.macktireh.dev",
+            demo: "https://ollaix.macktireh.com",
             github: "https://github.com/Macktireh/ollaix",
             image:
               "https://raw.githubusercontent.com/Macktireh/ollaix-ui/refs/heads/main/public/chatbot.png",
@@ -55,7 +55,7 @@ export function getCVData(lang: LangType): CV {
             name: "Ollaix UI",
             title: t("cv.projects.ollaix-ui.title"),
             description: t("cv.projects.ollaix-ui.description"),
-            demo: "https://ollaix.macktireh.dev",
+            demo: "https://ollaix.macktireh.com",
             github: "https://github.com/Macktireh/ollaix-ui",
             image:
               "https://raw.githubusercontent.com/Macktireh/ollaix-ui/refs/heads/main/public/chatbot.png",
@@ -64,7 +64,7 @@ export function getCVData(lang: LangType): CV {
             name: "Twitter Clone",
             title: t("cv.projects.twitter.title"),
             description: t("cv.projects.twitter.description"),
-            demo: "https://twitter.macktireh.dev",
+            demo: "https://twitter.macktireh.com",
             github: "https://github.com/Macktireh/clone-twitter-frontend",
             image:
               "https://raw.githubusercontent.com/Macktireh/clone-twitter-frontend/refs/heads/main/public/static/img/logo192.png",

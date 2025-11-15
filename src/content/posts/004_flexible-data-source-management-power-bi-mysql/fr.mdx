@@ -62,9 +62,9 @@ Pour simplifier le développement en local, nous avons d'abord rédigé la requ�
 
 Nous avons mis en place cinq paramètres permettant de gérer dynamiquement les sources de données :
 
-<PostImage 
-    src="https://github.com/user-attachments/assets/b83a1abc-b0a4-4a45-a980-6571bf7d88bc"
-    alt="Paramètres Power Query pour la gestion des sources de données"
+<PostImage
+  src="https://github.com/user-attachments/assets/b83a1abc-b0a4-4a45-a980-6571bf7d88bc"
+  alt="Paramètres Power Query pour la gestion des sources de données"
 />
 
 - **`ENVIRONMENT`** : choix entre LOCAL et PRODUCTION
@@ -81,9 +81,9 @@ Nous avons mis en place cinq paramètres permettant de gérer dynamiquement les 
 
 Nous avons créé une variable dynamique booléenne `IS_PRODUCTION` qui simplifie la détection de l'environnement :
 
-<PostImage 
-    src="https://github.com/user-attachments/assets/b008a278-203c-4c2a-bbe0-1e48310392ad"
-    alt="Variable IS_PRODUCTION"
+<PostImage
+  src="https://github.com/user-attachments/assets/b008a278-203c-4c2a-bbe0-1e48310392ad"
+  alt="Variable IS_PRODUCTION"
 />
 
 ```powerquery
@@ -104,9 +104,9 @@ Cette approche nous permet d'utiliser simplement `IS_PRODUCTION` dans nos condit
 
 Nous avons créé une fonction Power Query nommée `GetData`, permettant de récupérer les données depuis MySQL en production et depuis un fichier CSV en local.
 
-<PostImage 
-    src="https://github.com/user-attachments/assets/487fa3bf-198b-418d-b560-a751998720ad"
-    alt="Fonction GetData"
+<PostImage
+  src="https://github.com/user-attachments/assets/487fa3bf-198b-418d-b560-a751998720ad"
+  alt="Fonction GetData"
 />
 
 ```powerquery
@@ -161,15 +161,14 @@ Cette fonction réalise trois opérations essentielles :
    - Bascule automatiquement entre CSV local et base MySQL
    - Utilise la variable `IS_PRODUCTION` comme critère de sélection
 
-
 <br />
 ##### 3. Utilisation de la Fonction GetData
 
 Pour utiliser la fonction GetData, il suffit de créer une nouvelle requête et de la renommer comme vous le souhaitez. Dans cet exemple, nous l'appelons "MyData".
 
-<PostImage 
-    src="https://github.com/user-attachments/assets/1425d395-2c12-498a-bb27-3731516e1b13"
-    alt="Requête MyData"
+<PostImage
+  src="https://github.com/user-attachments/assets/1425d395-2c12-498a-bb27-3731516e1b13"
+  alt="Requête MyData"
 />
 
 ```powerquery
@@ -178,7 +177,6 @@ let
 in
     Source
 ```
-
 
 Cette approche permet de récupérer les données en spécifiant uniquement deux arguments :
 
