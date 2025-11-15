@@ -61,9 +61,9 @@ To simplify local development, we first wrote the SQL query to extract the neces
 
 We set up five parameters to dynamically manage data sources:
 
-<PostImage 
-    src="https://github.com/user-attachments/assets/b83a1abc-b0a4-4a45-a980-6571bf7d88bc"
-    alt="Power Query parameters for data source management"
+<PostImage
+  src="https://github.com/user-attachments/assets/b83a1abc-b0a4-4a45-a980-6571bf7d88bc"
+  alt="Power Query parameters for data source management"
 />
 
 - **`ENVIRONMENT`**: choice between LOCAL and PRODUCTION
@@ -80,9 +80,9 @@ We set up five parameters to dynamically manage data sources:
 
 We created a boolean dynamic variable `IS_PRODUCTION` that simplifies environment detection:
 
-<PostImage 
-    src="https://github.com/user-attachments/assets/b008a278-203c-4c2a-bbe0-1e48310392ad"
-    alt="IS_PRODUCTION variable"
+<PostImage
+  src="https://github.com/user-attachments/assets/b008a278-203c-4c2a-bbe0-1e48310392ad"
+  alt="IS_PRODUCTION variable"
 />
 
 ```powerquery
@@ -103,9 +103,9 @@ This approach allows us to simply use `IS_PRODUCTION` in our conditions rather t
 
 We created a Power Query function named `GetData`, allowing data retrieval from MySQL in production and from a CSV file locally.
 
-<PostImage 
-    src="https://github.com/user-attachments/assets/487fa3bf-198b-418d-b560-a751998720ad"
-    alt="GetData function"
+<PostImage
+  src="https://github.com/user-attachments/assets/487fa3bf-198b-418d-b560-a751998720ad"
+  alt="GetData function"
 />
 
 ```powerquery
@@ -164,9 +164,9 @@ This function performs three essential operations:
 
 To use the GetData function, simply create a new query and rename it as desired. In this example, we call it "MyData".
 
-<PostImage 
-    src="https://github.com/user-attachments/assets/1425d395-2c12-498a-bb27-3731516e1b13"
-    alt="MyData query"
+<PostImage
+  src="https://github.com/user-attachments/assets/1425d395-2c12-498a-bb27-3731516e1b13"
+  alt="MyData query"
 />
 
 ```powerquery

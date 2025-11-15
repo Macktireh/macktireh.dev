@@ -1,4 +1,4 @@
-# [📃 macktireh.dev](https://macktireh.dev)
+# [📃 macktireh.com](https://macktireh.com)
 
 This repository holds the source code for my personal website and blog, built with [Astro](https://astro.build/).
 
@@ -7,7 +7,7 @@ This repository holds the source code for my personal website and blog, built wi
 - **Language** - [TypeScript](https://www.typescriptlang.org/)
 - **Main Framework** - [Astro](https://astro.build/)
 - **Styling** - [SCSS](https://sass-lang.com/)
-- **Icons** - [Iconbuddy](https://iconbuddy.com/)
+- **Icons** - [Lucide](https://lucide.dev/)
 - **Code Formatting** - [Prettier](https://prettier.io/)
 - **IDE** - [VSCode](https://code.visualstudio.com/)
 - **Browser** - [Zen Browser](https://zen-browser.app/)
