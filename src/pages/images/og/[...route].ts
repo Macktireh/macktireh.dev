@@ -9,7 +9,7 @@ const pages = Object.fromEntries(
   posts.map(({ id, blog_slug, data }) => [id.split("_")[1], { blog_slug, data }])
 );
 
-export const { getStaticPaths, GET } = OGImageRoute({
+export const { getStaticPaths, GET } = await OGImageRoute({
   // The name of your dynamic route segment.
   // In this case it’s `route`, because the file is named `[...route].ts`.
   param: "route",

@@ -11,14 +11,14 @@
     "sass": "sass --watch ./src/styles/scss/main.scss ./src/styles/style.css --style=compressed"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.10",
-    "@astrojs/rss": "^4.0.13",
-    "@astrojs/sitemap": "^3.6.0",
-    "@expressive-code/plugin-line-numbers": "^0.41.3",
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/rss": "^4.0.14",
+    "@astrojs/sitemap": "^3.6.1",
+    "@expressive-code/plugin-line-numbers": "^0.41.5",
     "@lucide/astro": "^0.542.0",
-    "astro": "^5.15.8",
-    "astro-expressive-code": "^0.41.3",
-    "astro-og-canvas": "^0.7.2"
+    "astro": "^5.16.8",
+    "astro-expressive-code": "^0.41.5",
+    "astro-og-canvas": "^0.10.0"
   },
   "devDependencies": {
     "sass": "^1.79.5"
