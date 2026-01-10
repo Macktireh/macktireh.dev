@@ -1,0 +1,249 @@
+---
+import {
+  Award,
+  Mail,
+  Globe,
+  FileText,
+  Linkedin,
+  Github,
+  Calendar,
+  ExternalLink,
+  Code,
+  Users,
+  Briefcase,
+  GraduationCap,
+  Trophy,
+} from "@lucide/astro";
+import LangSelector from "@src/components/LangSelector.astro";
+import Layout from "@src/layouts/Layout.astro";
+import { LOCALES, useTranslations } from "@src/i18n/utils";
+import { getCVData } from "@src/helpers/cvData";
+
+export async function getStaticPaths() {
+  return LOCALES.map((lang) => {
+    return { params: { lang } };
+  });
+}
+
+const { lang } = Astro.params;
+const t = useTranslations(lang);
+const cvData = getCVData(lang);
+---
+
+<Layout
+  title={t("cv.page.title")}
+  description={t("cv.page.description")}
+  lang={lang}
+>
+  <LangSelector slot="lang-selector" />
+  <main class="cv-container">
+    <!-- Header Section -->
+    <section class="cv-header">
+      <div class="cv-header__content">
+        <div class="cv-header__info">
+          <h1 class="cv-header__name">{cvData.personal.name}</h1>
+          <p class="cv-header__title">{cvData.personal.title}</p>
+          <div class="cv-header__certification">
+            <Award size={16} color="#f1f1f1" />
+            <span>Power BI Certified</span>
+          </div>
+        </div>
+        <div class="cv-header__avatar">
+          <img src="/images/mack.png" alt={cvData.personal.name} />
+        </div>
+      </div>
+
+      <div class="cv-header__contacts">
+        <a href={`mailto:${cvData.personal.email}`} class="cv-contact">
+          <Mail size={16} />
+          <span>{cvData.personal.email}</span>
+        </a>
+        <a href="/" class="cv-contact">
+          <Globe size={16} />
+          <span>{cvData.personal.website}</span>
+        </a>
+        <a href={cvData.personal.linkedin} class="cv-contact">
+          <Linkedin size={16} />
+          <span>LinkedIn</span>
+        </a>
+        <a href={cvData.personal.github} class="cv-contact">
+          <Github size={16} />
+          <span>GitHub</span>
+        </a>
+        <a href={cvData.personal.articles} class="cv-contact">
+          <FileText size={16} />
+          <span>{t("cv.contact.articles")}</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="cv-section">
+      <h2 class="cv-section__title">
+        <Users size={24} />
+        {t("cv.section.about")}
+      </h2>
+      <div class="cv-card">
+        <p class="cv-about">{cvData.about}</p>
+      </div>
+    </section>
+
+    <!-- Skills & Projects Section -->
+    <section class="cv-section">
+      <h2 class="cv-section__title">
+        <Code size={24} />
+        {t("cv.section.skills")}
+      </h2>
+      <ul class="cv-skills">
+        {
+          cvData.skills.map((skillCategory) => (
+            <li class="cv-skill-category">
+              <h3 class="cv-skill-category__title">{skillCategory.category}</h3>
+              <ul class="cv-projects-grid">
+                {skillCategory.projects.map((project) => (
+                  <li class="cv-project-card">
+                    <div class="cv-project-card__header">
+                      <img
+                        src={project.image}
+                        alt={project.name}
+                        class="cv-project-card__image"
+                      />
+                      <h4 class="cv-project-card__name">{project.name}</h4>
+                    </div>
+                    <p class="cv-project-card__description">
+                      {project.description}
+                    </p>
+                    <div class="cv-project-card__links">
+                      {project.demo && (
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          class="cv-project-link cv-project-link--demo"
+                        >
+                          <ExternalLink size={14} />
+                          {t("cv.project.demo")}
+                        </a>
+                      )}
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          class="cv-project-link cv-project-link--github"
+                        >
+                          <Github size={14} />
+                          {t("cv.project.code")}
+                        </a>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="cv-section">
+      <h2 class="cv-section__title">
+        <Briefcase size={24} />
+        {t("cv.section.experience")}
+      </h2>
+      <div class="cv-timeline">
+        {
+          cvData.experiences.map((exp) => (
+            <div class="cv-timeline-item">
+              <div class="cv-timeline-item__marker" />
+              <div class="cv-card cv-experience-card">
+                <div class="cv-experience-card__header">
+                  <img
+                    src={exp.logo}
+                    alt={exp.company}
+                    class="cv-experience-card__logo"
+                  />
+                  <div class="cv-experience-card__info">
+                    <h3 class="cv-experience-card__company">{exp.company}</h3>
+                    <h4 class="cv-experience-card__position">{exp.position}</h4>
+                    <div class="cv-experience-card__period">
+                      <Calendar size={14} />
+                      <span>{exp.period}</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="cv-experience-card__description">{exp.description}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Open Source Section -->
+    <section class="cv-section">
+      <h2 class="cv-section__title">
+        <Github size={24} />
+        {t("cv.section.opensource")}
+      </h2>
+      {
+        cvData.openSource.map((project) => (
+          <div class="cv-card cv-opensource-card">
+            <h3 class="cv-opensource-card__name">{project.name}</h3>
+            <p class="cv-opensource-card__description">{project.description}</p>
+            <div class="cv-opensource-card__links">
+              <a
+                href={project.pypi}
+                target="_blank"
+                class="cv-project-link cv-project-link--pypi"
+              >
+                📦 PyPI
+              </a>
+              <a
+                href={project.github}
+                class="cv-project-link cv-project-link--github"
+              >
+                <Github size={14} />
+                GitHub
+              </a>
+            </div>
+          </div>
+        ))
+      }
+    </section>
+
+    <!-- Education Section -->
+    <section class="cv-section">
+      <h2 class="cv-section__title">
+        <GraduationCap size={24} />
+        {t("cv.section.education")}
+      </h2>
+      <div class="cv-education-grid">
+        {
+          cvData.education.map((edu) => (
+            <div
+              class={`cv-card cv-education-card ${edu.type === "certification" ? "cv-education-card--certification" : ""}`}
+            >
+              <div class="cv-education-card__header">
+                <img
+                  src={edu.logo}
+                  alt={edu.institution}
+                  class="cv-education-card__logo"
+                />
+                <div class="cv-education-card__badge">
+                  {edu.type === "certification" ? (
+                    <Trophy size={16} />
+                  ) : (
+                    <GraduationCap size={16} />
+                  )}
+                  <span>{edu.year}</span>
+                </div>
+              </div>
+              <h3 class="cv-education-card__degree">{edu.degree}</h3>
+              <p class="cv-education-card__institution">{edu.institution}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</Layout>

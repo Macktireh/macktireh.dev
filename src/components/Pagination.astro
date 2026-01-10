@@ -2,7 +2,7 @@
 import { type PageType } from "@src/helpers/types";
 import { useTranslations, type LangType } from "@src/i18n/utils";
 import type { BlogType } from "@src/services/posts";
-import Icon from "@src/components/Icon.astro";
+import { MoveRight } from "@lucide/astro";
 
 type Props = {
   page: PageType<BlogType>;
@@ -17,12 +17,12 @@ const t = useTranslations(lang);
   {
     page.url.prev ? (
       <a href={page.url.prev} class="page-link prev-page">
-        <Icon name="arrow-right" />
+        <MoveRight />
         <span>{t("pagination.prev")}</span>
       </a>
     ) : (
       <div class="disabled prev-page">
-        <Icon name="arrow-right" />
+        <MoveRight />
         <span>{t("pagination.prev")}</span>
       </div>
     )
@@ -32,12 +32,12 @@ const t = useTranslations(lang);
     page.url.next ? (
       <a href={page.url.next} class="page-link next-page">
         <span>{t("pagination.next")}</span>
-        <Icon name="arrow-right" />
+        <MoveRight />
       </a>
     ) : (
       <div class="disabled next-page">
         <span>{t("pagination.next")}</span>
-        <Icon name="arrow-right" />
+        <MoveRight />
       </div>
     )
   }

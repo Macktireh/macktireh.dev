@@ -22,3 +22,10 @@ pnpm-debug.log*
 
 # scss
 *.css.map
+
+# Claude code
+.claude/
+prompts/
+CLAUDE.md
+DEPLOYMENT.md
+MIGRATION_GUIDE.md

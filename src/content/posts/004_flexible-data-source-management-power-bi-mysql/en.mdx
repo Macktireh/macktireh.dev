@@ -8,6 +8,7 @@ giscusTitleDiscussionsMapping: "Flexible Data Source Management in Power BI with
 ---
 
 import Link from "@src/components/Link.astro";
+import PostImage from "@src/components/PostImage.astro";
 import Note from "@src/components/Note.astro";
 
 ### Table of Contents
@@ -60,7 +61,10 @@ To simplify local development, we first wrote the SQL query to extract the neces
 
 We set up five parameters to dynamically manage data sources:
 
-![parameters](https://github.com/user-attachments/assets/b83a1abc-b0a4-4a45-a980-6571bf7d88bc)
+<PostImage
+  src="https://github.com/user-attachments/assets/b83a1abc-b0a4-4a45-a980-6571bf7d88bc"
+  alt="Power Query parameters for data source management"
+/>
 
 - **`ENVIRONMENT`**: choice between LOCAL and PRODUCTION
 - **`URL_CSV_FILE`**: link to the CSV file
@@ -76,7 +80,10 @@ We set up five parameters to dynamically manage data sources:
 
 We created a boolean dynamic variable `IS_PRODUCTION` that simplifies environment detection:
 
-![is_prod](https://github.com/user-attachments/assets/b008a278-203c-4c2a-bbe0-1e48310392ad)
+<PostImage
+  src="https://github.com/user-attachments/assets/b008a278-203c-4c2a-bbe0-1e48310392ad"
+  alt="IS_PRODUCTION variable"
+/>
 
 ```powerquery
 let
@@ -96,7 +103,10 @@ This approach allows us to simply use `IS_PRODUCTION` in our conditions rather t
 
 We created a Power Query function named `GetData`, allowing data retrieval from MySQL in production and from a CSV file locally.
 
-![getdata](https://github.com/user-attachments/assets/487fa3bf-198b-418d-b560-a751998720ad)
+<PostImage
+  src="https://github.com/user-attachments/assets/487fa3bf-198b-418d-b560-a751998720ad"
+  alt="GetData function"
+/>
 
 ```powerquery
 let
@@ -154,7 +164,10 @@ This function performs three essential operations:
 
 To use the GetData function, simply create a new query and rename it as desired. In this example, we call it "MyData".
 
-![mydata](https://github.com/user-attachments/assets/1425d395-2c12-498a-bb27-3731516e1b13)
+<PostImage
+  src="https://github.com/user-attachments/assets/1425d395-2c12-498a-bb27-3731516e1b13"
+  alt="MyData query"
+/>
 
 ```powerquery
 let
@@ -246,4 +259,4 @@ This second approach offers several advantages:
 ### Conclusion
 
 In this article, we explored a solution to efficiently manage data sources in Power BI by implementing a dynamic switching system between local CSV files and a production MySQL database. The approach we developed not only solved our immediate connectivity and performance challenges but also provided a flexible framework that can be easily adapted to other environments or data sources. This approach can easily be adapted and extended to meet other needs, such as adding new environments (test, pre-production) or supporting other data sources (PostgreSQL, Oracle, etc.).
-Otherwise, if you want to import and combine multiple Excel/CSV files in a clean and optimized way, I invite you to read my article <Link href="https://macktireh.dev/en/posts/import-multiple-excel-csv-files-power-bi-custom-power-query-function/" external>“Import Multiple Excel/CSV Files into Power BI with a Custom Power Query Function”</Link>.
+Otherwise, if you want to import and combine multiple Excel/CSV files in a clean and optimized way, I invite you to read my article <Link href="https://macktireh.com/en/posts/import-multiple-excel-csv-files-power-bi-custom-power-query-function/" external>“Import Multiple Excel/CSV Files into Power BI with a Custom Power Query Function”</Link>.

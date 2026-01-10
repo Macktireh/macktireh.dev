@@ -9,6 +9,7 @@ giscusTitleDiscussionsMapping: "Import Multiple Excel/CSV Files into Power BI wi
 ---
 
 import Link from "@src/components/Link.astro";
+import PostImage from "@src/components/PostImage.astro";
 import Note from "@src/components/Note.astro";
 
 ### Table des matières
@@ -41,7 +42,10 @@ Généralement, lorsqu'on souhaite importer et combiner plusieurs fichiers CSV o
 
 Prenons un exemple concret : imaginons que vous ayez plusieurs fichiers de données financières par pays stockés dans un dossier SharePoint.
 
-![FinancialSample](https://github.com/user-attachments/assets/9e32d6c7-bc85-4d9c-8059-5ec17625db6c)
+<PostImage
+    src="https://github.com/user-attachments/assets/9e32d6c7-bc85-4d9c-8059-5ec17625db6c"
+    alt="Exemple de données financières"
+/>
 
 <Note>
   Vous pouvez télécharger les données d'exemple utilisées dans cet article via
@@ -57,13 +61,19 @@ Prenons un exemple concret : imaginons que vous ayez plusieurs fichiers de donn�
 3. Sélectionnez-le et cliquez sur "Se connecter"
 4. Saisissez le lien de votre site SharePoint (ou utilisez un paramètre Power Query)
 
-![SharepointFolderConnector](https://github.com/user-attachments/assets/421d6756-d781-4b54-8ad1-07bb9f8d9700)
+<PostImage
+    src="https://github.com/user-attachments/assets/421d6756-d781-4b54-8ad1-07bb9f8d9700"
+    alt="Connecteur de dossiers Sharepoint"
+/>
 
 5. Cliquez sur OK puis sur "Transformer les données"
 6. Dans la colonne "Folder Path", filtrez pour sélectionner le dossier contenant vos fichiers
 7. Cliquez sur les doubles flèches de la première colonne pour combiner tous les fichiers
 
-![FirstExample](https://github.com/user-attachments/assets/02dd0b9e-ca9d-47c2-95f1-7de49781da6f)
+<PostImage
+    src="https://github.com/user-attachments/assets/02dd0b9e-ca9d-47c2-95f1-7de49781da6f"
+    alt="Premier Exemple"
+/>
 
 **🎯 Problème :** À ce stade, vous remarquerez que Power Query crée de nombreux dossiers, requêtes et fonctions. C'est là que ça devient problématique : à chaque nouvelle importation similaire, vous vous retrouvez avec une multiplication de ces éléments qui "polluent" votre éditeur Power Query.
 
@@ -277,7 +287,10 @@ RenameFirstColumn = Table.RenameColumns(FilterOutHeaderRows, {{firstColumnName, 
 3. Remplacez tout le code par le bloc de code ci-dessus.
 4. Renommez la fonction comme vous le souhaitez. Personnellement, je nomme les fonctions avec des noms explicites, par exemple : `fxImportAndCombineMultipleExcelFilesFromSharepointOrTeams`
 
-![PowerQueryFunction](https://github.com/user-attachments/assets/21b9f16e-d08c-4336-8623-44f272f97f90)
+<PostImage
+    src="https://github.com/user-attachments/assets/21b9f16e-d08c-4336-8623-44f272f97f90"
+    alt="Fonction Power Query"
+/>
 
 C’est fait ! La fonction est prête à être utilisée. 🎉
 
@@ -292,7 +305,10 @@ Pour utiliser notre nouvelle fonction :
 3. Copiez-collez le code de la fonction
 4. Renommer comme vous le souhaitez. Dans cet exemple, nous l’appelons “MyData”
 
-![MyDataQuery](https://github.com/user-attachments/assets/af3e7585-2238-417d-ba95-dd06df45f3d4)
+<PostImage
+    src="https://github.com/user-attachments/assets/af3e7585-2238-417d-ba95-dd06df45f3d4"
+    alt="Requête MyData"
+/>
 
 ```powerquery
 let
@@ -326,7 +342,10 @@ Explication
    - **"Sheet1"** : Le nom de la feuille de calcul à extraire de chaque fichier Excel.
    - **"Segment"** : La colonne utilisée pour filtrer les lignes dans chaque fichier (dans cet exemple, il s'agit de la première colonne de nos fichiers Excel).
 
-![SecondExample](https://github.com/user-attachments/assets/569eca1c-f153-4d8b-a051-60c547926ece)
+<PostImage
+    src="https://github.com/user-attachments/assets/569eca1c-f153-4d8b-a051-60c547926ece"
+    alt="Deuxième Exemple"
+/>
 
 Et voilà, les fichiers sont automatiquement importés et combinés dans une seule requête. C’est vraiment propre et efficace, non ? 😎
 
