@@ -1,20 +1,35 @@
 ---
-import Icon2 from '@src/components/Icon2.astro';
-import { DEFAULT_LANG, useTranslations, type LangType } from '@src/i18n/utils';
+import {
+  CircleX,
+  Info,
+  Lightbulb,
+  MessageSquareWarning,
+  TriangleAlert,
+} from "@lucide/astro";
+import { DEFAULT_LANG, useTranslations, type LangType } from "@src/i18n/utils";
 
 type Props = {
   variant?: "note" | "tip" | "important" | "warning" | "caution";
   lang?: LangType;
-}
+};
 
 const { variant = "note", lang = DEFAULT_LANG } = Astro.props as Props;
 
 const t = useTranslations(lang);
+
+const icons = {
+  note: Info,
+  tip: Lightbulb,
+  important: CircleX,
+  warning: MessageSquareWarning,
+  caution: TriangleAlert,
+};
+const Icon = icons[variant];
 ---
 
 <div class={`infobox ${variant}`}>
   <div class="infobox-header">
-    <Icon2 name={variant} size={24} />
+    {Icon && <Icon size={24} />}
     <span>{t(`infobox.${variant}`)}</span>
   </div>
   <div class="infobox-content">
