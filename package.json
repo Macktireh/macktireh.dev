@@ -12,13 +12,13 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
-    "@astrojs/rss": "^4.0.14",
-    "@astrojs/sitemap": "^3.6.1",
-    "@expressive-code/plugin-line-numbers": "^0.41.5",
+    "@astrojs/rss": "^4.0.15",
+    "@astrojs/sitemap": "^3.7.0",
+    "@expressive-code/plugin-line-numbers": "^0.41.6",
     "@lucide/astro": "^0.542.0",
-    "astro": "^5.16.8",
-    "astro-expressive-code": "^0.41.5",
-    "astro-og-canvas": "^0.10.0"
+    "astro": "^5.17.1",
+    "astro-expressive-code": "^0.41.6",
+    "astro-og-canvas": "^0.10.1"
   },
   "devDependencies": {
     "sass": "^1.79.5"
