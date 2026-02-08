@@ -1,0 +1,364 @@
+---
+title: "Ollaix : Créer son propre chatbot avec des modèles IA locaux et cloud"
+description: "Découvrez comment construire une plateforme de chat complète qui communique avec des modèles d'IA locaux (Ollama) et cloud (Gemini)."
+pubDate: "Oct 31 2025"
+tags: ["IA", "Chatbot", "Python", "React", "Docker", "Ollama", "API"]
+lang: "fr"
+heroImage: "https://github.com/user-attachments/assets/40708d43-07d7-4db6-85fb-2e46ff453da8"
+giscusTitleDiscussionsMapping: "Ollaix: Build your own chatbot interface using open-source and cloud-based AI models"
+---
+
+import Link from "@src/components/Link.astro";
+import PostImage from "@src/components/PostImage.astro";
+import Note from "@src/components/Note.astro";
+
+### Table des matières
+
+- [Introduction](#introduction)
+- [Le contexte : Pourquoi Ollaix ?](#le-contexte--pourquoi-ollaix-)
+- [L'architecture du projet](#larchitecture-du-projet)
+  - [1. Le backend : Une API Python avec Litestar](#1-le-backend--une-api-python-avec-litestar)
+  - [2. Les modèles locaux : Ollama](#2-les-modèles-locaux--ollama)
+  - [3. Le frontend : Une interface React moderne](#3-le-frontend--une-interface-react-moderne)
+- [La conteneurisation avec Docker](#la-conteneurisation-avec-docker)
+- [Les défis rencontrés](#les-défis-rencontrés)
+- [Les apprentissages clés](#les-apprentissages-clés)
+- [Comment essayer Ollaix](#comment-essayer-ollaix)
+- [Améliorations possibles](#ce-qui-pourrait-être-amélioré)
+- [Conclusion](#conclusion)
+
+<br />
+
+## Introduction
+
+Vous vous êtes déjà demandé comment fonctionnent les chatbots IA derrière les interfaces que vous utilisez tous les jours ? Moi oui, et c'est exactement ce qui m'a poussé à créer **Ollaix**.
+
+Ce projet est né d'une simple curiosité : comprendre comment construire une interface de chat moderne qui peut communiquer avec différents modèles d'intelligence artificielle. Pas juste un modèle, mais plusieurs - qu'ils soient hébergés localement sur ma machine ou dans le cloud. Et surtout, je voulais que ce soit complètement custom, avec une architecture que je maîtrise de bout en bout.
+
+Le résultat ? Une application complète comprenant une API backend en Python et une interface web moderne en React. Le tout containerisé avec Docker pour faciliter le déploiement. Dans cet article, je vous raconte ce parcours d'apprentissage et les choix techniques que j'ai faits.
+
+<br />
+
+## Le contexte : Pourquoi Ollaix ?
+
+Quand on utilise ChatGPT, Claude ou d'autres outils IA, on interagit avec une interface simple et élégante. Mais derrière, il y a toute une infrastructure : des API, des systèmes d'authentification, du streaming de données... J'avais envie de comprendre tout ça par moi-même.
+
+**Mes objectifs étaient clairs :**
+- Apprendre en pratiquant : rien de mieux que de mettre les mains dans le code pour vraiment comprendre
+- Avoir le contrôle : créer quelque chose de custom plutôt que d'utiliser des solutions toutes faites
+- Utiliser des modèles open source : pouvoir tourner des modèles localement avec Ollama
+- Garder de la flexibilité : pouvoir aussi utiliser des modèles cloud comme Gemini de Google
+- Créer une interface moderne : une expérience utilisateur fluide et agréable
+
+<br />
+
+## L'architecture du projet
+
+Ollaix se compose de trois parties principales qui fonctionnent ensemble pour créer une expérience de chat fluide et performante.
+
+#### 1. Le backend : Une API Python avec Litestar
+
+Le cœur du système, c'est l'API. J'ai choisi **Litestar**, un framework Python moderne et performant, pour créer une passerelle unifiée entre l'interface utilisateur et les différents modèles IA.
+
+##### Pourquoi Litestar ?
+
+- Ultra rapide et basé sur les standards modernes (ASGI)
+- Documentation claire et API intuitive
+- Support natif du streaming (essentiel pour l'expérience chat)
+- Parfait pour apprendre les concepts d'API REST avancées
+
+<br />
+
+##### Ce que fait l'API
+
+L'API expose plusieurs endpoints essentiels :
+- `/v1/chat/completions` : accepte les requêtes de chat et route vers le bon fournisseur
+- `/v1/models` : liste tous les modèles disponibles (Ollama et Gemini)
+- Support du streaming en temps réel pour afficher les réponses mot par mot
+
+Ce qui est intéressant, c'est que j'ai créé une interface abstraite `AIServiceInterface` qui me permet d'ajouter facilement de nouveaux fournisseurs à l'avenir. Le principe SOLID appliqué en pratique !
+
+<Note variant='tip'>
+  **Architecture modulaire**
+  
+  L'utilisation d'une interface abstraite signifie que chaque fournisseur d'IA (Ollama, Gemini) implémente les mêmes méthodes. Résultat ? Ajouter un nouveau fournisseur (OpenAI, Anthropic, etc.) devient trivial. Il suffit de créer une nouvelle classe qui respecte le contrat de l'interface.
+</Note>
+
+<br />
+
+#### 2. Les modèles locaux : Ollama
+
+**Ollama**, c'est un outil génial qui permet de faire tourner des modèles d'IA directement sur sa machine. J'ai intégré trois modèles légers mais performants :
+
+- **Gemma 3 (1B)** : Un petit modèle de Google, rapide et efficace
+- **Qwen 3 (1.7B)** : Un modèle d'Alibaba, excellent pour le traitement du langage
+- **DeepSeek R1 (1.5B)** : Optimisé pour le raisonnement et le code
+
+<br />
+
+##### Avantages de l'approche containerisée
+
+Chaque modèle tourne dans son propre conteneur Docker, ce qui permet :
+- Une isolation complète entre les services
+- De scaler facilement en ajoutant plus de modèles
+- De gérer les ressources de manière optimale
+- De démarrer/arrêter des modèles indépendamment
+
+<br />
+
+#### 3. Le frontend : Une interface React moderne
+
+Pour l'interface, j'ai voulu quelque chose de fluide et esthétique. La stack technique :
+
+**Technologies principales :**
+- **React 19** avec **TypeScript** pour une base solide et typée
+- **Vite** comme bundler (ultra rapide en développement)
+- **Tailwind CSS** + **DaisyUI** pour le design
+- **react-markdown** pour afficher joliment le Markdown dans les réponses
+- **react-syntax-highlighter** pour colorer le code
+
+<br />
+
+##### Fonctionnalités implémentées
+
+- Chat en temps réel avec streaming des réponses
+- Sélection facile entre différents modèles
+- Thème sombre/clair
+- Copie des réponses en un clic
+- Bouton pour arrêter la génération
+- Support multilingue (français/anglais)
+
+<br />
+
+## La conteneurisation avec Docker
+
+Un aspect crucial du projet, c'est la facilité de déploiement. Tout est dockerisé pour garantir que ça fonctionne partout de la même manière.
+
+#### Pour le développement
+
+Lancer l'ensemble du projet localement est aussi simple que :
+
+```bash frame="terminal" title="Terminal"
+docker compose up --build
+```
+
+Et voilà ! Tous les services se lancent : l'API, les trois instances Ollama avec leurs modèles respectifs.
+
+#### Pour la production
+
+J'ai créé une configuration séparée avec **Traefik** comme reverse proxy. Les avantages :
+- Gestion automatique des certificats SSL avec Let's Encrypt
+- Routage intelligent du trafic
+- Haute disponibilité
+- Support des domaines personnalisés
+
+#### CI/CD avec GitHub Actions
+
+Les images Docker sont automatiquement construites et publiées sur GitHub Container Registry via GitHub Actions. Le workflow :
+
+1. Détection des changements dans le code
+2. Build automatique des images Docker
+3. Tests
+4. Publication sur le registry
+5. Déploiement en production (si tag git)
+
+<Note>
+  **Automatisation complète**
+  
+  Dès que je crée une nouvelle version (tag git), tout se déploie automatiquement. Plus besoin de penser au déploiement manuel, GitHub Actions s'occupe de tout !
+</Note>
+
+<br />
+
+## Les défis rencontrés
+
+Bien sûr, tout n'a pas été rose. Voici quelques défis intéressants que j'ai dû résoudre.
+
+#### 1. Le streaming en temps réel
+
+Faire fonctionner le streaming de manière fluide entre l'API Python et l'interface React n'était pas trivial. Les défis :
+
+- Gérer les async generators côté Python
+- Parser les Server-Sent Events (SSE) côté React
+- Gérer les erreurs de connexion sans casser l'expérience utilisateur
+- Afficher les réponses progressivement sans lags ni saccades
+
+<br />
+
+#### 2. L'unification des API
+
+Ollama et Gemini ont des formats de réponse différents. Le problème :
+- Ollama renvoie les données dans un certain format
+- Gemini utilise sa propre structure
+- Le frontend attend un format unifié
+
+J'ai dû créer une couche d'abstraction pour normaliser tout ça et présenter une API cohérente au frontend. Maintenant, peu importe le fournisseur, le format de réponse est toujours le même.
+
+#### 3. La gestion des ressources
+
+Faire tourner plusieurs modèles Ollama en parallèle, c'est gourmand en mémoire. Optimisations mises en place :
+
+- Configurations Docker optimisées (healthchecks, limites de ressources)
+- Démarrage progressif des services pour éviter les pics de charge
+- Gestion du cycle de vie des conteneurs
+- Monitoring des ressources
+
+<br />
+
+#### 4. Le CI/CD
+
+Mettre en place une pipeline qui :
+- Teste le code automatiquement
+- Build les images Docker seulement si nécessaire (détection des changements)
+- Publie sur le registry
+- Déploie en production sans intervention manuelle
+
+Ça m'a pris du temps à affiner, mais maintenant tout est automatisé et fonctionne comme une horloge !
+
+
+## Les apprentissages clés
+
+Ce projet m'a énormément appris sur plusieurs aspects du développement moderne.
+
+##### Sur l'architecture
+
+- **Séparation des responsabilités** : API, services, modèles bien séparés
+- **Pattern interface** : rendre le code extensible et maintenable
+- **Conteneurisation** : Docker comme solution de déploiement moderne et portable
+
+<br />
+
+##### Sur les API
+
+- **Streaming HTTP** : comment gérer des flux de données en temps réel
+- **Documentation** : importance d'une API bien documentée (j'utilise Scalar pour l'API docs)
+- **Gestion des erreurs** : prévoir tous les cas limites possibles
+
+<br />
+##### Sur le DevOps
+
+- **Docker Compose** : orchestration multi-services simplifiée
+- **GitHub Actions** : automatisation du build et du déploiement
+- **Traefik** : reverse proxy moderne pour la production
+- **Monitoring** : importance de surveiller les performances et les erreurs
+
+<br />
+##### Sur le frontend moderne
+
+- **React 19** : découverte des nouvelles fonctionnalités
+- **Intégration API streaming** : affichage progressif des données
+- **Gestion d'état** : pas besoin de Redux pour tout !
+- **TypeScript** : la sécurité des types apporte vraiment de la valeur
+
+<br />
+
+## Comment essayer Ollaix
+
+Si vous voulez tester le projet par vous-même, voici les différentes options disponibles.
+
+##### Option 1 : La démo en ligne
+
+La façon la plus simple d'essayer Ollaix est d'utiliser la démo en ligne. Rendez-vous sur <Link href="https://ollaix.macktireh.com" external>ollaix.macktireh.com</Link>  pour tester directement dans votre navigateur.
+
+##### Option 2 : Lancer localement
+
+**Backend**
+
+```bash frame="terminal" title="Terminal"
+# Cloner le repository
+git clone https://github.com/Macktireh/ollaix.git
+cd ollaix
+
+# Configurer l'environnement
+cp .env.example .env
+# Ajouter votre clé API Gemini dans .env (optionnel)
+
+# Lancer avec Docker
+docker compose up --build
+
+# L'API sera disponible sur http://localhost:8000
+```
+
+**Frontend**
+
+```bash frame="terminal" title="Terminal"
+# Cloner le repository
+git clone https://github.com/Macktireh/ollaix-ui.git
+cd ollaix-ui
+
+# Installer les dépendances
+npm install
+
+# Configurer
+cp .env.example .env
+
+# Lancer en mode développement
+npm run dev
+
+# L'interface sera sur http://localhost:3000
+```
+
+<Note variant='tip'>
+  **Configuration minimale requise**
+  
+  Pour faire tourner Ollama localement, comptez environ 4-8 Go de RAM disponible selon les modèles. Les modèles 1B-2B que j'utilise sont légers, mais si vous voulez des modèles plus gros, prévoyez plus de ressources !
+</Note>
+
+<br />
+
+## Ce qui pourrait être amélioré
+
+Le projet fonctionne bien, mais il y a toujours des choses à améliorer. Voici ma roadmap d'idées :
+
+#### 1. Système de mémoire
+
+Actuellement, chaque conversation repart de zéro. Un système de contexte persistant permettrait :
+- De garder le fil des conversations longues
+- D'avoir une vraie mémoire entre les sessions
+- De gérer plusieurs conversations en parallèle
+
+#### 2. Plus de modèles
+
+Intégrer d'autres fournisseurs pour donner plus de choix :
+- **OpenAI** (GPT-4, GPT-3.5)
+- **Anthropic** (Claude)
+- **Mistral AI** (Mistral, Mixtral)
+- **Cohere**
+
+Grâce à l'architecture modulaire, ajouter ces fournisseurs serait relativement simple.
+
+#### 3. Gestion des conversations
+
+Fonctionnalités pour gérer l'historique :
+- Sauvegarder les conversations
+- Reprendre une conversation où on l'a laissée
+- Rechercher dans l'historique
+- Exporter les conversations
+
+#### 4. Optimisations
+
+Plusieurs axes d'optimisation possibles :
+- Mise en cache de certaines réponses
+- Préchargement des modèles
+- Optimisation de la consommation mémoire
+- Support du multi-GPU pour les modèles locaux
+
+#### 5. Features avancées
+
+Fonctionnalités qui enrichiraient l'expérience :
+- Upload de fichiers (PDF, images, documents)
+- Génération d'images (avec Stable Diffusion ou DALL-E)
+- Recherche web intégrée
+- Plugins personnalisables
+
+<br />
+
+## Conclusion
+
+Ollaix a été un super projet d'apprentissage. J'ai pu expérimenter avec des technologies modernes, comprendre en profondeur comment fonctionnent les chatbots IA, et créer quelque chose d'utilisable et d'extensible.
+
+Le projet est open source et modulaire, conçu pour être facilement adaptable et extensible. Si vous avez des questions, des suggestions, ou si vous voulez contribuer, les repositories sont ouverts :
+
+- **Backend** : <Link href="https://github.com/Macktireh/ollaix" external>github.com/Macktireh/ollaix</Link>
+- **Frontend** : <Link href="https://github.com/Macktireh/ollaix-ui" external>github.com/Macktireh/ollaix-ui</Link>
+- **Démo en ligne** : <Link href="https://ollaix.macktireh.com" external>ollaix.macktireh.com</Link>
