@@ -20,6 +20,7 @@ const FileIconsType = {
 };
 
 export type FileIconType = keyof typeof FileIconsType;
+export type FolderIconType = keyof typeof FolderIconsType;
 
 const FolderIconsType = {
   vscode: "vscode",
@@ -54,16 +55,18 @@ const FolderIconsType = {
 };
 
 export function getFileIconUri(ext: FileIconType | string) {
-  if (FileIconsType[ext]) {
-    return `https://raw.githubusercontent.com/material-extensions/vscode-material-icon-theme/7f6543ceb62a238b1e45b194563e72de0d2a41a1/icons/${FileIconsType[ext]}.svg`;
+  if (ext in FileIconsType) {
+    return `https://raw.githubusercontent.com/material-extensions/vscode-material-icon-theme/7f6543ceb62a238b1e45b194563e72de0d2a41a1/icons/${
+      FileIconsType[ext as FileIconType]
+    }.svg`;
   }
   return `https://raw.githubusercontent.com/Macktireh/Media/d1d8a2a09883ba6b3e4deaab05e5d52f05709607/svg/file.svg`;
 }
 
-export function getFolderIconUrl(type: string, isOpen: boolean = false) {
-  if (FolderIconsType[type]) {
+export function getFolderIconUrl(type: FolderIconType | string, isOpen: boolean = false) {
+  if (type in FolderIconsType) {
     return `https://raw.githubusercontent.com/material-extensions/vscode-material-icon-theme/7f6543ceb62a238b1e45b194563e72de0d2a41a1/icons/folder-${
-      FolderIconsType[type]
+      FolderIconsType[type as FolderIconType]
     }${isOpen ? "-open" : ""}.svg`;
   }
   return `https://raw.githubusercontent.com/Macktireh/Media/d1d8a2a09883ba6b3e4deaab05e5d52f05709607/svg/folder${

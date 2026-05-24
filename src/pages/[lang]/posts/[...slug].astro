@@ -1,4 +1,5 @@
 ---
+import { render } from "astro:content";
 import LangSelector from "@src/components/LangSelector.astro";
 import { getPostsSorted } from "@src/services/posts";
 import { DEFAULT_LANG } from "@src/i18n/utils";
@@ -23,10 +24,15 @@ const page = Astro.props;
 const locales = (await getPostsSorted())
   .filter((post) => post.blog_slug === slug)
   .map((post) => post.data.lang);
-const { Content } = await page.render();
+const { Content } = await render(page);
 ---
 
-<PostDetails {...page.data} slug={page.blog_slug} content={page.body} lang={lang}>
+<PostDetails
+  {...page.data}
+  slug={page.blog_slug}
+  content={page.body!}
+  lang={lang}
+>
   <LangSelector slot="lang-selector" locales={locales} />
   <Content />
 </PostDetails>
@@ -39,19 +45,19 @@ const { Content } = await page.render();
     if (!hideCopyButtonOnMobile()) {
       updateCopyButtonVisibility(mediaQuery);
       mediaQuery.addEventListener("change", () =>
-        updateCopyButtonVisibility(mediaQuery)
+        updateCopyButtonVisibility(mediaQuery),
       );
     }
   }
 
-  function updateCopyButtonVisibility(mediaQuery) {
+  function updateCopyButtonVisibility(mediaQuery: MediaQueryList) {
     toggleCopyButtonDisplay(mediaQuery.matches ? "none" : "flex");
   }
 
   function hideCopyButtonOnMobile() {
     const isMobileDevice =
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
+        navigator.userAgent,
       );
     if (isMobileDevice) {
       toggleCopyButtonDisplay("none");
@@ -59,8 +65,8 @@ const { Content } = await page.render();
     return isMobileDevice;
   }
 
-  function toggleCopyButtonDisplay(displayStyle) {
-    document.querySelectorAll(".copy").forEach((button: HTMLElement) => {
+  function toggleCopyButtonDisplay(displayStyle: string) {
+    document.querySelectorAll<HTMLElement>(".copy").forEach((button) => {
       button.style.display = displayStyle;
     });
   }

@@ -12,7 +12,7 @@ import LangSelector from "@src/components/LangSelector.astro";
 import Pagination from "@src/components/Pagination.astro";
 import Card from "@src/components/Card.astro";
 
-export async function getStaticPaths({ paginate }) {
+export async function getStaticPaths({ paginate }: { paginate: (items: BlogType[], options: any) => any[] }) {
   const posts = await getPostsSorted();
   return LOCALES.flatMap((lang) => {
     const posts_filtered = posts.filter((post) => {

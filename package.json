@@ -11,12 +11,12 @@
     "sass": "sass --watch ./src/styles/scss/main.scss ./src/styles/style.css --style=compressed"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/rss": "^4.0.15",
-    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/mdx": "^5.0.6",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.2",
     "@expressive-code/plugin-line-numbers": "^0.41.6",
     "@lucide/astro": "^0.542.0",
-    "astro": "^5.17.1",
+    "astro": "^6.3.7",
     "astro-expressive-code": "^0.41.6",
     "astro-og-canvas": "^0.10.1"
   },
