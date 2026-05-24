@@ -4,8 +4,6 @@ import {
   Mail,
   Globe,
   FileText,
-  Linkedin,
-  Github,
   Calendar,
   ExternalLink,
   Code,
@@ -18,6 +16,7 @@ import LangSelector from "@src/components/LangSelector.astro";
 import Layout from "@src/layouts/Layout.astro";
 import { LOCALES, useTranslations } from "@src/i18n/utils";
 import { getCVData } from "@src/helpers/cvData";
+import Icon from "@src/components/Icon.astro";
 
 export async function getStaticPaths() {
   return LOCALES.map((lang) => {
@@ -63,11 +62,11 @@ const cvData = getCVData(lang);
           <span>{cvData.personal.website}</span>
         </a>
         <a href={cvData.personal.linkedin} class="cv-contact">
-          <Linkedin size={16} />
+          <Icon name="linkedin" />
           <span>LinkedIn</span>
         </a>
         <a href={cvData.personal.github} class="cv-contact">
-          <Github size={16} />
+          <Icon name="github" />
           <span>GitHub</span>
         </a>
         <a href={cvData.personal.articles} class="cv-contact">
@@ -130,7 +129,7 @@ const cvData = getCVData(lang);
                           target="_blank"
                           class="cv-project-link cv-project-link--github"
                         >
-                          <Github size={14} />
+                          <Icon name="github" />
                           {t("cv.project.code")}
                         </a>
                       )}
@@ -182,7 +181,7 @@ const cvData = getCVData(lang);
     <!-- Open Source Section -->
     <section class="cv-section">
       <h2 class="cv-section__title">
-        <Github size={24} />
+        <Icon name="github" />
         {t("cv.section.opensource")}
       </h2>
       {
@@ -202,7 +201,7 @@ const cvData = getCVData(lang);
                 href={project.github}
                 class="cv-project-link cv-project-link--github"
               >
-                <Github size={14} />
+                <Icon name="github" />
                 GitHub
               </a>
             </div>

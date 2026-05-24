@@ -1,6 +1,7 @@
+import type { APIContext } from "astro";
 import rss from "@astrojs/rss";
 import { getPostsByLang } from "@src/services/posts";
-import { LOCALES, useTranslations } from "@src/i18n/utils";
+import { LOCALES, useTranslations, type LangType } from "@src/i18n/utils";
 import { SITE } from "@src/consts"
 
 export function getStaticPaths() {
@@ -10,14 +11,14 @@ export function getStaticPaths() {
   return paths;
 }
 
-export async function GET(context) {
+export async function GET(context: APIContext) {
   const { lang } = context.params;
-  const t = useTranslations(lang);
-  const posts = await getPostsByLang(lang);
+  const t = useTranslations(lang as LangType);
+  const posts = await getPostsByLang(lang as LangType);
   return rss({
     title: t("site.title"),
     description: t("site.description", { firstname: SITE.authorFirstName }),
-    site: context.site,
+    site: context.site!,
     items: posts.map((post) => ({
       ...post.data,
       link: `/${lang}${post.pathname}`,
