@@ -1,0 +1,380 @@
+---
+title: "Ollaix: Build Your Own Chatbot with Local and Cloud AI Models"
+description: "Learn how to build a complete chat platform that communicates with both local AI models (Ollama) and cloud models (Gemini)."
+pubDate: "Oct 31 2025"
+tags: ["AI", "Chatbot", "LLM", "Python", "React", "Docker", "Ollama", "API"]
+heroImage: "https://github.com/user-attachments/assets/3afc3dad-965c-4574-bfc4-e48fd4c010de"
+giscusTitleDiscussionsMapping: "Ollaix: Build Your Own Chatbot with Local and Cloud AI Models"
+---
+
+import Link from "@src/components/Link.astro";
+import PostImage from "@src/components/PostImage.astro";
+import Note from "@src/components/Note.astro";
+import Video from "@src/components/Video.astro";
+
+### Table of Contents
+
+- [Introduction](#introduction)
+- [Demo](#demo)
+- [Context: Why Ollaix?](#context--why-ollaix-)
+- [Project Architecture](#project-architecture)
+  - [1. Backend: A Python API with Litestar](#1-backend--a-python-api-with-litestar)
+  - [2. Local models: Ollama](#2-local-models--ollama)
+  - [3. Frontend: A modern React interface](#3-frontend--a-modern-react-interface)
+- [Containerization with Docker](#containerization-with-docker)
+- [Challenges encountered](#challenges-encountered)
+- [Key learnings](#key-learnings)
+- [How to try Ollaix](#how-to-try-ollaix)
+- [Possible improvements](#what-could-be-improved)
+- [Conclusion](#conclusion)
+
+<br />
+
+## Introduction
+
+Have you ever wondered how AI chatbots work behind the interfaces you use every day? I did, and that’s exactly what pushed me to create **Ollaix**.
+
+This project was born from simple curiosity: understanding how to build a modern chat interface that can communicate with different AI models. Not just one model, but several — whether they are hosted locally on my machine or in the cloud. And most importantly, I wanted it to be fully custom, with an architecture I control end-to-end.
+
+The result? A complete application including a Python backend API and a modern React web interface. All containerized with Docker to make deployment easy. In this article, I’ll walk you through this learning journey and the technical choices I made.
+
+## Demo
+
+**Live demo**: <Link href="https://ollaix.macktireh.com" external>ollaix.macktireh.com</Link>
+
+<Video src="https://raw.githubusercontent.com/Macktireh/Media/refs/heads/main/videos/ollaix-demo.mp4" />
+
+<br />
+
+## Context: Why Ollaix?
+
+When we use ChatGPT, Claude, or other AI tools, we interact with a simple and elegant interface. But behind the scenes, there’s a whole infrastructure: APIs, authentication systems, data streaming… I wanted to understand all of that by myself.
+
+**My goals were clear:**
+- Learn by doing: nothing beats hands-on coding to truly understand
+- Stay in control: build something custom instead of relying on ready-made solutions
+- Use open-source models: run models locally with Ollama
+- Keep flexibility: also use cloud models like Google’s Gemini
+- Create a modern interface: a smooth and pleasant user experience
+
+<br />
+
+## Project Architecture
+
+Ollaix consists of three main parts working together to create a smooth and performant chat experience.
+
+#### 1. Backend: A Python API with Litestar
+
+The core of the system is the API. I chose **Litestar**, a modern and high-performance Python framework, to create a unified gateway between the UI and different AI models.
+
+##### Why Litestar?
+
+- Ultra-fast and based on modern standards (ASGI)
+- Clear documentation and intuitive API
+- Native streaming support (essential for chat experience)
+- Perfect for learning advanced REST API concepts
+
+<br />
+
+##### What the API does
+
+The API exposes several key endpoints:
+- `/v1/chat/completions`: accepts chat requests and routes them to the correct provider
+- `/v1/models`: lists all available models (Ollama and Gemini)
+- Real-time streaming support to display responses word by word
+
+What’s interesting is that I created an abstract interface `AIServiceInterface` that allows me to easily add new providers in the future. SOLID principles applied in practice!
+
+<Note variant='tip'>
+  **Modular architecture**
+  
+  Using an abstract interface means that each AI provider (Ollama, Gemini) implements the same methods. Result? Adding a new provider (OpenAI, Anthropic, etc.) becomes trivial. You just need to create a new class that respects the interface contract.
+</Note>
+
+<br />
+
+#### 2. Local models: Ollama
+
+**Ollama** is a great tool that lets you run AI models directly on your machine. I integrated three lightweight but powerful models:
+
+- **Gemma 3 (1B)**: A small Google model, fast and efficient
+- **Qwen 3 (1.7B)**: An Alibaba model, excellent for language processing
+- **DeepSeek R1 (1.5B)**: Optimized for reasoning and coding
+
+<br />
+
+##### Advantages of the containerized approach
+
+Each model runs in its own Docker container, which allows:
+- Full isolation between services
+- Easy scaling by adding more models
+- Better resource management
+- Independent start/stop of models
+
+<br />
+
+#### 3. Frontend: A modern React interface
+
+For the UI, I wanted something smooth and visually appealing. The tech stack:
+
+**Main technologies:**
+- **React 19** with **TypeScript** for a strong typed foundation
+- **Vite** as the bundler (ultra-fast in development)
+- **Tailwind CSS** + **DaisyUI** for styling
+- **react-markdown** to render Markdown responses nicely
+- **react-syntax-highlighter** for code highlighting
+
+<br />
+
+##### Implemented features
+
+- Real-time chat with streaming responses
+- Easy model selection
+- Dark/light theme
+- One-click copy of responses
+- Stop generation button
+- Multilingual support (French/English)
+
+<br />
+
+## Containerization with Docker
+
+A crucial aspect of the project is ease of deployment. Everything is dockerized to ensure it works the same everywhere.
+
+#### For development
+
+Running the entire project locally is as simple as:
+
+```bash
+docker compose up --build
+```
+
+And that’s it! All services start: the API, and the three Ollama instances with their respective models.
+
+#### For production
+
+I created a separate configuration using **Traefik** as a reverse proxy. Benefits:
+
+* Automatic SSL certificate management with Let’s Encrypt
+* Smart traffic routing
+* High availability
+* Custom domain support
+
+#### CI/CD with GitHub Actions
+
+Docker images are automatically built and published to GitHub Container Registry via GitHub Actions. The workflow:
+
+1. Detect code changes
+2. Automatically build Docker images
+3. Run tests
+4. Publish to registry
+5. Deploy to production (on git tag)
+
+<Note>
+  **Full automation**
+
+  As soon as I create a new version (git tag), everything is deployed automatically. No need to think about manual deployment—GitHub Actions handles everything! 
+</Note>
+
+<br />
+
+## Challenges encountered
+
+Of course, everything wasn’t perfect. Here are some interesting challenges I had to solve.
+
+#### 1. Real-time streaming
+
+Making streaming work smoothly between the Python API and the React interface wasn’t trivial. Challenges included:
+
+* Handling async generators in Python
+* Parsing Server-Sent Events (SSE) in React
+* Managing connection errors without breaking UX
+* Displaying responses progressively without lag or stutter
+
+<br />
+
+#### 2. API unification
+
+Ollama and Gemini return data in different formats. The problem:
+
+* Ollama uses one format
+* Gemini uses another
+* The frontend expects a unified format
+
+I had to build an abstraction layer to normalize everything and expose a consistent API to the frontend. Now, regardless of the provider, the response format is always the same.
+
+#### 3. Resource management
+
+Running multiple Ollama models in parallel is memory-intensive. Optimizations implemented:
+
+* Optimized Docker configurations (healthchecks, resource limits)
+* Progressive service startup to avoid load spikes
+* Container lifecycle management
+* Resource monitoring
+
+<br />
+
+#### 4. CI/CD
+
+Setting up a pipeline that:
+
+* Automatically tests code
+* Builds Docker images only when necessary (change detection)
+* Publishes to the registry
+* Deploys to production without manual intervention
+
+It took time to fine-tune, but now everything is automated and runs like clockwork!
+
+## Key learnings
+
+This project taught me a lot about modern development.
+
+##### Architecture
+
+* **Separation of concerns**: API, services, models clearly separated
+* **Interface pattern**: making code extensible and maintainable
+* **Containerization**: Docker as a modern, portable deployment solution
+
+<br />
+
+##### APIs
+
+* **HTTP streaming**: handling real-time data flows
+* **Documentation**: importance of well-documented APIs (I use Scalar for API docs)
+* **Error handling**: anticipating edge cases
+
+<br />
+
+##### DevOps
+
+* **Docker Compose**: simplified multi-service orchestration
+* **GitHub Actions**: build and deployment automation
+* **Traefik**: modern reverse proxy for production
+* **Monitoring**: importance of tracking performance and errors
+
+<br />
+
+##### Modern frontend
+
+* **React 19**: exploring new features
+* **Streaming API integration**: progressive data rendering
+* **State management**: no need for Redux everywhere!
+* **TypeScript**: type safety really adds value
+
+<br />
+
+## How to try Ollaix
+
+If you want to try the project yourself, here are the available options.
+
+##### Option 1: Live demo
+
+The easiest way to try Ollaix is the online demo. Go to <Link href="https://ollaix.macktireh.com" external>ollaix.macktireh.com</Link> to test it directly in your browser.
+
+##### Option 2: Run locally
+
+**Backend**
+
+```bash
+# Clone the repository
+git clone https://github.com/Macktireh/ollaix.git
+cd ollaix
+
+# Configure environment
+cp .env.example .env
+# Add your Gemini API key in .env (optional)
+
+# Run with Docker
+docker compose up --build
+
+# API will be available at http://localhost:8000
+```
+
+**Frontend**
+
+```bash
+# Clone the repository
+git clone https://github.com/Macktireh/ollaix-ui.git
+cd ollaix-ui
+
+# Install dependencies
+npm install
+
+# Configure
+cp .env.example .env
+
+# Start development mode
+npm run dev
+
+# UI will be available at http://localhost:3000
+```
+
+<Note variant='tip'>
+  **Minimum requirements**
+
+  To run Ollama locally, expect around 4–8 GB of available RAM depending on the models. The 1B–2B models I use are lightweight, but if you want larger models, plan for more resources!
+</Note>
+
+<br />
+
+## What could be improved
+
+The project works well, but there’s always room for improvement. Here’s my roadmap:
+
+#### 1. Memory system
+
+Currently, each conversation starts from scratch. A persistent context system would allow:
+
+* Maintaining long conversation threads
+* Real memory across sessions
+* Managing multiple conversations in parallel
+
+#### 2. More models
+
+Integrate additional providers for more flexibility:
+
+* **OpenAI** (GPT-4, GPT-3.5)
+* **Anthropic** (Claude)
+* **Mistral AI** (Mistral, Mixtral)
+* **Cohere**
+
+Thanks to the modular architecture, adding these providers would be relatively simple.
+
+#### 3. Conversation management
+
+Features for managing history:
+
+* Save conversations
+* Resume conversations
+* Search history
+* Export conversations
+
+#### 4. Optimizations
+
+Several optimization areas:
+
+* Response caching
+* Model preloading
+* Memory usage optimization
+* Multi-GPU support for local models
+
+#### 5. Advanced features
+
+Features that would enhance the experience:
+
+* File uploads (PDF, images, documents)
+* Image generation (Stable Diffusion or DALL·E)
+* Integrated web search
+* Custom plugins
+
+<br />
+
+## Conclusion
+
+Ollaix has been a great learning project. I was able to experiment with modern technologies, deeply understand how AI chatbots work, and build something usable and extensible.
+
+The project is open source and modular, designed to be easily adaptable and extensible. If you have questions, suggestions, or want to contribute, the repositories are open:
+
+* **Backend**: <Link href="https://github.com/Macktireh/ollaix" external>github.com/Macktireh/ollaix</Link>
+* **Frontend**: <Link href="https://github.com/Macktireh/ollaix-ui" external>github.com/Macktireh/ollaix-ui</Link>
+* **Live demo**: <Link href="https://ollaix.macktireh.com" external>ollaix.macktireh.com</Link>
